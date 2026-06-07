@@ -204,6 +204,54 @@ const DAILY_TIPS = [
   'Романтичный вечер звучит лучше с цветочными и древесными нотами.'
 ];
 
+const DAILY_QUESTS = [
+  {
+    text: 'Подберите 3 аромата с настроением «Энергия»',
+    type: 'mood',
+    mood: 'Энергия',
+    target: 3,
+    gemReward: 5,
+    heartReward: 2
+  },
+  {
+    text: 'Удовольте 3 клиентов за день',
+    type: 'happy',
+    target: 3,
+    gemReward: 4,
+    heartReward: 3
+  },
+  {
+    text: 'Подберите 2 аромата с настроением «Уют»',
+    type: 'mood',
+    mood: 'Уют',
+    target: 2,
+    gemReward: 4,
+    heartReward: 2
+  },
+  {
+    text: 'Сделайте 4 удачных подбора подряд',
+    type: 'streak',
+    target: 4,
+    gemReward: 6,
+    heartReward: 4
+  },
+  {
+    text: 'Подберите 2 аромата с настроением «Спокойствие» или «Фокус»',
+    type: 'moodMulti',
+    moods: ['Спокойствие', 'Фокус'],
+    target: 2,
+    gemReward: 5,
+    heartReward: 2
+  }
+];
+
+const REPUTATION_TIERS = [
+  { min: 0, title: 'Начинающий аромаэксперт', stars: 1, next: 3 },
+  { min: 3, title: 'Хозяйка уютной лавки', stars: 2, next: 6 },
+  { min: 6, title: 'Мастер ароматных историй', stars: 3, next: 9 },
+  { min: 9, title: 'Легенда Коварства Ароматов', stars: 4, next: null }
+];
+
 const CLIENTS_PER_DAY = 5;
 
 /* ===== Состояние игры ===== */
@@ -224,7 +272,15 @@ const state = {
   questProgress: 0,
   questTarget: 3,
   questMood: 'Энергия',
-  favorites: []
+  questMoods: [],
+  questType: 'mood',
+  questGemReward: 5,
+  questHeartReward: 2,
+  questCompleted: false,
+  questClaimed: false,
+  gems: 0,
+  favorites: [],
+  maxPickStreak: 0
 };
 
 /* ===== DOM-элементы ===== */
@@ -235,6 +291,8 @@ const els = {
   startDayBtn: document.getElementById('startDayBtn'),
   newDayBtn: document.getElementById('newDayBtn'),
   clientCard: document.getElementById('clientCard'),
+  clientArrival: document.getElementById('clientArrival'),
+  arrivalText: document.getElementById('arrivalText'),
   clientAvatar: document.getElementById('clientAvatar'),
   clientName: document.getElementById('clientName'),
   clientMood: document.getElementById('clientMood'),
@@ -252,17 +310,39 @@ const els = {
   moodBar: document.getElementById('moodBar'),
   moodPercent: document.getElementById('moodPercent'),
   heartsCount: document.getElementById('heartsCount'),
+  heartsCard: document.getElementById('heartsCard'),
+  heartsFloat: document.getElementById('heartsFloat'),
   clientIndicator: document.getElementById('clientIndicator'),
   moodCircleFill: document.getElementById('moodCircleFill'),
   moodCircleText: document.getElementById('moodCircleText'),
   reputationTitle: document.getElementById('reputationTitle'),
+  reputationStars: document.getElementById('reputationStars'),
+  reputationTier: document.getElementById('reputationTier'),
+  reputationBarFill: document.getElementById('reputationBarFill'),
+  reputationProgressLabel: document.getElementById('reputationProgressLabel'),
+  reputationCard: document.getElementById('reputationCard'),
   streakCount: document.getElementById('streakCount'),
+  pickStreakCount: document.getElementById('pickStreakCount'),
+  streakCard: document.getElementById('streakCard'),
+  streakIcon: document.getElementById('streakIcon'),
+  questText: document.getElementById('questText'),
+  questReward: document.getElementById('questReward'),
+  questHeartReward: document.getElementById('questHeartReward'),
+  questComplete: document.getElementById('questComplete'),
+  questCard: document.getElementById('questCard'),
+  questBadge: document.getElementById('questBadge'),
   questProgress: document.getElementById('questProgress'),
+  questBarFill: document.getElementById('questBarFill'),
   favoritesList: document.getElementById('favoritesList'),
+  favoritesCount: document.getElementById('favoritesCount'),
+  toastContainer: document.getElementById('toastContainer'),
   summarySales: document.getElementById('summarySales'),
   summaryHappy: document.getElementById('summaryHappy'),
   summaryMood: document.getElementById('summaryMood'),
   summaryReputation: document.getElementById('summaryReputation'),
+  summaryHearts: document.getElementById('summaryHearts'),
+  summaryStreak: document.getElementById('summaryStreak'),
+  summaryQuestReward: document.getElementById('summaryQuestReward'),
   summaryText: document.getElementById('summaryText'),
   dailyTip: document.getElementById('dailyTip')
 };
@@ -292,10 +372,162 @@ function pickAromaOptions(correctId) {
 }
 
 function getReputation(totalHappy) {
-  if (totalHappy >= 9) return 'Легенда Коварства Ароматов';
-  if (totalHappy >= 6) return 'Мастер ароматных историй';
-  if (totalHappy >= 3) return 'Хозяйка уютной лавки';
-  return 'Начинающий аромаэксперт';
+  const tier = getReputationTier(totalHappy);
+  return tier.title;
+}
+
+function getReputationTier(totalHappy) {
+  let current = REPUTATION_TIERS[0];
+  for (let i = REPUTATION_TIERS.length - 1; i >= 0; i--) {
+    if (totalHappy >= REPUTATION_TIERS[i].min) {
+      current = REPUTATION_TIERS[i];
+      break;
+    }
+  }
+  return current;
+}
+
+function getReputationProgress(totalHappy) {
+  const tier = getReputationTier(totalHappy);
+  if (tier.next === null) {
+    return { current: totalHappy - tier.min, needed: 0, pct: 100, label: 'Максимальный уровень!' };
+  }
+  const current = totalHappy - tier.min;
+  const needed = tier.next - tier.min;
+  return {
+    current,
+    needed,
+    pct: (current / needed) * 100,
+    label: `${current} / ${needed} до следующего уровня`
+  };
+}
+
+function renderStars(count) {
+  return '★'.repeat(count) + '☆'.repeat(4 - count);
+}
+
+function pickDailyQuest() {
+  return DAILY_QUESTS[Math.floor(Math.random() * DAILY_QUESTS.length)];
+}
+
+function applyDailyQuest(quest) {
+  state.questType = quest.type;
+  state.questTarget = quest.target;
+  state.questMood = quest.mood || '';
+  state.questMoods = quest.moods || [];
+  state.questGemReward = quest.gemReward;
+  state.questHeartReward = quest.heartReward;
+  state.questProgress = 0;
+  state.questCompleted = false;
+  state.questClaimed = false;
+
+  if (els.questText) els.questText.textContent = quest.text;
+  if (els.questReward) els.questReward.textContent = quest.gemReward;
+  if (els.questHeartReward) els.questHeartReward.textContent = quest.heartReward;
+  if (els.questComplete) els.questComplete.classList.add('hidden');
+  if (els.questCard) els.questCard.classList.remove('quest-done');
+  if (els.questBadge) els.questBadge.textContent = 'Ежедневное';
+}
+
+function checkQuestProgress(isCorrect, correctAroma) {
+  if (!isCorrect || state.questCompleted) return;
+
+  let advanced = false;
+
+  switch (state.questType) {
+    case 'mood':
+      if (correctAroma.mood === state.questMood) advanced = true;
+      break;
+    case 'moodMulti':
+      if (state.questMoods.includes(correctAroma.mood)) advanced = true;
+      break;
+    case 'happy':
+      advanced = true;
+      break;
+    case 'streak':
+      if (state.currentStreak >= state.questTarget) {
+        state.questProgress = state.questTarget;
+        completeQuest();
+        return;
+      }
+      return;
+    default:
+      break;
+  }
+
+  if (advanced) {
+    state.questProgress = Math.min(state.questTarget, state.questProgress + 1);
+    if (state.questProgress >= state.questTarget) {
+      completeQuest();
+    }
+  }
+}
+
+function completeQuest() {
+  if (state.questCompleted) return;
+  state.questCompleted = true;
+
+  state.gems += state.questGemReward;
+  addHearts(state.questHeartReward, 'Задание выполнено!');
+
+  if (els.questComplete) els.questComplete.classList.remove('hidden');
+  if (els.questCard) els.questCard.classList.add('quest-done');
+  if (els.questBadge) els.questBadge.textContent = 'Готово ✓';
+
+  showToast(`Ежедневное задание выполнено! +${state.questGemReward} 💎 +${state.questHeartReward} 💖`, 'quest');
+}
+
+function addHearts(amount, reason) {
+  state.hearts += amount;
+  if (els.heartsCard) {
+    els.heartsCard.classList.remove('hearts-pop');
+    void els.heartsCard.offsetWidth;
+    els.heartsCard.classList.add('hearts-pop');
+  }
+  spawnFloatingHearts(amount);
+  if (reason) showToast(`+${amount} 💖 ${reason}`, 'heart');
+}
+
+function spawnFloatingHearts(count) {
+  if (!els.heartsFloat) return;
+  const n = Math.min(count, 5);
+  for (let i = 0; i < n; i++) {
+    const h = document.createElement('span');
+    h.className = 'floating-heart';
+    h.textContent = '💖';
+    h.style.left = 20 + Math.random() * 60 + '%';
+    h.style.animationDelay = i * 0.12 + 's';
+    els.heartsFloat.appendChild(h);
+    setTimeout(() => h.remove(), 1200);
+  }
+}
+
+function showToast(message, type = 'info') {
+  if (!els.toastContainer) return;
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+  els.toastContainer.appendChild(toast);
+  requestAnimationFrame(() => toast.classList.add('toast-show'));
+  setTimeout(() => {
+    toast.classList.remove('toast-show');
+    setTimeout(() => toast.remove(), 400);
+  }, 2800);
+}
+
+function updateStreakUI() {
+  if (els.pickStreakCount) els.pickStreakCount.textContent = state.currentStreak;
+  if (els.streakCount) els.streakCount.textContent = state.streak;
+
+  if (els.streakCard) {
+    els.streakCard.classList.toggle('streak-hot', state.currentStreak >= 3);
+    els.streakCard.classList.toggle('streak-fire', state.streak >= 1);
+  }
+  if (els.streakIcon) {
+    if (state.currentStreak >= 5) els.streakIcon.textContent = '🔥';
+    else if (state.currentStreak >= 3) els.streakIcon.textContent = '✨';
+    else els.streakIcon.textContent = '🕯️';
+  }
 }
 
 function clampMood(value) {
@@ -335,7 +567,6 @@ function updateStats() {
   els.salesCount.textContent = state.sales;
   els.happyCount.textContent = state.happyClients;
   els.heartsCount.textContent = state.hearts;
-  els.streakCount.textContent = state.streak;
 
   const mood = clampMood(state.mood);
   els.moodBar.style.width = mood + '%';
@@ -346,8 +577,24 @@ function updateStats() {
   const offset = circumference - (circumference * mood / 100);
   els.moodCircleFill.style.strokeDashoffset = offset;
 
-  els.reputationTitle.textContent = getReputation(state.totalHappy);
+  const tier = getReputationTier(state.totalHappy);
+  const repProgress = getReputationProgress(state.totalHappy);
+
+  els.reputationTitle.textContent = tier.title;
+  if (els.reputationStars) els.reputationStars.textContent = renderStars(tier.stars);
+  if (els.reputationTier) els.reputationTier.textContent = `Уровень ${tier.stars}`;
+  if (els.reputationBarFill) els.reputationBarFill.style.width = repProgress.pct + '%';
+  if (els.reputationProgressLabel) els.reputationProgressLabel.textContent = repProgress.label;
+
   els.questProgress.textContent = `${state.questProgress} / ${state.questTarget}`;
+  if (els.questBarFill) {
+    const pct = (state.questProgress / state.questTarget) * 100;
+    els.questBarFill.style.width = pct + '%';
+  }
+
+  if (els.favoritesCount) els.favoritesCount.textContent = state.favorites.length;
+
+  updateStreakUI();
 }
 
 function updateClientIndicator() {
@@ -370,42 +617,61 @@ function renderClient() {
   state.answered = false;
   state.hintUsed = false;
 
-  els.clientCard.classList.remove('animate-in');
-  void els.clientCard.offsetWidth;
-  els.clientCard.classList.add('animate-in');
-
-  els.clientAvatar.textContent = client.avatar;
-  els.clientName.textContent = client.name;
-  els.clientMood.textContent = client.moodTag;
-  els.clientRequest.textContent = client.request;
-
+  els.clientCard.classList.remove('animate-in', 'client-visible');
+  els.clientCard.classList.add('client-hidden');
   els.hintBox.classList.add('hidden');
   els.hintBox.textContent = '';
   els.hintBtn.disabled = false;
-
   els.resultBlock.classList.add('hidden');
   els.resultBlock.classList.remove('success', 'partial');
   els.resultSparks.innerHTML = '';
-
-  const options = pickAromaOptions(client.correctAroma);
   els.aromaGrid.innerHTML = '';
 
-  options.forEach(aroma => {
-    const card = document.createElement('button');
-    card.type = 'button';
-    card.className = 'aroma-card';
-    card.dataset.id = aroma.id;
-    card.innerHTML = `
-      <span class="aroma-icon">${aroma.icon}</span>
-      <div class="aroma-name">${aroma.name}</div>
-      <div class="aroma-desc">${aroma.description}</div>
-      <div class="aroma-tags">${aroma.tags}</div>
-    `;
-    card.addEventListener('click', () => handleAromaChoice(aroma.id, card));
-    els.aromaGrid.appendChild(card);
-  });
+  playClientEntrance(client);
+}
 
-  updateClientIndicator();
+function playClientEntrance(client) {
+  if (els.clientArrival) {
+    els.clientArrival.classList.remove('hidden');
+    els.arrivalText.textContent = `В лавку входит ${client.name}...`;
+    els.clientArrival.classList.remove('arrival-play');
+    void els.clientArrival.offsetWidth;
+    els.clientArrival.classList.add('arrival-play');
+  }
+
+  setTimeout(() => {
+    if (els.clientArrival) els.clientArrival.classList.add('hidden');
+
+    els.clientAvatar.textContent = client.avatar;
+    els.clientName.textContent = client.name;
+    els.clientMood.textContent = client.moodTag;
+    els.clientRequest.textContent = client.request;
+
+    els.clientCard.classList.remove('client-hidden');
+    els.clientCard.classList.add('animate-in', 'client-visible');
+
+    const options = pickAromaOptions(client.correctAroma);
+    options.forEach((aroma, i) => {
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'aroma-card aroma-enter';
+      card.style.animationDelay = (0.15 + i * 0.1) + 's';
+      card.dataset.id = aroma.id;
+      card.innerHTML = `
+        <div class="aroma-card-shine"></div>
+        <div class="aroma-icon-ring">
+          <span class="aroma-icon">${aroma.icon}</span>
+        </div>
+        <div class="aroma-name">${aroma.name}</div>
+        <div class="aroma-desc">${aroma.description}</div>
+        <div class="aroma-tags">${aroma.tags}</div>
+      `;
+      card.addEventListener('click', () => handleAromaChoice(aroma.id, card));
+      els.aromaGrid.appendChild(card);
+    });
+
+    updateClientIndicator();
+  }, 900);
 }
 
 /* ===== Выбор аромата ===== */
@@ -439,21 +705,39 @@ function handleAromaChoice(chosenId, cardEl) {
     state.totalHappy += 1;
     state.daySales += 1;
     state.dayHappy += 1;
-    state.hearts += 1;
     state.currentStreak += 1;
+    state.maxPickStreak = Math.max(state.maxPickStreak, state.currentStreak);
+
+    addHearts(1, 'Удачный подбор!');
+
+    if (state.currentStreak === 3) {
+      addHearts(1, 'Серия из 3 подборов!');
+      showToast('🔥 Серия из 3 удачных подборов!', 'streak');
+    } else if (state.currentStreak === 5) {
+      addHearts(2, 'Идеальная серия!');
+      showToast('🔥 Потрясающая серия — 5 подряд!', 'streak');
+    }
 
     const moodBoost = Math.random() > 0.5 ? 15 : 10;
     state.mood = clampMood(state.mood + moodBoost);
 
-    if (correctAroma.mood === state.questMood) {
-      state.questProgress = Math.min(state.questTarget, state.questProgress + 1);
-    }
+    checkQuestProgress(true, correctAroma);
 
-    addFavorite(correctAroma);
+    const favAdded = addFavorite(correctAroma);
     showResult(true, client, correctAroma);
     spawnSparks(true);
+
+    if (els.reputationCard) {
+      els.reputationCard.classList.remove('rep-levelup');
+      void els.reputationCard.offsetWidth;
+      els.reputationCard.classList.add('rep-pulse');
+      setTimeout(() => els.reputationCard.classList.remove('rep-pulse'), 600);
+    }
   } else {
     state.mood = clampMood(state.mood + 3);
+    if (state.currentStreak >= 2) {
+      showToast('Серия прервана. Но вы всё равно помогли клиенту!', 'info');
+    }
     state.currentStreak = 0;
     showResult(false, client, correctAroma);
   }
@@ -500,23 +784,28 @@ function spawnSparks(isHearts) {
 
 /* ===== Избранные ароматы ===== */
 function addFavorite(aroma) {
-  if (state.favorites.some(f => f.id === aroma.id)) return;
+  if (state.favorites.some(f => f.id === aroma.id)) return false;
   state.favorites.push(aroma);
-  renderFavorites();
+  renderFavorites(true);
+  showToast(`${aroma.icon} «${aroma.name}» добавлен в избранное!`, 'favorite');
+  return true;
 }
 
-function renderFavorites() {
+function renderFavorites(highlightNew) {
   if (state.favorites.length === 0) {
     els.favoritesList.innerHTML = '<span class="favorites-empty">Удачные подборы появятся здесь</span>';
     return;
   }
 
-  els.favoritesList.innerHTML = state.favorites.map(a => `
-    <span class="favorite-chip">
-      <span class="fav-icon">${a.icon}</span>
-      ${a.name}
-    </span>
-  `).join('');
+  els.favoritesList.innerHTML = state.favorites.map((a, i) => {
+    const isNew = highlightNew && i === state.favorites.length - 1;
+    return `
+      <span class="favorite-chip${isNew ? ' favorite-new' : ''}">
+        <span class="fav-icon">${a.icon}</span>
+        ${a.name}
+      </span>
+    `;
+  }).join('');
 }
 
 /* ===== Подсказка ===== */
@@ -542,18 +831,46 @@ function nextClient() {
 }
 
 function endDay() {
+  const prevTier = getReputationTier(state.totalHappy - state.dayHappy);
+
   if (state.dayHappy === CLIENTS_PER_DAY) {
     state.streak += 1;
+    addHearts(3, 'Идеальный день в лавке!');
+    showToast('🌟 Идеальный день — все клиенты довольны!', 'streak');
   } else {
     state.streak = 0;
+  }
+
+  if (state.questType === 'happy' && !state.questCompleted && state.dayHappy >= state.questTarget) {
+    state.questProgress = state.questTarget;
+    completeQuest();
   }
 
   els.summarySales.textContent = state.daySales;
   els.summaryHappy.textContent = state.dayHappy;
   els.summaryMood.textContent = clampMood(state.mood) + '%';
   els.summaryReputation.textContent = getReputation(state.totalHappy);
+  if (els.summaryHearts) els.summaryHearts.textContent = state.hearts;
+  if (els.summaryStreak) els.summaryStreak.textContent = state.maxPickStreak;
+
+  if (els.summaryQuestReward) {
+    if (state.questCompleted) {
+      els.summaryQuestReward.textContent =
+        `✨ Задание дня выполнено! Получено: ${state.questGemReward} 💎 и ${state.questHeartReward} 💖`;
+      els.summaryQuestReward.classList.remove('hidden');
+    } else {
+      els.summaryQuestReward.classList.add('hidden');
+    }
+  }
+
   els.summaryText.textContent = getSummaryText(state.dayHappy, state.daySales);
 
+  const newTier = getReputationTier(state.totalHappy);
+  if (newTier.stars > prevTier.stars) {
+    showToast(`⭐ Новый уровень репутации: ${newTier.title}!`, 'quest');
+  }
+
+  state.maxPickStreak = 0;
   updateStats();
   showScreen(els.summaryScreen);
 }
@@ -564,10 +881,12 @@ function startDay() {
   state.currentIndex = 0;
   state.daySales = 0;
   state.dayHappy = 0;
-  state.questProgress = 0;
+  state.maxPickStreak = 0;
+  state.currentStreak = 0;
   state.answered = false;
   state.hintUsed = false;
 
+  applyDailyQuest(pickDailyQuest());
   els.dailyTip.textContent = DAILY_TIPS[Math.floor(Math.random() * DAILY_TIPS.length)];
 
   updateStats();

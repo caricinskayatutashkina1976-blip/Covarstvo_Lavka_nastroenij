@@ -7,32 +7,71 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="shop-bg" aria-hidden="true"></div>
+  <!-- Декоративный фон лавки -->
+  <div class="shop-bg" aria-hidden="true">
+    <div class="shop-shelves shop-shelves-left"></div>
+    <div class="shop-shelves shop-shelves-right"></div>
+    <div class="shop-glow shop-glow-1"></div>
+    <div class="shop-glow shop-glow-2"></div>
+    <div class="shop-vignette"></div>
+  </div>
   <div class="floating-particles" aria-hidden="true"></div>
+  <div class="ambient-sparkles" aria-hidden="true"></div>
 
   <div class="app">
     <!-- Левая панель -->
     <aside class="sidebar">
+      <div class="sidebar-frame"></div>
       <div class="brand">
-        <div class="brand-logo">✨</div>
+        <div class="brand-emblem">
+          <span class="brand-logo">✨</span>
+          <span class="brand-ring"></span>
+        </div>
         <h1 class="brand-title">Коварство Ароматов</h1>
         <p class="brand-subtitle">Лавка настроений</p>
+        <div class="brand-divider"><span>✦</span></div>
       </div>
 
+      <p class="sidebar-label">Меню лавки</p>
       <nav class="sidebar-nav">
-        <a href="#" class="nav-item active" data-nav="home">🏠 Главная</a>
-        <a href="#" class="nav-item" data-nav="candles">🕯️ Свечи</a>
-        <a href="#" class="nav-item" data-nav="diffusers">🌬️ Диффузоры</a>
-        <a href="#" class="nav-item" data-nav="auto">🚗 Автопарфюм</a>
-        <a href="#" class="nav-item" data-nav="offers">🎁 Спецпредложения</a>
-        <a href="#" class="nav-item" data-nav="inventory">📦 Инвентарь</a>
-        <a href="#" class="nav-item" data-nav="collections">💎 Коллекции</a>
+        <a href="#" class="nav-item active" data-nav="home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-text">Главная</span>
+        </a>
+        <a href="#" class="nav-item" data-nav="candles">
+          <span class="nav-icon">🕯️</span>
+          <span class="nav-text">Свечи</span>
+        </a>
+        <a href="#" class="nav-item" data-nav="diffusers">
+          <span class="nav-icon">🌬️</span>
+          <span class="nav-text">Диффузоры</span>
+        </a>
+        <a href="#" class="nav-item" data-nav="auto">
+          <span class="nav-icon">🚗</span>
+          <span class="nav-text">Автопарфюм</span>
+        </a>
+        <a href="#" class="nav-item" data-nav="offers">
+          <span class="nav-icon">🎁</span>
+          <span class="nav-text">Спецпредложения</span>
+        </a>
+        <a href="#" class="nav-item" data-nav="inventory">
+          <span class="nav-icon">📦</span>
+          <span class="nav-text">Инвентарь</span>
+        </a>
+        <a href="#" class="nav-item" data-nav="collections">
+          <span class="nav-icon">💎</span>
+          <span class="nav-text">Коллекции</span>
+        </a>
       </nav>
 
-      <div class="streak-card">
-        <div class="streak-icon">🔥</div>
+      <div class="streak-card" id="streakCard">
+        <div class="streak-glow"></div>
+        <div class="streak-icon" id="streakIcon">🔥</div>
         <h3>Серия удачных подборов</h3>
-        <p class="streak-value"><span id="streakCount">0</span> дней подряд</p>
+        <p class="pick-streak">
+          <span id="pickStreakCount">0</span> подряд сегодня
+        </p>
+        <p class="streak-value"><span id="streakCount">0</span> идеальных дней</p>
         <p class="streak-hint">Делайте клиентов счастливее!</p>
       </div>
     </aside>
@@ -42,21 +81,21 @@
       <!-- Верхняя статистика -->
       <header class="stats-bar">
         <div class="stat-card">
-          <span class="stat-icon">💰</span>
+          <div class="stat-icon-wrap">💰</div>
           <div class="stat-info">
             <span class="stat-label">Продажи</span>
             <span class="stat-value" id="salesCount">0</span>
           </div>
         </div>
         <div class="stat-card">
-          <span class="stat-icon">😊</span>
+          <div class="stat-icon-wrap">😊</div>
           <div class="stat-info">
             <span class="stat-label">Довольные клиенты</span>
             <span class="stat-value" id="happyCount">0</span>
           </div>
         </div>
         <div class="stat-card stat-card-wide">
-          <span class="stat-icon">🌸</span>
+          <div class="stat-icon-wrap">🌸</div>
           <div class="stat-info">
             <span class="stat-label">Настроение лавки</span>
             <div class="mood-bar-wrap">
@@ -65,14 +104,16 @@
             <span class="stat-value small" id="moodPercent">50%</span>
           </div>
         </div>
-        <div class="stat-card">
-          <span class="stat-icon">💖</span>
+        <div class="stat-card stat-card-hearts" id="heartsCard">
+          <div class="stat-icon-wrap">💖</div>
           <div class="stat-info">
             <span class="stat-label">Бонусные сердца</span>
             <span class="stat-value" id="heartsCount">0</span>
           </div>
+          <div class="hearts-float" id="heartsFloat" aria-hidden="true"></div>
         </div>
         <div class="client-indicator">
+          <span class="indicator-dot"></span>
           <span id="clientIndicator">Клиент 0 из 5</span>
         </div>
       </header>
@@ -80,19 +121,28 @@
       <div class="game-layout">
         <!-- Центральная игровая зона -->
         <section class="game-center">
-          <!-- Экран приветствия -->
           <div class="screen screen-welcome" id="welcomeScreen">
             <div class="welcome-card">
+              <div class="welcome-ornament welcome-ornament-top">✦ ✦ ✦</div>
               <div class="welcome-decor">🕯️ 🌹 ✨</div>
               <h2>Добро пожаловать в лавку</h2>
               <p>Сегодня к вам придут гости с разными настроениями. Подберите им идеальный аромат — и настроение лавки расцветёт, как утренняя роза.</p>
               <button class="btn btn-primary btn-large" id="startDayBtn">Начать день</button>
+              <div class="welcome-ornament welcome-ornament-bottom">— · —</div>
             </div>
           </div>
 
-          <!-- Игровой экран -->
           <div class="screen screen-game hidden" id="gameScreen">
+            <div class="client-arrival hidden" id="clientArrival" aria-live="polite">
+              <span class="arrival-bell">🚪</span>
+              <span class="arrival-text" id="arrivalText">В лавку входит гость...</span>
+            </div>
             <div class="client-card" id="clientCard">
+              <div class="card-corner card-corner-tl"></div>
+              <div class="card-corner card-corner-tr"></div>
+              <div class="card-corner card-corner-bl"></div>
+              <div class="card-corner card-corner-br"></div>
+
               <div class="client-header">
                 <div class="client-avatar-wrap">
                   <div class="client-avatar" id="clientAvatar">👩</div>
@@ -110,7 +160,11 @@
 
               <div class="hint-box hidden" id="hintBox"></div>
 
-              <h3 class="section-title">Выберите аромат</h3>
+              <div class="section-title-wrap">
+                <span class="section-ornament">✦</span>
+                <h3 class="section-title">Выберите аромат</h3>
+                <span class="section-ornament">✦</span>
+              </div>
 
               <div class="aroma-grid" id="aromaGrid"></div>
 
@@ -123,7 +177,6 @@
             </div>
           </div>
 
-          <!-- Экран итогов дня -->
           <div class="screen screen-summary hidden" id="summaryScreen">
             <div class="summary-card">
               <div class="summary-header">🌙 Итоги дня</div>
@@ -145,23 +198,44 @@
                   <span class="summary-stat-label">Репутация</span>
                   <span class="summary-stat-value reputation" id="summaryReputation">—</span>
                 </div>
+                <div class="summary-stat">
+                  <span class="summary-stat-label">Бонусные сердца</span>
+                  <span class="summary-stat-value" id="summaryHearts">0</span>
+                </div>
+                <div class="summary-stat">
+                  <span class="summary-stat-label">Серия подборов</span>
+                  <span class="summary-stat-value" id="summaryStreak">0</span>
+                </div>
               </div>
+              <div class="summary-rewards hidden" id="summaryQuestReward"></div>
               <p class="summary-text" id="summaryText"></p>
               <button class="btn btn-primary btn-large" id="newDayBtn">Начать новый день</button>
             </div>
           </div>
         </section>
 
-        <!-- Правая панель -->
+        <!-- Правая панель заданий -->
         <aside class="right-panel">
-          <div class="panel-card">
+          <div class="panel-header">
+            <span class="panel-header-icon">📜</span>
+            <span>Панель мастера</span>
+          </div>
+
+          <div class="panel-card panel-card-quest" id="questCard">
+            <div class="panel-card-badge" id="questBadge">Ежедневное</div>
             <h3>📋 Ежедневное задание</h3>
             <p class="quest-text" id="questText">Подберите 3 аромата с настроением «Энергия»</p>
-            <div class="quest-progress">
-              <span>Прогресс:</span>
-              <span id="questProgress">0 / 3</span>
+            <div class="quest-progress-wrap">
+              <div class="quest-progress-bar">
+                <div class="quest-progress-fill" id="questBarFill"></div>
+              </div>
+              <div class="quest-progress">
+                <span>Прогресс:</span>
+                <span id="questProgress">0 / 3</span>
+              </div>
             </div>
-            <p class="quest-reward">Награда: 💎 <span id="questReward">5</span></p>
+            <p class="quest-reward">Награда: 💎 <span id="questReward">5</span> + 💖 <span id="questHeartReward">2</span></p>
+            <p class="quest-complete hidden" id="questComplete">✨ Задание выполнено!</p>
           </div>
 
           <div class="panel-card mood-circle-card">
@@ -175,9 +249,19 @@
             </div>
           </div>
 
-          <div class="panel-card">
+          <div class="panel-card panel-card-reputation" id="reputationCard">
             <h3>⭐ Репутация</h3>
+            <div class="reputation-level">
+              <span class="reputation-stars" id="reputationStars">★☆☆☆</span>
+              <span class="reputation-tier" id="reputationTier">Уровень 1</span>
+            </div>
             <p class="reputation-title" id="reputationTitle">Начинающий аромаэксперт</p>
+            <div class="reputation-progress-wrap">
+              <div class="reputation-progress-bar">
+                <div class="reputation-progress-fill" id="reputationBarFill"></div>
+              </div>
+              <span class="reputation-progress-label" id="reputationProgressLabel">0 / 3 до следующего уровня</span>
+            </div>
           </div>
 
           <div class="panel-card tip-card">
@@ -187,27 +271,57 @@
         </aside>
       </div>
 
-      <!-- Нижняя панель -->
+      <!-- Нижний инвентарь -->
       <footer class="bottom-panel">
+        <div class="bottom-panel-frame"></div>
         <div class="inventory-section">
-          <h3>📦 Ваш инвентарь</h3>
-          <div class="inventory-items">
-            <div class="inv-item" title="Свечи">🕯️<span>Свечи</span></div>
-            <div class="inv-item" title="Диффузоры">🌬️<span>Диффузоры</span></div>
-            <div class="inv-item" title="Автопарфюм">🚗<span>Автопарфюм</span></div>
-            <div class="inv-item" title="Цветы/декор">🌸<span>Декор</span></div>
-            <button class="inv-add" title="Добавить">+</button>
+          <div class="section-head">
+            <h3>📦 Ваш инвентарь</h3>
+            <span class="section-head-note">полки лавки</span>
+          </div>
+          <div class="inventory-shelf">
+            <div class="inventory-items">
+              <div class="inv-item" title="Свечи">
+                <div class="inv-item-icon">🕯️</div>
+                <span class="inv-item-label">Свечи</span>
+                <span class="inv-item-qty">×12</span>
+              </div>
+              <div class="inv-item" title="Диффузоры">
+                <div class="inv-item-icon">🌬️</div>
+                <span class="inv-item-label">Диффузоры</span>
+                <span class="inv-item-qty">×8</span>
+              </div>
+              <div class="inv-item" title="Автопарфюм">
+                <div class="inv-item-icon">🚗</div>
+                <span class="inv-item-label">Автопарфюм</span>
+                <span class="inv-item-qty">×5</span>
+              </div>
+              <div class="inv-item" title="Цветы/декор">
+                <div class="inv-item-icon">🌸</div>
+                <span class="inv-item-label">Декор</span>
+                <span class="inv-item-qty">×6</span>
+              </div>
+              <button class="inv-add" title="Добавить" type="button">+</button>
+            </div>
+            <div class="shelf-edge"></div>
           </div>
         </div>
         <div class="favorites-section">
-          <h3>💫 Избранные ароматы</h3>
-          <div class="favorites-list" id="favoritesList">
-            <span class="favorites-empty">Удачные подборы появятся здесь</span>
+          <div class="section-head">
+            <h3>💫 Избранные ароматы <span class="favorites-count" id="favoritesCount">0</span></h3>
+            <span class="section-head-note">удачные подборы</span>
+          </div>
+          <div class="favorites-tray">
+            <div class="favorites-list" id="favoritesList">
+              <span class="favorites-empty">Удачные подборы появятся здесь</span>
+            </div>
           </div>
         </div>
       </footer>
     </main>
   </div>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
   <script src="script.js"></script>
 </body>

@@ -1,5 +1,7 @@
 /* ===== Данные ароматов ===== */
-const AROMAS = [Я пользуюсь мессенджером MAX. Присоединяйся! https://id: 'lavender',
+const AROMAS = [
+  {
+    id: 'lavender',
     name: 'Лаванда',
     description: 'Спокойствие, сон, расслабление',
     tags: 'Травяной • Спокойный',
@@ -355,6 +357,13 @@ const SECTION_INTROS = {
 /* ===== Ссылка для связи с Натальей (MAX) ===== */
 const NATALYA_CONTACT_URL = 'https://max.ru/u/f9LHodD0cOIP8EjW1gjuxBQgv0vvt2CzVvd_ooi2yX3tz1G5w2XwEpXjZkk';
 
+/* ===== Telegram для формы заявки — заменить USERNAME на настоящий ник ===== */
+const TELEGRAM_USERNAME = 'USERNAME';
+const TELEGRAM_URL = `https://t.me/${TELEGRAM_USERNAME}`;
+
+const SHARE_PROMO_TEXT = 'Промокод ЛАВКА — приятный комплимент к заказу от Коварство Ароматов.';
+const GAME_TITLE = 'Коварство Ароматов: Лавка настроений';
+
 /* ===== Типы ароматного результата (лид-магнит) ===== */
 const AROMA_TYPES = [
   {
@@ -444,7 +453,9 @@ const state = {
   savedGameScreen: null,
   dayStarted: false,
   showcaseItems: { candles: [], diffusers: [], bottles: [] },
-  dayCorrectAromas: []
+  dayCorrectAromas: [],
+  currentAromaType: null,
+  leadMessage: ''
 };
 
 /* ===== DOM-элементы ===== */
@@ -535,7 +546,21 @@ const els = {
   btnPersonalPick: document.getElementById('btnPersonalPick'),
   btnViewCandles: document.getElementById('btnViewCandles'),
   btnGift1000: document.getElementById('btnGift1000'),
-  btnWriteNatalya: document.getElementById('btnWriteNatalya')
+  btnWriteNatalya: document.getElementById('btnWriteNatalya'),
+  leadForm: document.getElementById('leadForm'),
+  leadName: document.getElementById('leadName'),
+  leadPurpose: document.getElementById('leadPurpose'),
+  leadBudget: document.getElementById('leadBudget'),
+  leadComment: document.getElementById('leadComment'),
+  leadMessageBlock: document.getElementById('leadMessageBlock'),
+  leadMessageText: document.getElementById('leadMessageText'),
+  btnBuildMessage: document.getElementById('btnBuildMessage'),
+  btnCopyMessage: document.getElementById('btnCopyMessage'),
+  btnWriteTelegram: document.getElementById('btnWriteTelegram'),
+  shareResultText: document.getElementById('shareResultText'),
+  btnCopyShareResult: document.getElementById('btnCopyShareResult'),
+  btnCopyPromo: document.getElementById('btnCopyPromo'),
+  btnPlayAgain: document.getElementById('btnPlayAgain')
 };
 
 /* ===== Утилиты ===== */
@@ -1470,6 +1495,7 @@ function calculateAromaType(correctAromaNames) {
 
 function renderAromaResult() {
   const type = calculateAromaType(state.dayCorrectAromas);
+  state.currentAromaType = type;
 
   if (els.resultIcon) els.resultIcon.textContent = type.icon;
   if (els.resultType) els.resultType.textContent = type.title;
@@ -1484,6 +1510,152 @@ function renderAromaResult() {
       return `<span class="result-aroma-pill">${a.icon} ${a.name}</span>`;
     }).join('');
   }
+
+  resetLeadForm();
+  updateShareResultText();
+}
+
+function getAromaNamesForType(type) {
+  if (!type) return '';
+  return type.aromaIds
+    .map(id => getAromaById(id))
+    .filter(Boolean)
+    .map(a => a.name)
+    .join(', ');
+}
+
+function updateShareResultText() {
+  const type = state.currentAromaType;
+  if (!els.shareResultText || !type) return;
+  els.shareResultText.textContent =
+    `Я прошла игру «${GAME_TITLE}» и мой ароматный результат — ${type.title}.`;
+}
+
+function buildShareResultCopyText() {
+  const type = state.currentAromaType || AROMA_TYPES.find(t => t.id === DEFAULT_AROMA_TYPE_ID);
+  const aromas = getAromaNamesForType(type);
+  return `Мой ароматный результат — ${type.title}. Мне подошли ароматы: ${aromas}. Пройди игру «${GAME_TITLE}» и узнай свой аромат.`;
+}
+
+async function copyTextToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+  }
+  showToast('Скопировано!', 'success');
+}
+
+function copyShareResult() {
+  copyTextToClipboard(buildShareResultCopyText());
+}
+
+function copySharePromo() {
+  copyTextToClipboard(SHARE_PROMO_TEXT);
+}
+
+function resetLeadForm() {
+  state.leadMessage = '';
+  if (els.leadForm) els.leadForm.reset();
+  if (els.leadMessageBlock) els.leadMessageBlock.classList.add('hidden');
+  if (els.leadMessageText) els.leadMessageText.textContent = '';
+}
+
+function buildLeadMessage() {
+  const name = (els.leadName?.value || '').trim() || 'Гость';
+  const purpose = els.leadPurpose?.value || '—';
+  const budget = els.leadBudget?.value || '—';
+  const comment = (els.leadComment?.value || '').trim() || '—';
+  const type = state.currentAromaType || AROMA_TYPES.find(t => t.id === DEFAULT_AROMA_TYPE_ID);
+
+  const aromaNames = type.aromaIds
+    .map(id => getAromaById(id))
+    .filter(Boolean)
+    .map(a => a.name)
+    .join(', ');
+
+  const lines = [
+    'Здравствуйте, Наталья!',
+    '',
+    `Меня зовут ${name}.`,
+    '',
+    'Хочу персональный подбор ароматов из игры «Коварство Ароматов: Лавка настроений».',
+    '',
+    `🎯 Для чего: ${purpose}`,
+    `💰 Бюджет: ${budget}`,
+    `💬 Комментарий: ${comment}`,
+    '',
+    '🌸 Мой ароматный результат:',
+    `Тип: ${type.title}`,
+    type.description,
+    '',
+    `Подходящие ароматы: ${aromaNames}`,
+    `Рекомендованный продукт: ${type.product}`,
+    '',
+    '🎁 Кодовое слово: ЛАВКА',
+    '',
+    'Буду рада(а) вашей помощи с подбором!',
+    name
+  ];
+
+  return lines.join('\n');
+}
+
+function handleLeadFormSubmit(e) {
+  e.preventDefault();
+
+  const name = (els.leadName?.value || '').trim();
+  if (!name) {
+    showToast('Пожалуйста, укажите имя', 'warning');
+    els.leadName?.focus();
+    return;
+  }
+
+  state.leadMessage = buildLeadMessage();
+
+  if (els.leadMessageText) {
+    els.leadMessageText.textContent = state.leadMessage;
+  }
+  if (els.leadMessageBlock) {
+    els.leadMessageBlock.classList.remove('hidden');
+    els.leadMessageBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  showToast('Сообщение готово — можно скопировать или отправить', 'success');
+}
+
+async function copyLeadMessage() {
+  if (!state.leadMessage) {
+    showToast('Сначала сформируйте сообщение', 'warning');
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(state.leadMessage);
+    showToast('Сообщение скопировано!', 'success');
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = state.leadMessage;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    showToast('Сообщение скопировано!', 'success');
+  }
+}
+
+function openTelegramWithMessage() {
+  if (!state.leadMessage) {
+    showToast('Сначала сформируйте сообщение', 'warning');
+    return;
+  }
+  const url = `${TELEGRAM_URL}?text=${encodeURIComponent(state.leadMessage)}`;
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 function openContact() {
@@ -1574,6 +1746,8 @@ function startDay() {
   state.freeHintsToday = false;
   state.dayStarted = true;
   state.dayCorrectAromas = [];
+  state.currentAromaType = null;
+  state.leadMessage = '';
 
   applyDailyQuest(pickDailyQuest());
   els.dailyTip.textContent = DAILY_TIPS[Math.floor(Math.random() * DAILY_TIPS.length)];
@@ -1608,6 +1782,13 @@ function init() {
   if (els.btnViewCandles) els.btnViewCandles.addEventListener('click', openCandlesFromResult);
   if (els.btnGift1000) els.btnGift1000.addEventListener('click', openGift1000Modal);
   if (els.btnWriteNatalya) els.btnWriteNatalya.addEventListener('click', openContact);
+
+  if (els.leadForm) els.leadForm.addEventListener('submit', handleLeadFormSubmit);
+  if (els.btnCopyMessage) els.btnCopyMessage.addEventListener('click', copyLeadMessage);
+  if (els.btnWriteTelegram) els.btnWriteTelegram.addEventListener('click', openTelegramWithMessage);
+  if (els.btnCopyShareResult) els.btnCopyShareResult.addEventListener('click', copyShareResult);
+  if (els.btnCopyPromo) els.btnCopyPromo.addEventListener('click', copySharePromo);
+  if (els.btnPlayAgain) els.btnPlayAgain.addEventListener('click', startNewDay);
 
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', e => {

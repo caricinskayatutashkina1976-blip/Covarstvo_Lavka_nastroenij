@@ -187,7 +187,60 @@
                 <p class="coupon-text">Назовите кодовое слово <strong class="coupon-code">ЛАВКА</strong> и получите приятный комплимент к заказу.</p>
               </div>
 
+              <div class="share-result-block" id="shareResultBlock">
+                <h3 class="share-result-title">Поделиться результатом</h3>
+                <p class="share-result-text" id="shareResultText">Я прошла игру «Коварство Ароматов: Лавка настроений» и мой ароматный результат — …</p>
+                <div class="share-result-actions">
+                  <button class="btn btn-secondary btn-cta" type="button" id="btnCopyShareResult">Скопировать результат</button>
+                  <button class="btn btn-secondary btn-cta" type="button" id="btnCopyPromo">Скопировать промокод</button>
+                  <button class="btn btn-secondary btn-cta" type="button" id="btnPlayAgain">Пройти заново</button>
+                </div>
+              </div>
+
               <p class="result-sales-text">Хотите, Наталья подберёт для вас аромат под настроение, дом, машину или подарок?</p>
+
+              <div class="lead-form-block" id="leadFormBlock">
+                <h3 class="lead-form-title">Хочу персональный подбор</h3>
+                <form class="lead-form" id="leadForm" novalidate>
+                  <label class="lead-field">
+                    <span class="lead-label">Имя</span>
+                    <input class="lead-input" type="text" id="leadName" name="name" placeholder="Как к вам обращаться?" required>
+                  </label>
+                  <label class="lead-field">
+                    <span class="lead-label">Для чего нужен аромат?</span>
+                    <select class="lead-input lead-select" id="leadPurpose" name="purpose">
+                      <option value="Для дома">Для дома</option>
+                      <option value="Для машины">Для машины</option>
+                      <option value="В подарок">В подарок</option>
+                      <option value="Для себя">Для себя</option>
+                      <option value="Не знаю, нужна помощь">Не знаю, нужна помощь</option>
+                    </select>
+                  </label>
+                  <label class="lead-field">
+                    <span class="lead-label">Бюджет</span>
+                    <select class="lead-input lead-select" id="leadBudget" name="budget">
+                      <option value="до 500 ₽">до 500 ₽</option>
+                      <option value="до 1000 ₽">до 1000 ₽</option>
+                      <option value="до 2000 ₽">до 2000 ₽</option>
+                      <option value="хочу премиальный вариант">хочу премиальный вариант</option>
+                    </select>
+                  </label>
+                  <label class="lead-field">
+                    <span class="lead-label">Комментарий</span>
+                    <textarea class="lead-input lead-textarea" id="leadComment" name="comment" rows="3" placeholder="Расскажите о поводе или пожеланиях..."></textarea>
+                  </label>
+                  <button class="btn btn-primary btn-lead-submit" type="submit" id="btnBuildMessage">Сформировать сообщение</button>
+                </form>
+
+                <div class="lead-message-block hidden" id="leadMessageBlock">
+                  <h4 class="lead-message-title">✉️ Готовое сообщение для Натальи</h4>
+                  <div class="lead-message-text" id="leadMessageText"></div>
+                  <div class="lead-message-actions">
+                    <button class="btn btn-secondary btn-cta" type="button" id="btnCopyMessage">Скопировать сообщение</button>
+                    <button class="btn btn-primary btn-cta" type="button" id="btnWriteTelegram">Написать Наталье</button>
+                  </div>
+                </div>
+              </div>
 
               <div class="result-day-stats">
                 <div class="result-stat"><span>Продажи</span><strong id="summarySales">0</strong></div>
@@ -317,7 +370,7 @@
   </div>
 
   <div class="toast-container" id="toastContainer" aria-live="polite"></div>
-  <!-- Ссылка для связи с Натальей: NATALYA_CONTACT_URL в script.js -->
+  <!-- Ссылка MAX: NATALYA_CONTACT_URL | Telegram для формы: TELEGRAM_USERNAME в script.js -->
   <script src="script.js"></script>
 </body>
 </html>

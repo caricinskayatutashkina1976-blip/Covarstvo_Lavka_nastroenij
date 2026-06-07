@@ -646,6 +646,149 @@ body {
   max-width: 460px;
 }
 
+/* ===== Форма заявки (без сервера) ===== */
+.lead-form-block {
+  width: 100%;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(201, 155, 106, 0.4);
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.lead-form-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--burgundy);
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.lead-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lead-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lead-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.lead-input {
+  padding: 10px 12px;
+  border: 1px solid rgba(112, 36, 49, 0.15);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.lead-input:focus {
+  outline: none;
+  border-color: var(--burgundy-light);
+  box-shadow: 0 0 0 3px rgba(112, 36, 49, 0.08);
+}
+
+.lead-textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+
+.lead-select {
+  cursor: pointer;
+}
+
+.btn-lead-submit {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.lead-message-block {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(112, 36, 49, 0.2);
+}
+
+.lead-message-title {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  color: var(--burgundy);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.lead-message-text {
+  padding: 14px 16px;
+  background: linear-gradient(135deg, rgba(232, 180, 176, 0.15), rgba(250, 243, 240, 0.9));
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(201, 155, 106, 0.35);
+  font-size: 0.78rem;
+  line-height: 1.65;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 220px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+
+.lead-message-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* ===== Поделиться результатом ===== */
+.share-result-block {
+  width: 100%;
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(232, 180, 176, 0.5);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.share-result-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--burgundy);
+  margin-bottom: 10px;
+}
+
+.share-result-text {
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.55;
+  margin-bottom: 14px;
+  font-style: italic;
+}
+
+.share-result-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+@media (max-width: 600px) {
+  .share-result-actions { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .lead-message-actions { grid-template-columns: 1fr; }
+}
+
 .result-day-stats {
   display: flex;
   flex-wrap: wrap;

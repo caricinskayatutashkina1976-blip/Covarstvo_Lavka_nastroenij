@@ -7,31 +7,32 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Светлый атмосферный фон лавки -->
+  <!-- Атмосферный фон лавки -->
   <div class="shop-bg" aria-hidden="true">
+    <div class="shop-warm-glow"></div>
     <div class="shop-bokeh shop-bokeh-1"></div>
     <div class="shop-bokeh shop-bokeh-2"></div>
-    <div class="shop-bokeh shop-bokeh-3"></div>
     <div class="shop-shelves shop-shelves-left"></div>
     <div class="shop-shelves shop-shelves-right"></div>
-    <div class="shop-decor shop-decor-candles">🕯️</div>
-    <div class="shop-decor shop-decor-rose">🌹</div>
-    <div class="shop-decor shop-decor-petal">✿</div>
-    <div class="shop-decor shop-decor-flask">🧴</div>
+    <div class="shop-silhouettes">
+      <span>🕯️</span><span>🧴</span><span>🌿</span><span>🌹</span><span>✨</span><span>🍯</span>
+    </div>
   </div>
   <div class="floating-particles" aria-hidden="true"></div>
+  <div class="ambient-sparkles" aria-hidden="true"></div>
 
   <div class="app">
-    <!-- Левая панель -->
+    <!-- Левая панель — витрина бренда -->
     <aside class="sidebar">
+      <div class="sidebar-texture" aria-hidden="true"></div>
       <div class="brand">
-        <div class="brand-emblem" aria-hidden="true">✦</div>
+        <div class="brand-crest" aria-hidden="true">✦</div>
         <div class="brand-logo-wrap">
-          <span class="brand-logo">🌸</span>
+          <span class="brand-logo">🕯️</span>
         </div>
         <h1 class="brand-title">Коварство Ароматов</h1>
         <p class="brand-subtitle">Лавка настроений</p>
-        <div class="brand-divider"><span></span></div>
+        <div class="brand-divider"><span>— ✿ —</span></div>
       </div>
 
       <nav class="sidebar-nav" aria-label="Меню лавки">
@@ -112,6 +113,7 @@
           </div>
         </div>
         <div class="client-ribbon">
+          <span class="ribbon-candle">🕯️</span>
           <span class="ribbon-dot"></span>
           <span id="clientIndicator">Клиент 0 из 5</span>
         </div>
@@ -219,6 +221,7 @@
         </section>
 
         <aside class="right-panel">
+          <div class="panel-header-deco">📜 Панель мастера</div>
           <div class="panel-card panel-card-quest" id="questCard">
             <div class="panel-card-badge" id="questBadge">Ежедневное</div>
             <h3>📋 Ежедневное задание</h3>
@@ -317,7 +320,7 @@
 
         <div class="quote-plaque" aria-hidden="true">
           <span class="quote-icon">✿</span>
-          <p>Каждый аромат — это история. Напишите её красиво.</p>
+          <p>Каждый аромат — это история</p>
         </div>
       </footer>
     </main>

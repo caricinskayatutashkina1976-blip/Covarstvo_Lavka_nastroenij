@@ -376,6 +376,16 @@ function formatAromaTags(tags) {
     .map(t => `<span class="aroma-tag-pill">${t}</span>`).join('');
 }
 
+function getAromaTheme(tags) {
+  const t = tags.toLowerCase();
+  if (/свеж|лёгк|легк/.test(t)) return 'theme-fresh';
+  if (/цитрус|солнеч|фрукт|энергич/.test(t)) return 'theme-citrus';
+  if (/цветоч|романт|благород/.test(t)) return 'theme-floral';
+  if (/прян|тёпл|тепл|уют|сладк/.test(t)) return 'theme-spice';
+  if (/травян|хвой|спокой|фокус/.test(t)) return 'theme-herbal';
+  return 'theme-warm';
+}
+
 function getReputation(totalHappy) {
   const tier = getReputationTier(totalHappy);
   return tier.title;
@@ -559,8 +569,8 @@ function initMoodGradient() {
     const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
     defs.innerHTML = `
       <linearGradient id="moodGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#e8c8c8"/>
-        <stop offset="100%" stop-color="#c9a87c"/>
+        <stop offset="0%" stop-color="#D8AAA2"/>
+        <stop offset="100%" stop-color="#C99B6A"/>
       </linearGradient>
     `;
     svg.insertBefore(defs, svg.firstChild);
@@ -659,18 +669,19 @@ function playClientEntrance(client) {
     options.forEach((aroma, i) => {
       const card = document.createElement('button');
       card.type = 'button';
-      card.className = 'aroma-card aroma-enter';
-      card.style.animationDelay = (0.15 + i * 0.1) + 's';
+      card.className = `aroma-card aroma-enter ${getAromaTheme(aroma.tags)}`;
+      card.style.animationDelay = (0.12 + i * 0.08) + 's';
       card.dataset.id = aroma.id;
       card.innerHTML = `
         <div class="aroma-card-shine"></div>
-        <div class="aroma-card-frame"></div>
-        <div class="aroma-icon-ring">
+        <div class="aroma-card-art">
           <span class="aroma-icon">${aroma.icon}</span>
         </div>
-        <div class="aroma-name">${aroma.name}</div>
-        <div class="aroma-desc">${aroma.description}</div>
-        <div class="aroma-tags">${formatAromaTags(aroma.tags)}</div>
+        <div class="aroma-card-body">
+          <div class="aroma-name">${aroma.name}</div>
+          <div class="aroma-desc">${aroma.description}</div>
+          <div class="aroma-tags">${formatAromaTags(aroma.tags)}</div>
+        </div>
       `;
       card.addEventListener('click', () => handleAromaChoice(aroma.id, card));
       els.aromaGrid.appendChild(card);

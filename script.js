@@ -1089,16 +1089,15 @@ function getSummaryText(dayHappy, daySales) {
 /* ===== SVG градиент для круга настроения ===== */
 function initMoodGradient() {
   const svg = document.querySelector('.mood-circle svg');
-  if (!svg.querySelector('defs')) {
-    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-    defs.innerHTML = `
-      <linearGradient id="moodGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#D8AAA2"/>
-        <stop offset="100%" stop-color="#C99B6A"/>
-      </linearGradient>
-    `;
-    svg.insertBefore(defs, svg.firstChild);
-  }
+  if (!svg || svg.querySelector('defs')) return;
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  defs.innerHTML = `
+    <linearGradient id="moodGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D8AAA2"/>
+      <stop offset="100%" stop-color="#C99B6A"/>
+    </linearGradient>
+  `;
+  svg.insertBefore(defs, svg.firstChild);
 }
 
 /* ===== Обновление UI ===== */
@@ -1457,6 +1456,11 @@ function init() {
   updateStats();
   renderFavorites();
   updateInventoryUI();
+
+  if (!els.startDayBtn) {
+    console.error('Не найден элемент #startDayBtn — проверьте index.html');
+    return;
+  }
 
   els.startDayBtn.addEventListener('click', startDay);
   els.newDayBtn.addEventListener('click', startNewDay);

@@ -160,20 +160,54 @@
           </div>
 
           <div class="screen screen-summary hidden" id="summaryScreen">
-            <div class="summary-card">
-              <div class="summary-header">🌙 Итоги дня</div>
-              <h2>Лавка засыпает довольной</h2>
-              <div class="summary-stats">
-                <div class="summary-stat"><span class="summary-stat-label">Продажи</span><span class="summary-stat-value" id="summarySales">0</span></div>
-                <div class="summary-stat"><span class="summary-stat-label">Довольные</span><span class="summary-stat-value" id="summaryHappy">0</span></div>
-                <div class="summary-stat"><span class="summary-stat-label">Настроение</span><span class="summary-stat-value" id="summaryMood">0%</span></div>
-                <div class="summary-stat"><span class="summary-stat-label">Репутация</span><span class="summary-stat-value reputation" id="summaryReputation">—</span></div>
-                <div class="summary-stat"><span class="summary-stat-label">Сердца</span><span class="summary-stat-value" id="summaryHearts">0</span></div>
-                <div class="summary-stat"><span class="summary-stat-label">Серия</span><span class="summary-stat-value" id="summaryStreak">0</span></div>
+            <div class="result-card">
+              <div class="result-card-border" aria-hidden="true"></div>
+
+              <div class="result-header">✦ Ваш ароматный результат ✦</div>
+
+              <div class="result-type-icon" id="resultIcon">🕯️</div>
+              <h2 class="result-type-title" id="resultType">Эстет уюта</h2>
+              <p class="result-type-desc" id="resultDesc"></p>
+
+              <div class="result-aromas-block">
+                <h3 class="result-subtitle">Подходящие ароматы</h3>
+                <div class="result-aromas" id="resultAromas"></div>
               </div>
+
+              <div class="result-product-card" id="resultProductCard">
+                <span class="result-product-icon" id="resultProductIcon">🕯️</span>
+                <div class="result-product-info">
+                  <span class="result-product-label">Рекомендуем</span>
+                  <p class="result-product-text" id="resultProductText"></p>
+                </div>
+              </div>
+
+              <div class="result-promo-coupon">
+                <span class="coupon-badge">🎁 Ваш бонус</span>
+                <p class="coupon-text">Назовите кодовое слово <strong class="coupon-code">ЛАВКА</strong> и получите приятный комплимент к заказу.</p>
+              </div>
+
+              <p class="result-sales-text">Хотите, Наталья подберёт для вас аромат под настроение, дом, машину или подарок?</p>
+
+              <div class="result-day-stats">
+                <div class="result-stat"><span>Продажи</span><strong id="summarySales">0</strong></div>
+                <div class="result-stat"><span>Довольные</span><strong id="summaryHappy">0</strong></div>
+                <div class="result-stat"><span>Настроение</span><strong id="summaryMood">0%</strong></div>
+                <div class="result-stat"><span>Сердца</span><strong id="summaryHearts">0</strong></div>
+              </div>
+              <p class="summary-text result-summary-text" id="summaryText"></p>
               <div class="summary-rewards hidden" id="summaryQuestReward"></div>
-              <p class="summary-text" id="summaryText"></p>
-              <button class="btn btn-primary btn-large" id="newDayBtn">Начать новый день</button>
+              <span class="hidden" id="summaryReputation"></span>
+              <span class="hidden" id="summaryStreak"></span>
+
+              <div class="result-cta">
+                <button class="btn btn-primary btn-cta" type="button" id="btnPersonalPick">Получить персональный подбор</button>
+                <button class="btn btn-secondary btn-cta" type="button" id="btnViewCandles">Посмотреть свечи</button>
+                <button class="btn btn-secondary btn-cta" type="button" id="btnGift1000">Хочу подарок до 1000 ₽</button>
+                <button class="btn btn-secondary btn-cta" type="button" id="btnWriteNatalya">Написать Наталье</button>
+              </div>
+
+              <button class="btn btn-primary btn-large btn-new-day" type="button" id="newDayBtn">Начать новый день</button>
             </div>
           </div>
 
@@ -283,6 +317,7 @@
   </div>
 
   <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+  <!-- Ссылка для связи с Натальей: NATALYA_CONTACT_URL в script.js -->
   <script src="script.js"></script>
 </body>
 </html>

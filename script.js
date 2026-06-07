@@ -1,7 +1,5 @@
 /* ===== Данные ароматов ===== */
-const AROMAS = [
-  {
-    id: 'lavender',
+const AROMAS = [Я пользуюсь мессенджером MAX. Присоединяйся! https://id: 'lavender',
     name: 'Лаванда',
     description: 'Спокойствие, сон, расслабление',
     tags: 'Травяной • Спокойный',
@@ -354,6 +352,60 @@ const SECTION_INTROS = {
   collections: 'Собирайте коллекции — каждый правильный подбор добавляет аромат в альбом.'
 };
 
+/* ===== Ссылка для связи с Натальей (MAX) ===== */
+const NATALYA_CONTACT_URL = 'https://max.ru/u/f9LHodD0cOIP8EjW1gjuxBQgv0vvt2CzVvd_ooi2yX3tz1G5w2XwEpXjZkk';
+
+/* ===== Типы ароматного результата (лид-магнит) ===== */
+const AROMA_TYPES = [
+  {
+    id: 'cozy',
+    title: 'Эстет уюта',
+    icon: '🕯️',
+    aromaIds: ['vanilla', 'quince_spice', 'lavender'],
+    description: 'Вы выбираете тёплые, мягкие и обволакивающие ароматы. Для вас аромат — это не просто запах, а ощущение дома, заботы и красивого вечера.',
+    product: 'Ароматическая свеча или уютный подарочный набор',
+    productIcon: '🕯️'
+  },
+  {
+    id: 'energy',
+    title: 'Энергия и уверенность',
+    icon: '⚡',
+    aromaIds: ['grapefruit_vetiver', 'citrus_charge', 'morning_dew'],
+    description: 'Вам подходят свежие, бодрые и собранные ароматы. Они помогают включиться в день, почувствовать уверенность и ясность.',
+    product: 'Автопарфюм или диффузор для рабочего пространства',
+    productIcon: '🚗'
+  },
+  {
+    id: 'feminine',
+    title: 'Женственная история',
+    icon: '🌹',
+    aromaIds: ['cedar_rose', 'vanilla', 'mango'],
+    description: 'Ваш ароматный стиль — мягкий, красивый и запоминающийся. Вам близки женственные, эстетичные и немного романтичные композиции.',
+    product: 'Свеча, диффузор или распив парфюма для красивого образа',
+    productIcon: '✨'
+  },
+  {
+    id: 'calm',
+    title: 'Спокойствие и восстановление',
+    icon: '🪻',
+    aromaIds: ['lavender', 'lavender_sage', 'morning_dew'],
+    description: 'Вы выбираете ароматы, которые помогают замедлиться, восстановиться и создать вокруг себя спокойное пространство.',
+    product: 'Свеча для вечернего ритуала или диффузор для спальни',
+    productIcon: '🌿'
+  },
+  {
+    id: 'festive',
+    title: 'Праздничное настроение',
+    icon: '🎄',
+    aromaIds: ['pine_mandarin', 'quince_spice', 'mango'],
+    description: 'Вам нравятся ароматы, которые создают настроение, украшают момент и делают обычный день особенным.',
+    product: 'Подарочный набор, праздничная свеча или аромат для дома',
+    productIcon: '🎁'
+  }
+];
+
+const DEFAULT_AROMA_TYPE_ID = 'cozy';
+
 /* ===== Состояние игры ===== */
 const state = {
   sales: 0,
@@ -391,7 +443,8 @@ const state = {
   currentNav: 'home',
   savedGameScreen: null,
   dayStarted: false,
-  showcaseItems: { candles: [], diffusers: [], bottles: [] }
+  showcaseItems: { candles: [], diffusers: [], bottles: [] },
+  dayCorrectAromas: []
 };
 
 /* ===== DOM-элементы ===== */
@@ -472,7 +525,17 @@ const els = {
   invBottlesQty: document.getElementById('invBottlesQty'),
   invDecorQty: document.getElementById('invDecorQty'),
   invAddBtn: document.getElementById('invAddBtn'),
-  quotePlaque: document.getElementById('quotePlaque')
+  quotePlaque: document.getElementById('quotePlaque'),
+  resultIcon: document.getElementById('resultIcon'),
+  resultType: document.getElementById('resultType'),
+  resultDesc: document.getElementById('resultDesc'),
+  resultAromas: document.getElementById('resultAromas'),
+  resultProductIcon: document.getElementById('resultProductIcon'),
+  resultProductText: document.getElementById('resultProductText'),
+  btnPersonalPick: document.getElementById('btnPersonalPick'),
+  btnViewCandles: document.getElementById('btnViewCandles'),
+  btnGift1000: document.getElementById('btnGift1000'),
+  btnWriteNatalya: document.getElementById('btnWriteNatalya')
 };
 
 /* ===== Утилиты ===== */
@@ -1260,6 +1323,8 @@ function handleAromaChoice(chosenId, cardEl) {
     trackCollection(correctAroma.id);
     applyPromoBonus();
 
+    state.dayCorrectAromas.push(correctAroma.name);
+
     const favAdded = addFavorite(correctAroma);
     showResult(true, client, correctAroma);
     spawnSparks(true);
@@ -1377,6 +1442,75 @@ function nextClient() {
   renderClient();
 }
 
+function calculateAromaType(correctAromaNames) {
+  if (!correctAromaNames || correctAromaNames.length === 0) {
+    return AROMA_TYPES.find(t => t.id === DEFAULT_AROMA_TYPE_ID);
+  }
+
+  const nameToId = {};
+  AROMAS.forEach(a => { nameToId[a.name] = a.id; });
+
+  let bestType = AROMA_TYPES.find(t => t.id === DEFAULT_AROMA_TYPE_ID);
+  let bestScore = -1;
+
+  AROMA_TYPES.forEach(type => {
+    let score = 0;
+    correctAromaNames.forEach(name => {
+      const id = nameToId[name];
+      if (id && type.aromaIds.includes(id)) score += 1;
+    });
+    if (score > bestScore) {
+      bestScore = score;
+      bestType = type;
+    }
+  });
+
+  return bestType;
+}
+
+function renderAromaResult() {
+  const type = calculateAromaType(state.dayCorrectAromas);
+
+  if (els.resultIcon) els.resultIcon.textContent = type.icon;
+  if (els.resultType) els.resultType.textContent = type.title;
+  if (els.resultDesc) els.resultDesc.textContent = type.description;
+  if (els.resultProductIcon) els.resultProductIcon.textContent = type.productIcon;
+  if (els.resultProductText) els.resultProductText.textContent = type.product;
+
+  if (els.resultAromas) {
+    els.resultAromas.innerHTML = type.aromaIds.map(id => {
+      const a = getAromaById(id);
+      if (!a) return '';
+      return `<span class="result-aroma-pill">${a.icon} ${a.name}</span>`;
+    }).join('');
+  }
+}
+
+function openContact() {
+  window.open(NATALYA_CONTACT_URL, '_blank', 'noopener,noreferrer');
+}
+
+function openPersonalPickModal() {
+  openModal('Персональный подбор от Натальи', `
+    <p>Напишите, для чего вам нужен аромат: для дома, машины, подарка или настроения. Я помогу подобрать свечу, диффузор, автопарфюм или распив парфюма.</p>
+    <a class="btn-telegram" href="${NATALYA_CONTACT_URL}" target="_blank" rel="noopener noreferrer">Написать в MAX</a>
+  `);
+}
+
+function openGift1000Modal() {
+  openModal('Подарок до 1000 ₽', `
+    <p>Можно собрать мини-набор: свеча, аромасаше, пробник аромата или автопарфюм. Напишите Наталье — она подберёт вариант под бюджет и повод.</p>
+    <button type="button" class="btn-telegram btn-telegram-inline" id="modalContactBtn">Написать Наталье</button>
+  `);
+  const contactBtn = document.getElementById('modalContactBtn');
+  if (contactBtn) contactBtn.addEventListener('click', openContact);
+}
+
+function openCandlesFromResult() {
+  state.savedGameScreen = els.summaryScreen;
+  navigateToSection('candles');
+}
+
 function endDay() {
   const prevTier = getReputationTier(state.totalHappy - state.dayHappy);
 
@@ -1396,7 +1530,7 @@ function endDay() {
   els.summarySales.textContent = state.daySales;
   els.summaryHappy.textContent = state.dayHappy;
   els.summaryMood.textContent = clampMood(state.mood) + '%';
-  els.summaryReputation.textContent = getReputation(state.totalHappy);
+  if (els.summaryReputation) els.summaryReputation.textContent = getReputation(state.totalHappy);
   if (els.summaryHearts) els.summaryHearts.textContent = state.hearts;
   if (els.summaryStreak) els.summaryStreak.textContent = state.maxPickStreak;
 
@@ -1411,6 +1545,8 @@ function endDay() {
   }
 
   els.summaryText.textContent = getSummaryText(state.dayHappy, state.daySales);
+
+  renderAromaResult();
 
   const newTier = getReputationTier(state.totalHappy);
   if (newTier.stars > prevTier.stars) {
@@ -1437,6 +1573,7 @@ function startDay() {
   state.promoBonusPending = false;
   state.freeHintsToday = false;
   state.dayStarted = true;
+  state.dayCorrectAromas = [];
 
   applyDailyQuest(pickDailyQuest());
   els.dailyTip.textContent = DAILY_TIPS[Math.floor(Math.random() * DAILY_TIPS.length)];
@@ -1466,6 +1603,11 @@ function init() {
   els.newDayBtn.addEventListener('click', startNewDay);
   els.nextClientBtn.addEventListener('click', nextClient);
   els.hintBtn.addEventListener('click', useHint);
+
+  if (els.btnPersonalPick) els.btnPersonalPick.addEventListener('click', openPersonalPickModal);
+  if (els.btnViewCandles) els.btnViewCandles.addEventListener('click', openCandlesFromResult);
+  if (els.btnGift1000) els.btnGift1000.addEventListener('click', openGift1000Modal);
+  if (els.btnWriteNatalya) els.btnWriteNatalya.addEventListener('click', openContact);
 
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', e => {

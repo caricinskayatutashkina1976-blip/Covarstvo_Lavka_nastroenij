@@ -597,7 +597,7 @@ function updateStats() {
 
   els.reputationTitle.textContent = tier.title;
   if (els.reputationStars) els.reputationStars.textContent = renderStars(tier.stars);
-  if (els.reputationTier) els.reputationTier.textContent = `Уровень ${tier.stars}`;
+  if (els.reputationTier) els.reputationTier.textContent = tier.stars;
   if (els.reputationBarFill) els.reputationBarFill.style.width = repProgress.pct + '%';
   if (els.reputationProgressLabel) els.reputationProgressLabel.textContent = repProgress.label;
 

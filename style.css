@@ -896,6 +896,12 @@ button.btn-telegram,
   border-radius: var(--radius);
 }
 
+.client-arrival.hidden {
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden;
+}
+
 .arrival-text {
   font-family: var(--font-serif);
   font-size: 1.3rem;

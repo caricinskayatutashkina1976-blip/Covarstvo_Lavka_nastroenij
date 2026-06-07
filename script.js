@@ -459,7 +459,10 @@ const state = {
 };
 
 /* ===== DOM-элементы ===== */
-const els = {
+const els = {};
+
+function cacheElements() {
+  Object.assign(els, {
   welcomeScreen: document.getElementById('welcomeScreen'),
   gameScreen: document.getElementById('gameScreen'),
   summaryScreen: document.getElementById('summaryScreen'),
@@ -561,7 +564,8 @@ const els = {
   btnCopyShareResult: document.getElementById('btnCopyShareResult'),
   btnCopyPromo: document.getElementById('btnCopyPromo'),
   btnPlayAgain: document.getElementById('btnPlayAgain')
-};
+  });
+}
 
 /* ===== Утилиты ===== */
 function getAromaById(id) {
@@ -1190,29 +1194,31 @@ function initMoodGradient() {
 
 /* ===== Обновление UI ===== */
 function updateStats() {
-  els.salesCount.textContent = state.sales;
-  els.happyCount.textContent = state.happyClients;
-  els.heartsCount.textContent = state.hearts;
+  if (els.salesCount) els.salesCount.textContent = state.sales;
+  if (els.happyCount) els.happyCount.textContent = state.happyClients;
+  if (els.heartsCount) els.heartsCount.textContent = state.hearts;
 
   const mood = clampMood(state.mood);
-  els.moodBar.style.width = mood + '%';
-  els.moodPercent.textContent = mood + '%';
-  els.moodCircleText.textContent = mood + '%';
+  if (els.moodBar) els.moodBar.style.width = mood + '%';
+  if (els.moodPercent) els.moodPercent.textContent = mood + '%';
+  if (els.moodCircleText) els.moodCircleText.textContent = mood + '%';
 
-  const circumference = 264;
-  const offset = circumference - (circumference * mood / 100);
-  els.moodCircleFill.style.strokeDashoffset = offset;
+  if (els.moodCircleFill) {
+    const circumference = 264;
+    const offset = circumference - (circumference * mood / 100);
+    els.moodCircleFill.style.strokeDashoffset = offset;
+  }
 
   const tier = getReputationTier(state.totalHappy);
   const repProgress = getReputationProgress(state.totalHappy);
 
-  els.reputationTitle.textContent = tier.title;
+  if (els.reputationTitle) els.reputationTitle.textContent = tier.title;
   if (els.reputationStars) els.reputationStars.textContent = renderStars(tier.stars);
   if (els.reputationTier) els.reputationTier.textContent = tier.stars;
   if (els.reputationBarFill) els.reputationBarFill.style.width = repProgress.pct + '%';
   if (els.reputationProgressLabel) els.reputationProgressLabel.textContent = repProgress.label;
 
-  els.questProgress.textContent = `${state.questProgress} / ${state.questTarget}`;
+  if (els.questProgress) els.questProgress.textContent = `${state.questProgress} / ${state.questTarget}`;
   if (els.questBarFill) {
     const pct = (state.questProgress / state.questTarget) * 100;
     els.questBarFill.style.width = pct + '%';
@@ -1261,7 +1267,7 @@ function playClientEntrance(client) {
   }
 
   setTimeout(() => {
-    if (els.clientArrival) els.clientArrival.classList.add('hidden');
+    hideClientArrival();
 
     els.clientAvatar.textContent = client.avatar;
     els.clientName.textContent = client.name;
@@ -1295,6 +1301,13 @@ function playClientEntrance(client) {
 
     updateClientIndicator();
   }, 900);
+}
+
+function hideClientArrival() {
+  if (els.clientArrival) {
+    els.clientArrival.classList.add('hidden');
+    els.clientArrival.classList.remove('arrival-play');
+  }
 }
 
 /* ===== Выбор аромата ===== */
@@ -1762,7 +1775,14 @@ function startNewDay() {
 }
 
 /* ===== Инициализация ===== */
+let initialized = false;
+
 function init() {
+  if (initialized) return;
+  initialized = true;
+
+  cacheElements();
+
   initMoodGradient();
   updateStats();
   renderFavorites();
@@ -1774,9 +1794,9 @@ function init() {
   }
 
   els.startDayBtn.addEventListener('click', startDay);
-  els.newDayBtn.addEventListener('click', startNewDay);
-  els.nextClientBtn.addEventListener('click', nextClient);
-  els.hintBtn.addEventListener('click', useHint);
+  if (els.newDayBtn) els.newDayBtn.addEventListener('click', startNewDay);
+  if (els.nextClientBtn) els.nextClientBtn.addEventListener('click', nextClient);
+  if (els.hintBtn) els.hintBtn.addEventListener('click', useHint);
 
   if (els.btnPersonalPick) els.btnPersonalPick.addEventListener('click', openPersonalPickModal);
   if (els.btnViewCandles) els.btnViewCandles.addEventListener('click', openCandlesFromResult);
@@ -1823,4 +1843,16 @@ function init() {
   bindSectionContentEvents();
 }
 
-document.addEventListener('DOMContentLoaded', init);
+function bootGame() {
+  try {
+    init();
+  } catch (err) {
+    console.error('Ошибка инициализации игры:', err);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootGame);
+} else {
+  bootGame();
+}

@@ -19,26 +19,27 @@
         <p class="brand-subtitle">— Лавка настроений —</p>
       </div>
 
-      <nav class="sidebar-nav" aria-label="Меню лавки">
-        <a href="#" class="nav-item active" data-nav="home">
+      <nav class="sidebar-nav" aria-label="Управление лавкой">
+        <p class="sidebar-nav-label">Управление лавкой</p>
+        <a href="#" class="nav-item active" data-nav="home" title="Обслуживание клиентов">
           <span class="nav-icon">✨</span><span class="nav-text">Главная</span>
         </a>
-        <a href="#" class="nav-item" data-nav="candles">
+        <a href="#" class="nav-item" data-nav="candles" title="Пополнение витрины свечами">
           <span class="nav-icon">🕯️</span><span class="nav-text">Свечи</span>
         </a>
-        <a href="#" class="nav-item" data-nav="diffusers">
+        <a href="#" class="nav-item" data-nav="diffusers" title="Пополнение витрины диффузорами">
           <span class="nav-icon">🌿</span><span class="nav-text">Диффузоры</span>
         </a>
-        <a href="#" class="nav-item" data-nav="auto">
+        <a href="#" class="nav-item" data-nav="auto" title="Пополнение витрины автопарфюмом">
           <span class="nav-icon">🧴</span><span class="nav-text">Автопарфюм</span>
         </a>
-        <a href="#" class="nav-item" data-nav="offers">
+        <a href="#" class="nav-item" data-nav="offers" title="Запуск акций для лавки">
           <span class="nav-icon">🎁</span><span class="nav-text">Спецпредложения</span>
         </a>
-        <a href="#" class="nav-item" data-nav="inventory">
+        <a href="#" class="nav-item" data-nav="inventory" title="Просмотр и покупка ресурсов">
           <span class="nav-icon">📦</span><span class="nav-text">Инвентарь</span>
         </a>
-        <a href="#" class="nav-item" data-nav="collections">
+        <a href="#" class="nav-item" data-nav="collections" title="Сбор ароматических коллекций">
           <span class="nav-icon">📖</span><span class="nav-text">Коллекции</span>
         </a>
       </nav>
@@ -103,7 +104,7 @@
             <div class="welcome-card">
               <div class="welcome-ornament">✦ ✦ ✦</div>
               <h2>Добро пожаловать в лавку</h2>
-              <p>Сегодня к вам придут гости с разными настроениями. Подберите им идеальный аромат — и настроение лавки расцветёт.</p>
+              <p>Подбирайте ароматы для гостей на «Главной», а в меню слева управляйте витриной, акциями и коллекциями. Внизу — быстрый доступ к ресурсам.</p>
               <button class="btn btn-primary btn-large" id="startDayBtn">Начать день</button>
             </div>
           </div>
@@ -175,6 +176,20 @@
               <button class="btn btn-primary btn-large" id="newDayBtn">Начать новый день</button>
             </div>
           </div>
+
+          <div class="screen screen-section hidden" id="sectionScreen">
+            <div class="section-panel">
+              <div class="section-header">
+                <div class="section-header-text">
+                  <h2 class="section-panel-title" id="sectionTitle">Раздел</h2>
+                  <p class="section-intro" id="sectionIntro"></p>
+                </div>
+                <span class="promo-badge hidden" id="promoBadge">🎁 Акция активна</span>
+              </div>
+              <div class="section-content" id="sectionContent"></div>
+              <button class="btn btn-primary btn-back" id="backToShopBtn" type="button">К обслуживанию клиентов</button>
+            </div>
+          </div>
         </section>
 
         <aside class="right-panel">
@@ -224,28 +239,47 @@
 
       <footer class="bottom-panel">
         <div class="inventory-block">
-          <h3 class="bottom-title">Ваш инвентарь</h3>
+          <h3 class="bottom-title">Быстрый доступ</h3>
+          <p class="bottom-hint">Нажмите на иконку — посмотреть, что есть в наличии</p>
           <div class="inventory-items">
-            <div class="inv-item"><span class="inv-item-icon">🕯️</span><span class="inv-item-qty">7</span></div>
-            <div class="inv-item"><span class="inv-item-icon">🌿</span><span class="inv-item-qty">5</span></div>
-            <div class="inv-item"><span class="inv-item-icon">🧴</span><span class="inv-item-qty">4</span></div>
-            <div class="inv-item"><span class="inv-item-icon">🌸</span><span class="inv-item-qty">6</span></div>
-            <button class="inv-add" type="button">+</button>
+            <button class="inv-item inv-item-click" type="button" data-inv="candles" id="invCandlesBtn" title="Свечи в наличии">
+              <span class="inv-item-icon">🕯️</span><span class="inv-item-label">Свечи</span><span class="inv-item-qty" id="invCandlesQty">7</span>
+            </button>
+            <button class="inv-item inv-item-click" type="button" data-inv="diffusers" id="invDiffusersBtn" title="Диффузоры в наличии">
+              <span class="inv-item-icon">🌿</span><span class="inv-item-label">Диффузоры</span><span class="inv-item-qty" id="invDiffusersQty">5</span>
+            </button>
+            <button class="inv-item inv-item-click" type="button" data-inv="bottles" id="invBottlesBtn" title="Флаконы в наличии">
+              <span class="inv-item-icon">🧴</span><span class="inv-item-label">Флаконы</span><span class="inv-item-qty" id="invBottlesQty">4</span>
+            </button>
+            <button class="inv-item inv-item-click" type="button" data-inv="decor" id="invDecorBtn" title="Декор лавки">
+              <span class="inv-item-icon">🌸</span><span class="inv-item-label">Декор</span><span class="inv-item-qty" id="invDecorQty">6</span>
+            </button>
+            <button class="inv-add" type="button" id="invAddBtn" title="Открыть мини-магазин">+</button>
           </div>
         </div>
 
         <div class="favorites-block">
           <h3 class="bottom-title">Избранные ароматы <span class="favorites-count" id="favoritesCount">0</span></h3>
+          <p class="bottom-hint">Заполняются после удачных подборов</p>
           <div class="favorites-list" id="favoritesList">
-            <span class="favorites-empty">+</span>
+            <span class="favorites-empty">—</span>
           </div>
         </div>
 
-        <div class="quote-plaque">
+        <div class="quote-plaque" id="quotePlaque" role="button" tabindex="0" title="Открыть совет дня">
           <p>Каждый аромат — это история.<br>Напишите её красиво.</p>
+          <span class="quote-plaque-hint">Совет дня →</span>
         </div>
       </footer>
     </main>
+  </div>
+
+  <div class="modal-overlay hidden" id="modalOverlay">
+    <div class="modal-box" id="modalBox">
+      <button class="modal-close" id="modalClose" type="button" aria-label="Закрыть">×</button>
+      <h3 class="modal-title" id="modalTitle"></h3>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
   </div>
 
   <div class="toast-container" id="toastContainer" aria-live="polite"></div>

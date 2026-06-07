@@ -254,6 +254,106 @@ const REPUTATION_TIERS = [
 
 const CLIENTS_PER_DAY = 5;
 
+/* ===== Каталоги магазина ===== */
+const SHOP_CANDLES = [
+  { id: 'memory', name: 'Воспоминание', icon: '🕯️', description: 'Мягкий янтарный свет и ноты ванили с кедром.', mood: 'Ностальгия', price: 120 },
+  { id: 'botanical', name: 'Ожидание встречи', icon: '🌿', description: 'Ботаническая свеча с лавандой и зелёными нотами.', mood: 'Романтика', price: 140 },
+  { id: 'pine_candle', name: 'Хвоя и мандарин', icon: '🍊', description: 'Праздничный аромат новогодней ёлки и цитруса.', mood: 'Праздник', price: 130 },
+  { id: 'quince_candle', name: 'Печёная айва', icon: '🍯', description: 'Тёплые пряности и сладкая запечённая айва.', mood: 'Уют', price: 125 },
+  { id: 'lavender_candle', name: 'Лаванда', icon: '🪻', description: 'Классическая лаванда для спокойного вечера.', mood: 'Спокойствие', price: 110 }
+];
+
+const SHOP_DIFFUSERS = [
+  { id: 'lavender_field', name: 'Лавандовое поле', icon: '🪻', description: 'Мягкий травяной букет для спальни и гостиной.', room: 'Спальня, гостиная' },
+  { id: 'grapefruit_diff', name: 'Грейпфрут и ветивер', icon: '🌿', description: 'Свежий деловой аромат для кабинета.', room: 'Кабинет, прихожая' },
+  { id: 'dew_diff', name: 'Утренняя роса', icon: '💧', description: 'Лёгкая свежесть для минималистичного интерьера.', room: 'Спальня, ванная' },
+  { id: 'cedar_diff', name: 'Белый кедр и роза', icon: '🌹', description: 'Элегантный цветочно-древесный диффузор.', room: 'Гостиная, спальня' }
+];
+
+const SHOP_AUTO = [
+  { id: 'creed', name: 'Creed Aventus', icon: '🚗', description: 'Благородный древесно-фруктовый характер.', audience: 'Уверенным водителям' },
+  { id: 'citrus_auto', name: 'Цитрусовый заряд', icon: '🍋', description: 'Бодрящий цитрус для утренних поездок.', audience: 'Энергичным людям' },
+  { id: 'mango_auto', name: 'Манго', icon: '🥭', description: 'Солнечный фруктовый аромат для лета.', audience: 'Любителям яркости' },
+  { id: 'grapefruit_auto', name: 'Грейпфрут и ветивер', icon: '🧴', description: 'Собранный свежий аромат для авто.', audience: 'Деловым клиентам' },
+  { id: 'cedar_auto', name: 'Белый кедр', icon: '🌲', description: 'Чистый древесный аромат для салона.', audience: 'Ценителям элегантности' }
+];
+
+const SHOP_OFFERS = [
+  {
+    id: 'cozy_set',
+    name: 'Набор для уютного вечера',
+    icon: '🕯️',
+    contents: 'Свеча «Лаванда», диффузор «Лавандовое поле», мини-ваниль',
+    bonus: '+1 продажа при следующем правильном подборе',
+    bonusType: 'extraSale'
+  },
+  {
+    id: 'gift_set',
+    name: 'Подарок до 1000 рублей',
+    icon: '🎁',
+    contents: 'Мини-свеча, саше, открытка с пожеланием',
+    bonus: 'Бесплатная подсказка для всех клиентов сегодня',
+    bonusType: 'freeHints'
+  },
+  {
+    id: 'car_set',
+    name: 'Аромат в машину',
+    icon: '🚗',
+    contents: 'Автопарфюм «Цитрусовый заряд» + освежитель',
+    bonus: '+1 продажа и +5 настроения при следующем правильном подборе',
+    bonusType: 'carBonus'
+  }
+];
+
+const COLLECTIONS = [
+  { id: 'cozy_evening', name: 'Уютный вечер', aromas: ['lavender', 'vanilla', 'quince_spice'], reward: { hearts: 3, mood: 10 } },
+  { id: 'fresh_start', name: 'Свежий старт', aromas: ['morning_dew', 'citrus_charge', 'grapefruit_vetiver'], reward: { hearts: 2, mood: 8 } },
+  { id: 'festive_home', name: 'Праздничный дом', aromas: ['pine_mandarin', 'quince_spice'], reward: { hearts: 2, mood: 10 } },
+  { id: 'feminine_story', name: 'Женственная история', aromas: ['cedar_rose', 'vanilla'], reward: { hearts: 3, mood: 8 } },
+  { id: 'for_car', name: 'Для авто', aromas: ['citrus_charge', 'mango', 'grapefruit_vetiver'], reward: { hearts: 2, mood: 12 } }
+];
+
+const HOSTESS_TIPS = [
+  'Для делового настроения выбирайте свежие и древесные ароматы.',
+  'Для уюта подойдут ваниль, айва и мягкие пряности.',
+  'Для подарка лучше выбирать нежные и понятные ароматы.',
+  'Для фокуса подойдут лаванда, шалфей, ветивер.',
+  'Для праздника выбирайте хвою, мандарин и пряности.'
+];
+
+const MINI_SHOP_ITEMS = [
+  { id: 'candles_pack', label: 'Купить 3 свечи', cost: 2, type: 'candles', amount: 3 },
+  { id: 'diffusers_pack', label: 'Купить 2 диффузора', cost: 2, type: 'diffusers', amount: 2 },
+  { id: 'bottles_pack', label: 'Купить 2 флакона', cost: 2, type: 'bottles', amount: 2 },
+  { id: 'decor_pack', label: 'Купить декор', cost: 1, type: 'decor', amount: 2 }
+];
+
+const INV_REFILL_COSTS = {
+  candles: { cost: 2, amount: 3, label: 'Пополнить свечи' },
+  diffusers: { cost: 2, amount: 2, label: 'Пополнить диффузоры' },
+  bottles: { cost: 2, amount: 2, label: 'Пополнить флаконы' },
+  decor: { cost: 1, amount: 2, label: 'Купить декор' }
+};
+
+const SECTION_TITLES = {
+  home: 'Главная',
+  candles: 'Свечи',
+  diffusers: 'Диффузоры',
+  auto: 'Автопарфюм',
+  offers: 'Спецпредложения',
+  inventory: 'Инвентарь',
+  collections: 'Коллекции'
+};
+
+const SECTION_INTROS = {
+  candles: 'Пополняйте витрину свечами — уютная лавка привлекает больше гостей.',
+  diffusers: 'Добавляйте диффузоры на полки — аромат мягко наполняет пространство.',
+  auto: 'Выставляйте автопарфюм — для клиентов, которые ищут аромат в дорогу.',
+  offers: 'Запускайте акции раз в день — они усиливают продажи и настроение лавки.',
+  inventory: 'Смотрите запасы и покупайте ресурсы за продажи.',
+  collections: 'Собирайте коллекции — каждый правильный подбор добавляет аромат в альбом.'
+};
+
 /* ===== Состояние игры ===== */
 const state = {
   sales: 0,
@@ -280,7 +380,18 @@ const state = {
   questClaimed: false,
   gems: 0,
   favorites: [],
-  maxPickStreak: 0
+  maxPickStreak: 0,
+  inventory: { candles: 7, diffusers: 5, bottles: 4, decor: 6 },
+  collectedAromas: {},
+  completedCollections: [],
+  activePromo: null,
+  promoUsedToday: false,
+  promoBonusPending: false,
+  freeHintsToday: false,
+  currentNav: 'home',
+  savedGameScreen: null,
+  dayStarted: false,
+  showcaseItems: { candles: [], diffusers: [], bottles: [] }
 };
 
 /* ===== DOM-элементы ===== */
@@ -344,7 +455,24 @@ const els = {
   summaryStreak: document.getElementById('summaryStreak'),
   summaryQuestReward: document.getElementById('summaryQuestReward'),
   summaryText: document.getElementById('summaryText'),
-  dailyTip: document.getElementById('dailyTip')
+  dailyTip: document.getElementById('dailyTip'),
+  sectionScreen: document.getElementById('sectionScreen'),
+  sectionTitle: document.getElementById('sectionTitle'),
+  sectionIntro: document.getElementById('sectionIntro'),
+  sectionContent: document.getElementById('sectionContent'),
+  backToShopBtn: document.getElementById('backToShopBtn'),
+  promoBadge: document.getElementById('promoBadge'),
+  modalOverlay: document.getElementById('modalOverlay'),
+  modalBox: document.getElementById('modalBox'),
+  modalTitle: document.getElementById('modalTitle'),
+  modalBody: document.getElementById('modalBody'),
+  modalClose: document.getElementById('modalClose'),
+  invCandlesQty: document.getElementById('invCandlesQty'),
+  invDiffusersQty: document.getElementById('invDiffusersQty'),
+  invBottlesQty: document.getElementById('invBottlesQty'),
+  invDecorQty: document.getElementById('invDecorQty'),
+  invAddBtn: document.getElementById('invAddBtn'),
+  quotePlaque: document.getElementById('quotePlaque')
 };
 
 /* ===== Утилиты ===== */
@@ -527,8 +655,404 @@ function showToast(message, type = 'info') {
   setTimeout(() => {
     toast.classList.remove('toast-show');
     setTimeout(() => toast.remove(), 400);
-  }, 2800);
+  }, 2600);
 }
+
+function addMood(amount, silent) {
+  state.mood = clampMood(state.mood + amount);
+  updateStats();
+  if (!silent) showToast('Настроение лавки выросло', 'mood');
+}
+
+function updateInventoryUI() {
+  if (els.invCandlesQty) els.invCandlesQty.textContent = state.inventory.candles;
+  if (els.invDiffusersQty) els.invDiffusersQty.textContent = state.inventory.diffusers;
+  if (els.invBottlesQty) els.invBottlesQty.textContent = state.inventory.bottles;
+  if (els.invDecorQty) els.invDecorQty.textContent = state.inventory.decor;
+}
+
+function updatePromoBadge() {
+  if (!els.promoBadge) return;
+  if (state.activePromo) {
+    els.promoBadge.textContent = `🎁 ${state.activePromo.name}`;
+    els.promoBadge.classList.remove('hidden');
+  } else {
+    els.promoBadge.classList.add('hidden');
+  }
+}
+
+function spendSales(amount) {
+  if (state.sales < amount) return false;
+  state.sales -= amount;
+  updateStats();
+  return true;
+}
+
+function openModal(title, bodyHtml) {
+  if (!els.modalOverlay) return;
+  els.modalTitle.textContent = title;
+  els.modalBody.innerHTML = bodyHtml;
+  els.modalOverlay.classList.remove('hidden');
+}
+
+function closeModal() {
+  if (els.modalOverlay) els.modalOverlay.classList.add('hidden');
+}
+
+function hideAllCenterScreens() {
+  els.welcomeScreen.classList.add('hidden');
+  els.gameScreen.classList.add('hidden');
+  els.summaryScreen.classList.add('hidden');
+  if (els.sectionScreen) els.sectionScreen.classList.add('hidden');
+}
+
+function getCurrentGameScreen() {
+  if (!els.welcomeScreen.classList.contains('hidden')) return els.welcomeScreen;
+  if (!els.gameScreen.classList.contains('hidden')) return els.gameScreen;
+  if (!els.summaryScreen.classList.contains('hidden')) return els.summaryScreen;
+  return state.savedGameScreen || els.welcomeScreen;
+}
+
+function showScreen(screen) {
+  hideAllCenterScreens();
+  screen.classList.remove('hidden');
+  state.savedGameScreen = screen;
+  if (screen !== els.sectionScreen) state.currentNav = 'home';
+}
+
+function returnToShop() {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelector('[data-nav="home"]')?.classList.add('active');
+  state.currentNav = 'home';
+  hideAllCenterScreens();
+  (state.savedGameScreen || els.welcomeScreen).classList.remove('hidden');
+}
+
+function navigateToSection(navId) {
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.classList.toggle('active', n.dataset.nav === navId);
+  });
+  state.currentNav = navId;
+
+  if (navId === 'home') {
+    returnToShop();
+    return;
+  }
+
+  if (els.sectionScreen.classList.contains('hidden')) {
+    state.savedGameScreen = getCurrentGameScreen();
+  }
+
+  hideAllCenterScreens();
+  els.sectionScreen.classList.remove('hidden');
+  if (els.sectionTitle) els.sectionTitle.textContent = SECTION_TITLES[navId] || navId;
+  if (els.sectionIntro) {
+    els.sectionIntro.textContent = SECTION_INTROS[navId] || '';
+    els.sectionIntro.classList.toggle('hidden', !SECTION_INTROS[navId]);
+  }
+  updatePromoBadge();
+  renderSection(navId);
+}
+
+function renderShopCard(item, btnLabel, btnAction) {
+  return `
+    <article class="shop-card">
+      <div class="shop-card-icon">${item.icon}</div>
+      <h4 class="shop-card-name">${item.name}</h4>
+      <p class="shop-card-desc">${item.description}</p>
+      ${item.mood ? `<span class="shop-card-mood">${item.mood}</span>` : ''}
+      ${item.room ? `<p class="shop-card-meta">Комната: ${item.room}</p>` : ''}
+      ${item.audience ? `<p class="shop-card-meta">Кому: ${item.audience}</p>` : ''}
+      ${item.price ? `<p class="shop-card-price">💎 ${item.price} монет</p>` : ''}
+      ${item.contents ? `<p class="shop-card-meta">Состав: ${item.contents}</p>` : ''}
+      ${item.bonus ? `<p class="offer-bonus">Бонус: ${item.bonus}</p>` : ''}
+      <button class="btn-shop" type="button" data-action="${btnAction}" data-id="${item.id}">${btnLabel}</button>
+    </article>
+  `;
+}
+
+function renderSection(navId) {
+  if (!els.sectionContent) return;
+  let html = '';
+
+  switch (navId) {
+    case 'candles':
+      html = `<div class="shop-grid">${SHOP_CANDLES.map(c =>
+        renderShopCard(c, 'Добавить в витрину', 'add-candle')
+      ).join('')}</div>`;
+      break;
+
+    case 'diffusers':
+      html = `<div class="shop-grid">${SHOP_DIFFUSERS.map(d =>
+        renderShopCard(d, 'Добавить в витрину', 'add-diffuser')
+      ).join('')}</div>`;
+      break;
+
+    case 'auto':
+      html = `<div class="shop-grid">${SHOP_AUTO.map(a =>
+        renderShopCard(a, 'Добавить в витрину', 'add-auto')
+      ).join('')}</div>`;
+      break;
+
+    case 'offers':
+      html = `<div class="shop-grid">${SHOP_OFFERS.map(o =>
+        renderShopCard(
+          o,
+          state.promoUsedToday ? 'Акция уже запущена' : 'Запустить акцию',
+          'launch-offer'
+        )
+      ).join('')}</div>`;
+      if (state.promoUsedToday && state.activePromo) {
+        html += `<p class="shop-card-meta" style="margin-top:12px;text-align:center">Активна: <strong>${state.activePromo.name}</strong></p>`;
+      }
+      break;
+
+    case 'inventory':
+      html = `
+        <p class="section-lead">Все ресурсы лавки в одном месте. Покупайте за продажи — это ваши игровые монеты.</p>
+        <div class="inventory-detail-grid">
+          <div class="inv-detail-card"><span class="inv-detail-icon">🕯️</span><span class="inv-detail-label">Свечи</span><span class="inv-detail-value">${state.inventory.candles}</span></div>
+          <div class="inv-detail-card"><span class="inv-detail-icon">🌿</span><span class="inv-detail-label">Диффузоры</span><span class="inv-detail-value">${state.inventory.diffusers}</span></div>
+          <div class="inv-detail-card"><span class="inv-detail-icon">🧴</span><span class="inv-detail-label">Флаконы</span><span class="inv-detail-value">${state.inventory.bottles}</span></div>
+          <div class="inv-detail-card"><span class="inv-detail-icon">🌸</span><span class="inv-detail-label">Декор</span><span class="inv-detail-value">${state.inventory.decor}</span></div>
+          <div class="inv-detail-card"><span class="inv-detail-icon">💖</span><span class="inv-detail-label">Сердца</span><span class="inv-detail-value">${state.hearts}</span></div>
+          <div class="inv-detail-card"><span class="inv-detail-icon">💎</span><span class="inv-detail-label">Алмазы</span><span class="inv-detail-value">${state.gems}</span></div>
+        </div>
+        <p class="shop-card-meta">Избранных ароматов: <strong>${state.favorites.length}</strong></p>
+        <p class="shop-card-meta">Продаж (монеты): <strong>${state.sales}</strong></p>
+        <div class="inv-actions">
+          <button class="btn-inv-action" type="button" data-action="refill" data-type="candles">Пополнить свечи (2 продажи)</button>
+          <button class="btn-inv-action" type="button" data-action="refill" data-type="diffusers">Пополнить диффузоры (2 продажи)</button>
+          <button class="btn-inv-action" type="button" data-action="refill" data-type="bottles">Пополнить флаконы (2 продажи)</button>
+          <button class="btn-inv-action" type="button" data-action="refill" data-type="decor">Купить декор (1 продажа)</button>
+        </div>
+      `;
+      break;
+
+    case 'collections':
+      html = `<p class="section-lead">Правильные подборы добавляют ароматы в коллекции. Соберите все — получите награду.</p>`;
+      html += COLLECTIONS.map(col => {
+        const collected = col.aromas.filter(id => state.collectedAromas[id]);
+        const pct = (collected.length / col.aromas.length) * 100;
+        const done = state.completedCollections.includes(col.id);
+        return `
+          <div class="collection-card${done ? ' done' : ''}">
+            <h4 class="collection-name">${done ? '✨ ' : ''}${col.name}</h4>
+            <div class="collection-aromas">
+              ${col.aromas.map(id => {
+                const a = getAromaById(id);
+                const has = state.collectedAromas[id];
+                return `<span class="collection-aroma${has ? ' collected' : ''}">${a ? a.icon + ' ' + a.name : id}</span>`;
+              }).join('')}
+            </div>
+            <div class="collection-progress-bar"><div class="collection-progress-fill" style="width:${pct}%"></div></div>
+            <p class="collection-reward">Прогресс: ${collected.length}/${col.aromas.length} · Награда: ${col.reward.hearts} 💖, +${col.reward.mood} настроения</p>
+          </div>
+        `;
+      }).join('');
+      break;
+
+    default:
+      html = '<p>Раздел в разработке.</p>';
+  }
+
+  els.sectionContent.innerHTML = html;
+
+  if (navId === 'offers' && state.promoUsedToday) {
+    els.sectionContent.querySelectorAll('[data-action="launch-offer"]').forEach(btn => {
+      btn.disabled = true;
+    });
+  }
+}
+
+function handleSectionAction(e) {
+  const btn = e.currentTarget;
+  if (btn.disabled) return;
+  const action = btn.dataset.action;
+  const id = btn.dataset.id;
+
+  switch (action) {
+    case 'add-candle':
+      addToShowcase('candles', SHOP_CANDLES.find(c => c.id === id));
+      break;
+    case 'add-diffuser':
+      addToShowcase('diffusers', SHOP_DIFFUSERS.find(d => d.id === id));
+      break;
+    case 'add-auto':
+      addToShowcase('bottles', SHOP_AUTO.find(a => a.id === id));
+      break;
+    case 'launch-offer':
+      launchOffer(SHOP_OFFERS.find(o => o.id === id));
+      break;
+    case 'refill':
+      refillInventory(btn.dataset.type);
+      break;
+  }
+}
+
+function addToShowcase(type, item) {
+  if (!item) return;
+  const invKey = type === 'bottles' ? 'bottles' : type;
+  state.inventory[invKey] += 1;
+  if (!state.showcaseItems[type]) state.showcaseItems[type] = [];
+  state.showcaseItems[type].push(item.name);
+  updateInventoryUI();
+  addMood(2, true);
+  const labels = { candles: 'Свеча', diffusers: 'Диффузор', bottles: 'Автопарфюм' };
+  showToast(`${labels[type] || 'Товар'} «${item.name}» добавлена в витрину`, 'success');
+  showToast('Настроение лавки выросло', 'mood');
+}
+
+function launchOffer(offer) {
+  if (!offer || state.promoUsedToday) {
+    showToast('Акцию можно запустить только один раз за день', 'warning');
+    return;
+  }
+  state.promoUsedToday = true;
+  state.activePromo = offer;
+  state.promoBonusPending = true;
+  if (offer.bonusType === 'freeHints') state.freeHintsToday = true;
+  addMood(5, true);
+  updatePromoBadge();
+  showToast('Акция запущена!', 'success');
+  showToast('Настроение лавки выросло', 'mood');
+  renderSection('offers');
+}
+
+function refillInventory(type) {
+  const cfg = INV_REFILL_COSTS[type];
+  if (!cfg) return;
+  if (!spendSales(cfg.cost)) {
+    showToast('Недостаточно продаж для покупки', 'warning');
+    return;
+  }
+  state.inventory[type] += cfg.amount;
+  updateInventoryUI();
+  showToast(`${cfg.label}: +${cfg.amount}`, 'success');
+  renderSection('inventory');
+}
+
+function trackCollection(aromaId) {
+  if (!state.collectedAromas[aromaId]) {
+    state.collectedAromas[aromaId] = true;
+    showToast('Коллекция пополнена', 'success');
+  }
+
+  COLLECTIONS.forEach(col => {
+    if (state.completedCollections.includes(col.id)) return;
+    const allCollected = col.aromas.every(id => state.collectedAromas[id]);
+    if (allCollected) {
+      state.completedCollections.push(col.id);
+      addHearts(col.reward.hearts, '');
+      addMood(col.reward.mood, true);
+      showToast(`Коллекция «${col.name}» собрана! +${col.reward.hearts} 💖`, 'success');
+      showToast('Настроение лавки выросло', 'mood');
+    }
+  });
+}
+
+function applyPromoBonus() {
+  if (!state.promoBonusPending || !state.activePromo) return;
+  const offer = state.activePromo;
+  if (offer.bonusType === 'extraSale') {
+    state.sales += 1;
+    showToast('Бонус акции: +1 продажа!', 'success');
+  } else if (offer.bonusType === 'carBonus') {
+    state.sales += 1;
+    addMood(5, true);
+    showToast('Бонус акции: +1 продажа и настроение!', 'success');
+  }
+  state.promoBonusPending = false;
+}
+
+function openQuickInventory(type) {
+  const titles = { candles: 'Свечи в наличии', diffusers: 'Диффузоры', bottles: 'Флаконы и автопарфюм', decor: 'Декор лавки' };
+  const qty = state.inventory[type];
+  let listHtml = '';
+
+  if (type === 'decor') {
+    listHtml = `
+      <p>Украшения, сухоцветы и вазы создают уют в лавке.</p>
+      <p class="shop-card-meta">В наличии: <strong>${qty}</strong> единиц декора</p>
+      <ul class="modal-list">
+        <li>🌸 Сухие розы в вазах</li>
+        <li>🕯️ Подсвечники из латуни</li>
+        <li>🪷 Ароматические букеты</li>
+      </ul>
+    `;
+  } else {
+    const items = state.showcaseItems[type] || [];
+    if (items.length === 0) {
+      listHtml = `<p class="shop-card-meta">В витрине пока ${qty} шт. Добавьте товары из раздела меню.</p>`;
+    } else {
+      const counts = {};
+      items.forEach(name => { counts[name] = (counts[name] || 0) + 1; });
+      listHtml = `<ul class="modal-list">${Object.entries(counts).map(([name, n]) =>
+        `<li>${name} <span class="quick-list-qty">×${n}</span></li>`
+      ).join('')}</ul>`;
+      listHtml += `<p class="shop-card-meta">Всего: ${qty} шт.</p>`;
+    }
+  }
+
+  openModal(titles[type], listHtml);
+}
+
+function openMiniShop() {
+  const itemsHtml = MINI_SHOP_ITEMS.map(item => `
+    <div class="modal-shop-item">
+      <div class="modal-shop-item-info">
+        <div class="modal-shop-item-title">${item.label}</div>
+        <div class="modal-shop-item-cost">Стоимость: ${item.cost} продаж</div>
+      </div>
+      <button class="btn-modal-buy" type="button" data-mini="${item.id}">Купить</button>
+    </div>
+  `).join('');
+
+  openModal('Мини-магазин ресурсов', `<p class="shop-card-meta">Ваши продажи: ${state.sales}</p>${itemsHtml}`);
+
+  els.modalBody.querySelectorAll('[data-mini]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = MINI_SHOP_ITEMS.find(i => i.id === btn.dataset.mini);
+      if (!item) return;
+      if (!spendSales(item.cost)) {
+        showToast('Недостаточно продаж', 'warning');
+        return;
+      }
+      state.inventory[item.type] += item.amount;
+      updateInventoryUI();
+      showToast(`${item.label} — готово!`, 'success');
+      closeModal();
+    });
+  });
+}
+
+function openHostessTip() {
+  const tip = HOSTESS_TIPS[Math.floor(Math.random() * HOSTESS_TIPS.length)];
+  openModal('Совет дня', `<p style="font-style:italic">«${tip}»</p>`);
+}
+
+function openFavoriteDetail(aroma) {
+  openModal('Избранный аромат', `
+    <div class="favorite-detail-card">
+      <span class="favorite-detail-icon">${aroma.icon}</span>
+      <h4 class="favorite-detail-name">${aroma.name}</h4>
+      <span class="favorite-detail-mood">${aroma.mood}</span>
+      <p>${aroma.description}</p>
+      <p class="shop-card-meta">${aroma.tags}</p>
+    </div>
+  `);
+}
+
+function bindSectionContentEvents() {
+  if (els.backToShopBtn) els.backToShopBtn.addEventListener('click', returnToShop);
+  if (els.sectionContent) {
+    els.sectionContent.addEventListener('click', e => {
+      const btn = e.target.closest('[data-action]');
+      if (btn) handleSectionAction({ currentTarget: btn });
+    });
+  }
+}
+
 
 function updateStreakUI() {
   if (els.pickStreakCount) els.pickStreakCount.textContent = state.currentStreak;
@@ -610,18 +1134,13 @@ function updateStats() {
   if (els.favoritesCount) els.favoritesCount.textContent = state.favorites.length;
 
   updateStreakUI();
+  updateInventoryUI();
+  updatePromoBadge();
 }
 
 function updateClientIndicator() {
   const num = state.currentIndex + 1;
   els.clientIndicator.textContent = `Клиент ${num} из ${CLIENTS_PER_DAY}`;
-}
-
-function showScreen(screen) {
-  els.welcomeScreen.classList.add('hidden');
-  els.gameScreen.classList.add('hidden');
-  els.summaryScreen.classList.add('hidden');
-  screen.classList.remove('hidden');
 }
 
 /* ===== Рендер клиента ===== */
@@ -739,6 +1258,8 @@ function handleAromaChoice(chosenId, cardEl) {
     state.mood = clampMood(state.mood + moodBoost);
 
     checkQuestProgress(true, correctAroma);
+    trackCollection(correctAroma.id);
+    applyPromoBonus();
 
     const favAdded = addFavorite(correctAroma);
     showResult(true, client, correctAroma);
@@ -810,29 +1331,40 @@ function addFavorite(aroma) {
 
 function renderFavorites(highlightNew) {
   if (state.favorites.length === 0) {
-    els.favoritesList.innerHTML = '<span class="favorites-empty">Удачные подборы появятся здесь</span>';
+    els.favoritesList.innerHTML = '<span class="favorites-empty">Появятся после удачных подборов</span>';
     return;
   }
 
   els.favoritesList.innerHTML = state.favorites.map((a, i) => {
     const isNew = highlightNew && i === state.favorites.length - 1;
     return `
-      <span class="favorite-slot${isNew ? ' favorite-new' : ''}" title="${a.name}">
+      <button type="button" class="favorite-slot${isNew ? ' favorite-new' : ''}" data-fav-id="${a.id}" title="${a.name}">
         <span class="fav-icon">${a.icon}</span>
-      </span>
+      </button>
     `;
   }).join('');
+
+  els.favoritesList.querySelectorAll('[data-fav-id]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const aroma = getAromaById(btn.dataset.favId);
+      if (aroma) openFavoriteDetail(aroma);
+    });
+  });
 }
 
 /* ===== Подсказка ===== */
 function useHint() {
-  if (state.hintUsed || state.answered) return;
-  state.hintUsed = true;
+  if (state.answered) return;
+  if (!state.freeHintsToday && state.hintUsed) return;
 
   const client = state.dayClients[state.currentIndex];
   els.hintBox.textContent = '💡 ' + client.hint;
   els.hintBox.classList.remove('hidden');
-  els.hintBtn.disabled = true;
+
+  if (!state.freeHintsToday) {
+    state.hintUsed = true;
+    els.hintBtn.disabled = true;
+  }
 }
 
 /* ===== Следующий клиент / итоги ===== */
@@ -901,6 +1433,11 @@ function startDay() {
   state.currentStreak = 0;
   state.answered = false;
   state.hintUsed = false;
+  state.promoUsedToday = false;
+  state.activePromo = null;
+  state.promoBonusPending = false;
+  state.freeHintsToday = false;
+  state.dayStarted = true;
 
   applyDailyQuest(pickDailyQuest());
   els.dailyTip.textContent = DAILY_TIPS[Math.floor(Math.random() * DAILY_TIPS.length)];
@@ -919,6 +1456,7 @@ function init() {
   initMoodGradient();
   updateStats();
   renderFavorites();
+  updateInventoryUI();
 
   els.startDayBtn.addEventListener('click', startDay);
   els.newDayBtn.addEventListener('click', startNewDay);
@@ -928,10 +1466,34 @@ function init() {
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', e => {
       e.preventDefault();
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      item.classList.add('active');
+      navigateToSection(item.dataset.nav);
     });
   });
+
+  if (els.invAddBtn) els.invAddBtn.addEventListener('click', openMiniShop);
+
+  document.querySelectorAll('.inv-item-click').forEach(btn => {
+    btn.addEventListener('click', () => openQuickInventory(btn.dataset.inv));
+  });
+
+  if (els.quotePlaque) {
+    els.quotePlaque.addEventListener('click', openHostessTip);
+    els.quotePlaque.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openHostessTip();
+      }
+    });
+  }
+
+  if (els.modalClose) els.modalClose.addEventListener('click', closeModal);
+  if (els.modalOverlay) {
+    els.modalOverlay.addEventListener('click', e => {
+      if (e.target === els.modalOverlay) closeModal();
+    });
+  }
+
+  bindSectionContentEvents();
 }
 
 document.addEventListener('DOMContentLoaded', init);

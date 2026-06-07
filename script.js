@@ -371,6 +371,11 @@ function pickAromaOptions(correctId) {
   return shuffleArray([getAromaById(correctId), ...wrong]);
 }
 
+function formatAromaTags(tags) {
+  return tags.split('•').map(t => t.trim()).filter(Boolean)
+    .map(t => `<span class="aroma-tag-pill">${t}</span>`).join('');
+}
+
 function getReputation(totalHappy) {
   const tier = getReputationTier(totalHappy);
   return tier.title;
@@ -554,8 +559,8 @@ function initMoodGradient() {
     const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
     defs.innerHTML = `
       <linearGradient id="moodGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#c9a0a0"/>
-        <stop offset="100%" stop-color="#c9a962"/>
+        <stop offset="0%" stop-color="#e8c8c8"/>
+        <stop offset="100%" stop-color="#c9a87c"/>
       </linearGradient>
     `;
     svg.insertBefore(defs, svg.firstChild);
@@ -659,12 +664,13 @@ function playClientEntrance(client) {
       card.dataset.id = aroma.id;
       card.innerHTML = `
         <div class="aroma-card-shine"></div>
+        <div class="aroma-card-frame"></div>
         <div class="aroma-icon-ring">
           <span class="aroma-icon">${aroma.icon}</span>
         </div>
         <div class="aroma-name">${aroma.name}</div>
         <div class="aroma-desc">${aroma.description}</div>
-        <div class="aroma-tags">${aroma.tags}</div>
+        <div class="aroma-tags">${formatAromaTags(aroma.tags)}</div>
       `;
       card.addEventListener('click', () => handleAromaChoice(aroma.id, card));
       els.aromaGrid.appendChild(card);
@@ -800,9 +806,8 @@ function renderFavorites(highlightNew) {
   els.favoritesList.innerHTML = state.favorites.map((a, i) => {
     const isNew = highlightNew && i === state.favorites.length - 1;
     return `
-      <span class="favorite-chip${isNew ? ' favorite-new' : ''}">
+      <span class="favorite-slot${isNew ? ' favorite-new' : ''}" title="${a.name}">
         <span class="fav-icon">${a.icon}</span>
-        ${a.name}
       </span>
     `;
   }).join('');

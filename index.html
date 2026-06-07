@@ -7,33 +7,34 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Декоративный фон лавки -->
+  <!-- Светлый атмосферный фон лавки -->
   <div class="shop-bg" aria-hidden="true">
+    <div class="shop-bokeh shop-bokeh-1"></div>
+    <div class="shop-bokeh shop-bokeh-2"></div>
+    <div class="shop-bokeh shop-bokeh-3"></div>
     <div class="shop-shelves shop-shelves-left"></div>
     <div class="shop-shelves shop-shelves-right"></div>
-    <div class="shop-glow shop-glow-1"></div>
-    <div class="shop-glow shop-glow-2"></div>
-    <div class="shop-vignette"></div>
+    <div class="shop-decor shop-decor-candles">🕯️</div>
+    <div class="shop-decor shop-decor-rose">🌹</div>
+    <div class="shop-decor shop-decor-petal">✿</div>
+    <div class="shop-decor shop-decor-flask">🧴</div>
   </div>
   <div class="floating-particles" aria-hidden="true"></div>
-  <div class="ambient-sparkles" aria-hidden="true"></div>
 
   <div class="app">
     <!-- Левая панель -->
     <aside class="sidebar">
-      <div class="sidebar-frame"></div>
       <div class="brand">
-        <div class="brand-emblem">
-          <span class="brand-logo">✨</span>
-          <span class="brand-ring"></span>
+        <div class="brand-emblem" aria-hidden="true">✦</div>
+        <div class="brand-logo-wrap">
+          <span class="brand-logo">🌸</span>
         </div>
         <h1 class="brand-title">Коварство Ароматов</h1>
         <p class="brand-subtitle">Лавка настроений</p>
-        <div class="brand-divider"><span>✦</span></div>
+        <div class="brand-divider"><span></span></div>
       </div>
 
-      <p class="sidebar-label">Меню лавки</p>
-      <nav class="sidebar-nav">
+      <nav class="sidebar-nav" aria-label="Меню лавки">
         <a href="#" class="nav-item active" data-nav="home">
           <span class="nav-icon">🏠</span>
           <span class="nav-text">Главная</span>
@@ -65,12 +66,9 @@
       </nav>
 
       <div class="streak-card" id="streakCard">
-        <div class="streak-glow"></div>
-        <div class="streak-icon" id="streakIcon">🔥</div>
+        <div class="streak-badge" id="streakIcon">🏆</div>
         <h3>Серия удачных подборов</h3>
-        <p class="pick-streak">
-          <span id="pickStreakCount">0</span> подряд сегодня
-        </p>
+        <p class="pick-streak"><span id="pickStreakCount">0</span> подряд сегодня</p>
         <p class="streak-value"><span id="streakCount">0</span> идеальных дней</p>
         <p class="streak-hint">Делайте клиентов счастливее!</p>
       </div>
@@ -78,57 +76,56 @@
 
     <!-- Основная область -->
     <main class="main-content">
-      <!-- Верхняя статистика -->
-      <header class="stats-bar">
-        <div class="stat-card">
-          <div class="stat-icon-wrap">💰</div>
-          <div class="stat-info">
-            <span class="stat-label">Продажи</span>
-            <span class="stat-value" id="salesCount">0</span>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon-wrap">😊</div>
-          <div class="stat-info">
-            <span class="stat-label">Довольные клиенты</span>
-            <span class="stat-value" id="happyCount">0</span>
-          </div>
-        </div>
-        <div class="stat-card stat-card-wide">
-          <div class="stat-icon-wrap">🌸</div>
-          <div class="stat-info">
-            <span class="stat-label">Настроение лавки</span>
-            <div class="mood-bar-wrap">
-              <div class="mood-bar" id="moodBar" style="width: 50%"></div>
+      <header class="stats-section">
+        <div class="stats-bar">
+          <div class="stat-card">
+            <div class="stat-icon-wrap">💰</div>
+            <div class="stat-info">
+              <span class="stat-label">Продажи</span>
+              <span class="stat-value" id="salesCount">0</span>
             </div>
-            <span class="stat-value small" id="moodPercent">50%</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon-wrap">😊</div>
+            <div class="stat-info">
+              <span class="stat-label">Довольные</span>
+              <span class="stat-value" id="happyCount">0</span>
+            </div>
+          </div>
+          <div class="stat-card stat-card-wide">
+            <div class="stat-icon-wrap">🌸</div>
+            <div class="stat-info">
+              <span class="stat-label">Настроение лавки</span>
+              <div class="mood-bar-wrap">
+                <div class="mood-bar" id="moodBar" style="width: 50%"></div>
+              </div>
+              <span class="stat-value stat-value-muted" id="moodPercent">50%</span>
+            </div>
+          </div>
+          <div class="stat-card stat-card-hearts" id="heartsCard">
+            <div class="stat-icon-wrap">💖</div>
+            <div class="stat-info">
+              <span class="stat-label">Бонусные сердца</span>
+              <span class="stat-value" id="heartsCount">0</span>
+            </div>
+            <div class="hearts-float" id="heartsFloat" aria-hidden="true"></div>
           </div>
         </div>
-        <div class="stat-card stat-card-hearts" id="heartsCard">
-          <div class="stat-icon-wrap">💖</div>
-          <div class="stat-info">
-            <span class="stat-label">Бонусные сердца</span>
-            <span class="stat-value" id="heartsCount">0</span>
-          </div>
-          <div class="hearts-float" id="heartsFloat" aria-hidden="true"></div>
-        </div>
-        <div class="client-indicator">
-          <span class="indicator-dot"></span>
+        <div class="client-ribbon">
+          <span class="ribbon-dot"></span>
           <span id="clientIndicator">Клиент 0 из 5</span>
         </div>
       </header>
 
       <div class="game-layout">
-        <!-- Центральная игровая зона -->
         <section class="game-center">
           <div class="screen screen-welcome" id="welcomeScreen">
             <div class="welcome-card">
-              <div class="welcome-ornament welcome-ornament-top">✦ ✦ ✦</div>
+              <div class="welcome-ornament">✦ ✦ ✦</div>
               <div class="welcome-decor">🕯️ 🌹 ✨</div>
               <h2>Добро пожаловать в лавку</h2>
               <p>Сегодня к вам придут гости с разными настроениями. Подберите им идеальный аромат — и настроение лавки расцветёт, как утренняя роза.</p>
               <button class="btn btn-primary btn-large" id="startDayBtn">Начать день</button>
-              <div class="welcome-ornament welcome-ornament-bottom">— · —</div>
             </div>
           </div>
 
@@ -137,42 +134,47 @@
               <span class="arrival-bell">🚪</span>
               <span class="arrival-text" id="arrivalText">В лавку входит гость...</span>
             </div>
+
             <div class="client-card" id="clientCard">
-              <div class="card-corner card-corner-tl"></div>
-              <div class="card-corner card-corner-tr"></div>
-              <div class="card-corner card-corner-bl"></div>
-              <div class="card-corner card-corner-br"></div>
-
-              <div class="client-header">
-                <div class="client-avatar-wrap">
-                  <div class="client-avatar" id="clientAvatar">👩</div>
+              <div class="client-card-inner">
+                <div class="category-tabs" aria-hidden="true">
+                  <span class="category-tab" title="Свечи">🕯️</span>
+                  <span class="category-tab" title="Травы">🌿</span>
+                  <span class="category-tab" title="Флаконы">🧴</span>
+                  <span class="category-tab" title="Цветы">🌸</span>
                 </div>
-                <div class="client-meta">
-                  <h2 class="client-name" id="clientName">Софья</h2>
-                  <span class="mood-tag" id="clientMood">Деловая</span>
+
+                <div class="client-header">
+                  <div class="client-avatar-wrap">
+                    <div class="client-avatar" id="clientAvatar">👩</div>
+                  </div>
+                  <div class="client-meta">
+                    <h2 class="client-name" id="clientName">Софья</h2>
+                    <span class="mood-tag" id="clientMood">Деловая</span>
+                  </div>
+                  <button class="btn btn-hint" id="hintBtn" title="Подсказка">💡 Подсказка</button>
                 </div>
-                <button class="btn btn-hint" id="hintBtn" title="Подсказка">💡 Подсказка</button>
-              </div>
 
-              <blockquote class="client-request" id="clientRequest">
-                «Завтра важная презентация...»
-              </blockquote>
+                <blockquote class="client-request" id="clientRequest">
+                  «Завтра важная презентация...»
+                </blockquote>
 
-              <div class="hint-box hidden" id="hintBox"></div>
+                <div class="hint-box hidden" id="hintBox"></div>
 
-              <div class="section-title-wrap">
-                <span class="section-ornament">✦</span>
-                <h3 class="section-title">Выберите аромат</h3>
-                <span class="section-ornament">✦</span>
-              </div>
+                <div class="section-title-wrap">
+                  <span class="section-line"></span>
+                  <h3 class="section-title">Выберите аромат</h3>
+                  <span class="section-line"></span>
+                </div>
 
-              <div class="aroma-grid" id="aromaGrid"></div>
+                <div class="aroma-grid" id="aromaGrid"></div>
 
-              <div class="result-block hidden" id="resultBlock">
-                <div class="result-sparks" id="resultSparks"></div>
-                <p class="result-message" id="resultMessage"></p>
-                <p class="result-explanation" id="resultExplanation"></p>
-                <button class="btn btn-primary" id="nextClientBtn">Следующий клиент</button>
+                <div class="result-block hidden" id="resultBlock">
+                  <div class="result-sparks" id="resultSparks"></div>
+                  <p class="result-message" id="resultMessage"></p>
+                  <p class="result-explanation" id="resultExplanation"></p>
+                  <button class="btn btn-primary" id="nextClientBtn">Следующий клиент</button>
+                </div>
               </div>
             </div>
           </div>
@@ -214,13 +216,7 @@
           </div>
         </section>
 
-        <!-- Правая панель заданий -->
         <aside class="right-panel">
-          <div class="panel-header">
-            <span class="panel-header-icon">📜</span>
-            <span>Панель мастера</span>
-          </div>
-
           <div class="panel-card panel-card-quest" id="questCard">
             <div class="panel-card-badge" id="questBadge">Ежедневное</div>
             <h3>📋 Ежедневное задание</h3>
@@ -271,13 +267,10 @@
         </aside>
       </div>
 
-      <!-- Нижний инвентарь -->
       <footer class="bottom-panel">
-        <div class="bottom-panel-frame"></div>
         <div class="inventory-section">
           <div class="section-head">
             <h3>📦 Ваш инвентарь</h3>
-            <span class="section-head-note">полки лавки</span>
           </div>
           <div class="inventory-shelf">
             <div class="inventory-items">
@@ -291,14 +284,14 @@
                 <span class="inv-item-label">Диффузоры</span>
                 <span class="inv-item-qty">×8</span>
               </div>
-              <div class="inv-item" title="Автопарфюм">
-                <div class="inv-item-icon">🚗</div>
-                <span class="inv-item-label">Автопарфюм</span>
-                <span class="inv-item-qty">×5</span>
+              <div class="inv-item" title="Флаконы">
+                <div class="inv-item-icon">🧴</div>
+                <span class="inv-item-label">Флаконы</span>
+                <span class="inv-item-qty">×9</span>
               </div>
-              <div class="inv-item" title="Цветы/декор">
+              <div class="inv-item" title="Цветы">
                 <div class="inv-item-icon">🌸</div>
-                <span class="inv-item-label">Декор</span>
+                <span class="inv-item-label">Цветы</span>
                 <span class="inv-item-qty">×6</span>
               </div>
               <button class="inv-add" title="Добавить" type="button">+</button>
@@ -306,16 +299,21 @@
             <div class="shelf-edge"></div>
           </div>
         </div>
+
         <div class="favorites-section">
           <div class="section-head">
             <h3>💫 Избранные ароматы <span class="favorites-count" id="favoritesCount">0</span></h3>
-            <span class="section-head-note">удачные подборы</span>
           </div>
           <div class="favorites-tray">
             <div class="favorites-list" id="favoritesList">
               <span class="favorites-empty">Удачные подборы появятся здесь</span>
             </div>
           </div>
+        </div>
+
+        <div class="quote-plaque" aria-hidden="true">
+          <span class="quote-icon">✿</span>
+          <p>Каждый аромат — это история. Напишите её красиво.</p>
         </div>
       </footer>
     </main>

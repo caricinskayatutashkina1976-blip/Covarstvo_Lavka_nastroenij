@@ -2434,8 +2434,27 @@ a.btn {
 }
 
 @media (max-width: 900px) {
-  .app { flex-direction: column; overflow-y: auto; height: auto; min-height: 100vh; }
-  html, body { overflow: auto; }
+  html, body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .app {
+    flex-direction: column;
+    height: auto;
+    max-height: none;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .main-content {
+    overflow: visible;
+    flex: none;
+    width: 100%;
+  }
+
   .sidebar {
     width: 100%;
     min-width: 0;
@@ -2444,37 +2463,237 @@ a.btn {
     align-items: center;
     gap: 8px;
     padding: 10px;
+    flex-shrink: 0;
   }
+
   .brand { margin-bottom: 0; flex: 1; text-align: left; display: flex; align-items: center; gap: 8px; }
   .brand-title { font-size: 1rem; }
   .brand-subtitle { display: none; }
-  .sidebar-nav { flex-direction: row; flex-wrap: wrap; flex: none; }
+  .sidebar-nav-label { display: none; }
+  .sidebar-nav { flex-direction: row; flex-wrap: wrap; flex: none; justify-content: flex-end; }
   .nav-text { display: none; }
   .streak-card { display: none; }
-  .game-layout { flex-direction: column; }
+
+  .top-bar {
+    padding: 10px 12px 12px;
+  }
+
+  .game-layout {
+    flex-direction: column;
+    overflow: visible;
+    padding: 0 10px;
+    flex: none;
+  }
+
+  .game-center {
+    overflow: visible;
+    flex: none;
+    width: 100%;
+  }
+
+  .screen {
+    flex: none;
+    min-height: auto;
+  }
+
+  .screen-game {
+    gap: 8px;
+  }
+
+  .game-intro-panel {
+    max-height: none;
+  }
+
+  .game-intro-grid {
+    grid-template-columns: 1fr;
+    padding-top: 18px;
+    gap: 8px;
+    height: auto;
+  }
+
+  .game-promo-inner {
+    padding: 10px 10px 8px;
+  }
+
+  .game-promo-title {
+    padding-right: 48px;
+    font-size: 0.84rem;
+  }
+
+  .game-promo-lead {
+    font-size: 0.64rem;
+  }
+
+  .client-card {
+    flex: none;
+    overflow: visible;
+    min-height: 0;
+  }
+
+  .client-card-inner {
+    overflow-y: visible;
+    flex: none;
+    padding: 12px 14px;
+  }
+
+  .aroma-grid {
+    flex: none;
+    min-height: auto;
+  }
+
+  .screen-section,
+  .section-panel {
+    overflow: visible;
+    flex: none;
+  }
+
   .right-panel {
     width: 100%;
     min-width: 0;
     flex-direction: row;
     flex-wrap: wrap;
+    overflow: visible;
+    flex: none;
   }
+
   .panel-card { flex: 1; min-width: 140px; }
   .bottom-panel { flex-wrap: wrap; }
 }
 
 @media (max-width: 600px) {
-  .stats-row { flex-wrap: wrap; }
-  .stat-card { min-width: calc(50% - 5px); flex: 1; }
-  .game-intro-panel { max-height: none; }
-  .game-intro-grid { grid-template-columns: 1fr; padding-top: 20px; }
-  .game-promo-title { font-size: 0.78rem; padding-right: 0; }
-  .game-promo-footer { flex-direction: column; gap: 3px; }
-  .game-promo-footnote { white-space: normal; }
-  .game-contact-secondary { flex-direction: column; }
-  .aroma-grid { grid-template-columns: 1fr 1fr; }
-  .client-profile { flex-wrap: wrap; }
-  .client-avatar-frame { width: 100px; height: 100px; }
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 8px 10px 10px;
+  }
+
+  .stats-row {
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 6px;
+  }
+
+  .stat-card {
+    min-width: calc(50% - 3px);
+    flex: 1 1 calc(50% - 3px);
+    padding: 8px 10px;
+  }
+
+  .stat-card-mood {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .top-bar-right {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .hearts-widget {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .client-ribbon {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    width: 100%;
+    text-align: center;
+    order: 10;
+  }
+
+  .game-promo-benefits {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .game-promo-benefit {
+    padding: 5px 8px;
+  }
+
+  .game-promo-benefit-title {
+    font-size: 0.62rem;
+  }
+
+  .game-promo-benefit-text {
+    font-size: 0.58rem;
+  }
+
+  .game-promo-footer {
+    flex-direction: column;
+    gap: 4px;
+    align-items: stretch;
+  }
+
+  .game-promo-cta {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 0.72rem;
+  }
+
+  .game-promo-footnote {
+    white-space: normal;
+    text-align: center;
+  }
+
+  .btn-contact-main {
+    padding: 8px 12px;
+    font-size: 0.72rem;
+  }
+
+  .btn-contact-sub {
+    padding: 7px 8px;
+    font-size: 0.62rem;
+  }
+
+  .game-contact-secondary {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .aroma-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .client-profile { flex-wrap: wrap; gap: 12px; }
+  .client-avatar-frame { width: 88px; height: 88px; }
+  .client-name { font-size: 1.25rem; }
+  .client-request { font-size: 0.82rem; padding: 10px 12px; }
+  .client-info-head { gap: 6px; }
   .btn-hint { margin-left: 0; width: 100%; }
+
+  .category-tabs {
+    gap: 10px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+  }
+
+  .bottom-panel {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .inventory-items {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .right-panel .panel-card {
+    min-width: calc(50% - 5px);
+    flex: 1 1 calc(50% - 5px);
+  }
+
+  .welcome-card, .summary-card {
+    padding: 24px 16px;
+    margin: 0 4px;
+  }
+
+  .sidebar { padding: 8px; gap: 4px; }
+  .nav-item { padding: 8px 10px; }
+  .modal-overlay { padding: 12px; align-items: flex-end; }
+  .modal-box { max-height: 85dvh; padding: 18px 16px; }
 }
 
 /* ===== Разделы магазина ===== */

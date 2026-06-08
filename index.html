@@ -283,7 +283,11 @@
                     <span class="lead-label">Комментарий</span>
                     <textarea class="lead-input lead-textarea" id="leadComment" name="comment" rows="3" placeholder="Расскажите о поводе или пожеланиях..."></textarea>
                   </label>
-                  <button class="btn btn-primary btn-lead-submit" type="submit" id="btnBuildMessage">Сформировать сообщение</button>
+                  <label class="lead-consent">
+                    <input class="lead-consent-input" type="checkbox" id="leadConsent" name="consent">
+                    <span class="lead-consent-text">Я согласен(на) на обработку персональных данных и ознакомлен(а) с <button type="button" class="legal-link-inline" data-legal="privacy">Политикой конфиденциальности</button>.</span>
+                  </label>
+                  <button class="btn btn-primary btn-lead-submit" type="submit" id="btnBuildMessage" disabled>Сформировать сообщение</button>
                 </form>
 
                 <div class="lead-message-block hidden" id="leadMessageBlock">
@@ -413,6 +417,18 @@
           <p>Каждый аромат — это история.<br>Напишите её красиво.</p>
           <span class="quote-plaque-hint">Совет дня →</span>
         </div>
+      </footer>
+
+      <footer class="legal-footer" id="legalFooter">
+        <nav class="legal-footer-nav" aria-label="Юридические документы">
+          <button type="button" class="legal-link" data-legal="privacy">Политика конфиденциальности</button>
+          <span class="legal-sep" aria-hidden="true">·</span>
+          <button type="button" class="legal-link" data-legal="consent">Согласие на обработку ПДн</button>
+          <span class="legal-sep" aria-hidden="true">·</span>
+          <button type="button" class="legal-link" data-legal="offer">Публичная оферта</button>
+          <span class="legal-sep" aria-hidden="true">·</span>
+          <button type="button" class="legal-link" data-legal="bonus">Условия бонуса</button>
+        </nav>
       </footer>
     </main>
   </div>

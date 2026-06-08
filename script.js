@@ -504,6 +504,55 @@ function focusGamePlayArea() {
 const SHARE_PROMO_TEXT = 'Промокод ЛАВКА — приятный комплимент к заказу от Коварство Ароматов.';
 const GAME_TITLE = 'Коварство Ароматов: Лавка настроений';
 
+const LEGAL_DOCS = {
+  privacy: {
+    title: 'Политика конфиденциальности',
+    body: `
+      <p class="legal-doc-note">Текст документа будет размещён на сайте. Ниже — заглушка для ознакомления.</p>
+      <div class="legal-doc-text">
+        <p>Настоящая Политика конфиденциальности определяет порядок обработки и защиты персональных данных пользователей игры «Коварство Ароматов: Лавка настроений» и сайта «Коварство Ароматов».</p>
+        <p>Оператор обрабатывает персональные данные в соответствии с Федеральным законом № 152-ФЗ «О персональных данных».</p>
+        <p>Мы собираем только те данные, которые вы добровольно указываете при обращении за подбором аромата (имя, предпочтения, бюджет, комментарий).</p>
+        <p>Данные не передаются третьим лицам без вашего согласия, за исключением случаев, предусмотренных законом.</p>
+      </div>
+    `
+  },
+  consent: {
+    title: 'Согласие на обработку персональных данных',
+    body: `
+      <p class="legal-doc-note">Текст документа будет размещён на сайте. Ниже — заглушка для ознакомления.</p>
+      <div class="legal-doc-text">
+        <p>Я даю согласие на обработку моих персональных данных (имя, контактные данные, сведения о предпочтениях), предоставленных при заполнении формы заявки на персональный подбор аромата.</p>
+        <p>Цель обработки: связь со мной для подбора ароматической продукции и информирование об акциях «Коварство Ароматов».</p>
+        <p>Согласие действует до момента его отзыва путём обращения к оператору.</p>
+      </div>
+    `
+  },
+  offer: {
+    title: 'Публичная оферта',
+    body: `
+      <p class="legal-doc-note">Текст документа будет размещён на сайте. Ниже — заглушка для ознакомления.</p>
+      <div class="legal-doc-text">
+        <p>Настоящий документ является публичной офертой «Коварство Ароматов» о продаже ароматической продукции (свечи, диффузоры, автопарфюм, подарочные наборы).</p>
+        <p>Акцептом оферты считается оформление заказа через согласованные каналы связи.</p>
+        <p>Цены, ассортимент и условия доставки уточняются при оформлении заказа.</p>
+      </div>
+    `
+  },
+  bonus: {
+    title: 'Условия бонуса',
+    body: `
+      <p class="legal-doc-note">Текст документа будет размещён на сайте. Ниже — заглушка для ознакомления.</p>
+      <div class="legal-doc-text">
+        <p>Кодовое слово <strong>ЛАВКА</strong> предоставляет бонус к заказу после прохождения мини-игры «Лавка настроений».</p>
+        <p>Бонус действует при обращении к Наталье через мессенджер MAX в течение срока, указанного в актуальных условиях акции.</p>
+        <p>Размер и вид бонуса определяются действующими правилами «Коварство Ароматов» на момент заказа.</p>
+        <p>Бонус не суммируется с другими акциями, если иное не указано отдельно.</p>
+      </div>
+    `
+  }
+};
+
 /* ===== Типы ароматного результата (лид-магнит) ===== */
 const AROMA_TYPES = [
   {
@@ -700,6 +749,7 @@ function cacheElements() {
   leadMessageBlock: document.getElementById('leadMessageBlock'),
   leadMessageText: document.getElementById('leadMessageText'),
   btnBuildMessage: document.getElementById('btnBuildMessage'),
+  leadConsent: document.getElementById('leadConsent'),
   btnCopyMessage: document.getElementById('btnCopyMessage'),
   btnWriteTelegram: document.getElementById('btnWriteTelegram'),
   shareResultText: document.getElementById('shareResultText'),
@@ -976,6 +1026,34 @@ function openModal(title, bodyHtml) {
 
 function closeModal() {
   if (els.modalOverlay) els.modalOverlay.classList.add('hidden');
+}
+
+function openLegalModal(docId) {
+  const doc = LEGAL_DOCS[docId];
+  if (!doc) return;
+  openModal(doc.title, `
+    ${doc.body}
+    <button type="button" class="btn btn-secondary btn-legal-close" id="legalModalClose">Закрыть</button>
+  `);
+  const closeBtn = document.getElementById('legalModalClose');
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+}
+
+function updateLeadSubmitState() {
+  if (!els.btnBuildMessage || !els.leadConsent) return;
+  els.btnBuildMessage.disabled = !els.leadConsent.checked;
+}
+
+function bindLegalLinks(root = document) {
+  root.querySelectorAll('[data-legal]').forEach(btn => {
+    if (btn.dataset.legalBound) return;
+    btn.dataset.legalBound = '1';
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      openLegalModal(btn.dataset.legal);
+    });
+  });
 }
 
 function hideAllCenterScreens() {
@@ -1867,6 +1945,7 @@ function resetLeadForm() {
   if (els.leadForm) els.leadForm.reset();
   if (els.leadMessageBlock) els.leadMessageBlock.classList.add('hidden');
   if (els.leadMessageText) els.leadMessageText.textContent = '';
+  updateLeadSubmitState();
 }
 
 function buildLeadMessage() {
@@ -1911,6 +1990,12 @@ function buildLeadMessage() {
 
 function handleLeadFormSubmit(e) {
   e.preventDefault();
+
+  if (!els.leadConsent?.checked) {
+    showToast('Подтвердите согласие на обработку персональных данных', 'warning');
+    els.leadConsent?.focus();
+    return;
+  }
 
   const name = (els.leadName?.value || '').trim();
   if (!name) {
@@ -2118,6 +2203,9 @@ function init() {
   bindMaxContactLink(els.btnWriteTelegram, { requireMessage: true });
 
   if (els.leadForm) els.leadForm.addEventListener('submit', handleLeadFormSubmit);
+  if (els.leadConsent) els.leadConsent.addEventListener('change', updateLeadSubmitState);
+  updateLeadSubmitState();
+  bindLegalLinks();
   if (els.btnCopyMessage) els.btnCopyMessage.addEventListener('click', copyLeadMessage);
   if (els.btnCopyShareResult) els.btnCopyShareResult.addEventListener('click', copyShareResult);
   if (els.btnCopyPromo) els.btnCopyPromo.addEventListener('click', copySharePromo);

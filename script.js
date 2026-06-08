@@ -501,7 +501,8 @@ function focusGamePlayArea() {
   }
 }
 
-const SHARE_PROMO_TEXT = 'Кодовое слово ЛАВКА — назовите его Наталье при заказе свечи, диффузора, автопарфюма или подарочного набора и получите комплимент от Коварство Ароматов (мини-пробник, аромасаше или другой подарок). Бонус действует 7 дней. Один бонус — на один заказ.';
+const BONUS_CODEWORD = 'ЛАВКА';
+const SHARE_PROMO_TEXT = BONUS_CODEWORD;
 const GAME_TITLE = 'Коварство Ароматов: Лавка настроений';
 const THEME_STORAGE_KEY = 'lavka_theme';
 
@@ -795,6 +796,7 @@ function cacheElements() {
   shareResultText: document.getElementById('shareResultText'),
   btnCopyShareResult: document.getElementById('btnCopyShareResult'),
   btnCopyPromo: document.getElementById('btnCopyPromo'),
+  btnCopyBonusCode: document.getElementById('btnCopyBonusCode'),
   btnPlayAgain: document.getElementById('btnPlayAgain'),
   themeSwitch: document.getElementById('themeSwitch'),
   themeLight: document.getElementById('themeLight'),
@@ -1961,7 +1963,7 @@ function buildShareResultCopyText() {
   return `Мой ароматный результат — ${type.title}. Мне подошли ароматы: ${aromas}. Пройди игру «${GAME_TITLE}» и узнай свой аромат.`;
 }
 
-async function copyTextToClipboard(text) {
+async function copyTextToClipboard(text, toastMessage = 'Скопировано!') {
   try {
     await navigator.clipboard.writeText(text);
   } catch {
@@ -1972,7 +1974,11 @@ async function copyTextToClipboard(text) {
     document.execCommand('copy');
     ta.remove();
   }
-  showToast('Скопировано!', 'success');
+  showToast(toastMessage, 'success');
+}
+
+function copyBonusCodeWord() {
+  copyTextToClipboard(BONUS_CODEWORD, 'Кодовое слово скопировано!');
 }
 
 function copyShareResult() {
@@ -1980,7 +1986,7 @@ function copyShareResult() {
 }
 
 function copySharePromo() {
-  copyTextToClipboard(SHARE_PROMO_TEXT);
+  copyBonusCodeWord();
 }
 
 function resetLeadForm() {
@@ -2022,7 +2028,7 @@ function buildLeadMessage() {
     `Подходящие ароматы: ${aromaNames}`,
     `Рекомендованный продукт: ${type.product}`,
     '',
-    'Кодовое слово: ЛАВКА',
+    `Кодовое слово: ${BONUS_CODEWORD}`,
     '',
     'Буду рада(а) вашей помощи с подбором!',
     name
@@ -2255,6 +2261,7 @@ function init() {
   if (els.btnCopyMessage) els.btnCopyMessage.addEventListener('click', copyLeadMessage);
   if (els.btnCopyShareResult) els.btnCopyShareResult.addEventListener('click', copyShareResult);
   if (els.btnCopyPromo) els.btnCopyPromo.addEventListener('click', copySharePromo);
+  if (els.btnCopyBonusCode) els.btnCopyBonusCode.addEventListener('click', copyBonusCodeWord);
   if (els.btnPlayAgain) els.btnPlayAgain.addEventListener('click', startNewDay);
 
   document.querySelectorAll('.nav-item').forEach(item => {

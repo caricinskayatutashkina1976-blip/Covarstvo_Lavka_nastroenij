@@ -115,33 +115,46 @@
           </div>
 
           <div class="screen screen-game hidden" id="gameScreen">
-            <div class="game-promo-banner" id="gamePromoBanner">
-              <div class="game-promo-border" aria-hidden="true"></div>
-              <button class="game-promo-close" type="button" id="gamePromoClose" aria-label="Скрыть баннер">Скрыть</button>
-              <div class="game-promo-inner">
-                <p class="game-promo-eyebrow">Пройдите мини-игру и узнайте свой аромат</p>
-                <h2 class="game-promo-title">Ваша ароматная история начинается здесь</h2>
-                <p class="game-promo-lead">Помогите посетителям лавки выбрать подходящие ароматы. За 5 удачных подборов вы получите персональный ароматный результат, рекомендации от «Коварства Ароматов» и бонус к заказу.</p>
-                <div class="game-promo-benefits">
-                  <div class="game-promo-benefit">
-                    <span class="icon-frame icon-frame--promo"><img src="assets/icons/ui/star.png" alt="Результат" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Р</span></span>
-                    <h3 class="game-promo-benefit-title">Результат</h3>
-                    <p class="game-promo-benefit-text">Ваш ароматный тип и подходящие ноты</p>
-                  </div>
-                  <div class="game-promo-benefit">
-                    <span class="icon-frame icon-frame--promo"><img src="assets/icons/categories/candle.png" alt="Подбор" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">П</span></span>
-                    <h3 class="game-promo-benefit-title">Подбор</h3>
-                    <p class="game-promo-benefit-text">Свеча, диффузор, автопарфюм или подарок</p>
-                  </div>
-                  <div class="game-promo-benefit">
-                    <span class="icon-frame icon-frame--promo"><img src="assets/icons/ui/gift.png" alt="Бонус" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Б</span></span>
-                    <h3 class="game-promo-benefit-title">Бонус</h3>
-                    <p class="game-promo-benefit-text">Кодовое слово ЛАВКА в финале игры</p>
+            <div class="game-intro-panel" id="gameIntroPanel">
+              <button class="game-promo-close" type="button" id="gamePromoClose" aria-label="Скрыть блок">Скрыть</button>
+              <div class="game-intro-grid">
+                <div class="game-promo-banner" id="gamePromoBanner">
+                  <div class="game-promo-border" aria-hidden="true"></div>
+                  <div class="game-promo-inner">
+                    <h2 class="game-promo-title">Ваша ароматная история начинается здесь</h2>
+                    <p class="game-promo-lead">Пройдите 5 клиентов, узнайте свой ароматный результат и получите бонус к заказу от «Коварства Ароматов».</p>
+                    <div class="game-promo-benefits">
+                      <div class="game-promo-benefit">
+                        <span class="icon-frame icon-frame--promo"><img src="assets/icons/ui/heart.png" alt="Результат" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Р</span></span>
+                        <h3 class="game-promo-benefit-title">Результат</h3>
+                        <p class="game-promo-benefit-text">Ваш ароматный тип и подходящие ноты</p>
+                      </div>
+                      <div class="game-promo-benefit">
+                        <span class="icon-frame icon-frame--promo"><img src="assets/icons/ui/gift.png" alt="Подбор" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">П</span></span>
+                        <h3 class="game-promo-benefit-title">Подбор</h3>
+                        <p class="game-promo-benefit-text">Свеча, диффузор, автопарфюм или подарок</p>
+                      </div>
+                      <div class="game-promo-benefit">
+                        <span class="icon-frame icon-frame--promo"><img src="assets/icons/ui/bonus.png" alt="Бонус" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Б</span></span>
+                        <h3 class="game-promo-benefit-title">Бонус</h3>
+                        <p class="game-promo-benefit-text">Кодовое слово ЛАВКА в финале игры</p>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary game-promo-cta" type="button" id="gamePromoStartBtn">Начать и получить бонус</button>
+                    <p class="game-promo-footnote">Всего 5 клиентов — игра займёт 1–2 минуты</p>
                   </div>
                 </div>
-                <button class="btn btn-primary game-promo-cta" type="button" id="gamePromoStartBtn">Начать и получить бонус</button>
-                <p class="game-promo-footnote">Всего 5 клиентов — и вы узнаете свой аромат настроения.</p>
-                <p class="game-promo-time">Игра займёт 1–2 минуты</p>
+
+                <div class="game-contact-card" id="gameContactCard">
+                  <div class="game-contact-border" aria-hidden="true"></div>
+                  <h3 class="game-contact-title">Хотите подбор без игры?</h3>
+                  <p class="game-contact-text">Напишите Наталье — подберу аромат для дома, машины, подарка или настроения.</p>
+                  <div class="game-contact-actions">
+                    <a class="btn btn-primary btn-contact" id="btnGameWriteNatalya" href="#" target="_blank" rel="noopener noreferrer">Написать Наталье</a>
+                    <button class="btn btn-secondary btn-contact" type="button" id="btnGamePersonalPick">Получить подбор</button>
+                    <button class="btn btn-secondary btn-contact" type="button" id="btnGameGift1000">Подарок до 1000 ₽</button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -171,7 +184,7 @@
                     </div>
                     <blockquote class="client-request" id="clientRequest">«Завтра важная презентация...»</blockquote>
                   </div>
-                  <button class="btn btn-hint" id="hintBtn"><span class="icon-frame icon-frame--hint"><img src="assets/icons/ui/hint.png" alt="Подсказка" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">П</span></span> Подсказка</button>
+                  <button class="btn btn-hint" id="hintBtn"><span class="icon-frame icon-frame--hint"><img src="assets/icons/ui/hint.png" alt="Подсказка" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">?</span></span> Подсказка</button>
                 </div>
 
                 <div class="hint-box hidden" id="hintBox"></div>
@@ -218,7 +231,7 @@
               </div>
 
               <div class="result-promo-coupon">
-                <span class="coupon-badge"><span class="icon-frame icon-frame--coupon"><img src="assets/icons/ui/gift.png" alt="Бонус" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Б</span></span> Ваш бонус</span>
+                <span class="coupon-badge"><span class="icon-frame icon-frame--coupon"><img src="assets/icons/ui/bonus.png" alt="Бонус" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Б</span></span> Ваш бонус</span>
                 <p class="coupon-text">Назовите кодовое слово <strong class="coupon-code">ЛАВКА</strong> при заказе и получите приятный комплимент от «Коварства Ароматов».</p>
               </div>
 
@@ -353,7 +366,7 @@
           </div>
 
           <div class="panel-card tip-card">
-            <h3><span class="icon-frame icon-frame--panel"><img src="assets/icons/ui/hint.png" alt="Подсказка" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">П</span></span> Подсказка дня</h3>
+            <h3><span class="icon-frame icon-frame--panel"><img src="assets/icons/ui/hint.png" alt="Подсказка" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">?</span></span> Подсказка дня</h3>
             <p class="tip-text" id="dailyTip">Слушайте настроение клиента — оно подскажет аромат.</p>
           </div>
         </aside>

@@ -807,27 +807,32 @@ body {
   gap: 10px;
 }
 
-/* ===== Game promo banner ===== */
-.game-promo-banner {
+/* ===== Game intro panel ===== */
+.game-intro-panel {
   position: relative;
   flex-shrink: 0;
+}
+
+.game-intro-panel.hidden {
+  display: none !important;
+}
+
+.game-intro-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 10px;
+  align-items: stretch;
+  padding-top: 22px;
+}
+
+.game-promo-banner,
+.game-contact-card {
+  position: relative;
   background: linear-gradient(145deg, #FFF9F2 0%, #FAF3F0 100%);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   border: 1px solid rgba(201, 155, 106, 0.38);
   overflow: hidden;
-}
-
-.game-promo-banner.hidden {
-  display: none !important;
-}
-
-.game-promo-border {
-  position: absolute;
-  inset: 5px;
-  border: 1px solid rgba(201, 155, 106, 0.28);
-  border-radius: calc(var(--radius) - 4px);
-  pointer-events: none;
 }
 
 .game-promo-close {
@@ -852,97 +857,129 @@ body {
   background: var(--white);
 }
 
+.game-promo-border,
+.game-contact-border {
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(201, 155, 106, 0.28);
+  border-radius: calc(var(--radius) - 4px);
+  pointer-events: none;
+}
+
 .game-promo-inner {
   position: relative;
   z-index: 1;
-  padding: 14px 18px 12px;
+  padding: 12px 14px 10px;
   text-align: center;
-}
-
-.game-promo-eyebrow {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 4px;
 }
 
 .game-promo-title {
   font-family: var(--font-serif);
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--burgundy);
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   line-height: 1.25;
 }
 
 .game-promo-lead {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   color: var(--text);
-  line-height: 1.45;
-  max-width: 640px;
-  margin: 0 auto 10px;
+  line-height: 1.4;
+  margin: 0 auto 8px;
 }
 
 .game-promo-benefits {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 6px;
+  margin-bottom: 8px;
 }
 
 .game-promo-benefit {
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid rgba(201, 155, 106, 0.22);
   border-radius: var(--radius-sm);
-  padding: 8px 8px 10px;
+  padding: 6px 5px 8px;
   box-shadow: 0 2px 8px rgba(112, 36, 49, 0.05);
 }
 
 .icon-frame--promo {
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
-  margin: 0 auto 6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  margin: 0 auto 4px;
 }
 
 .icon-frame--promo .ui-icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
+}
+
+.icon-frame img:not(.hidden) {
+  display: block;
 }
 
 .game-promo-benefit-title {
   font-family: var(--font-serif);
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   font-weight: 700;
   color: var(--burgundy);
-  margin-bottom: 3px;
-}
-
-.game-promo-benefit-text {
-  font-size: 0.62rem;
-  color: var(--text-muted);
-  line-height: 1.35;
-}
-
-.game-promo-cta {
-  padding: 8px 22px;
-  font-size: 0.78rem;
-  margin-bottom: 6px;
-}
-
-.game-promo-footnote {
-  font-size: 0.68rem;
-  color: var(--text);
-  font-weight: 600;
   margin-bottom: 2px;
 }
 
-.game-promo-time {
+.game-promo-benefit-text {
+  font-size: 0.58rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+.game-promo-cta {
+  padding: 7px 18px;
+  font-size: 0.74rem;
+  margin-bottom: 4px;
+}
+
+.game-promo-footnote {
   font-size: 0.62rem;
   color: var(--text-muted);
   font-style: italic;
+}
+
+.game-contact-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px 14px;
+  text-align: center;
+}
+
+.game-contact-title {
+  font-family: var(--font-serif);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+.game-contact-text {
+  font-size: 0.66rem;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.game-contact-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn-contact {
+  width: 100%;
+  padding: 7px 10px;
+  font-size: 0.7rem;
 }
 
 /* ===== Welcome / Summary / Result ===== */
@@ -2181,7 +2218,12 @@ button.btn-telegram,
 .inv-add .inventory-icon {
   width: 22px;
   height: 22px;
-  filter: brightness(0) invert(1);
+}
+
+.inv-add .inventory-icon.hidden + .icon-text-fallback:not(.hidden) {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .inv-add:hover { transform: scale(1.08); }
@@ -2383,8 +2425,9 @@ a.btn {
 @media (max-width: 600px) {
   .stats-row { flex-wrap: wrap; }
   .stat-card { min-width: calc(50% - 5px); flex: 1; }
+  .game-intro-grid { grid-template-columns: 1fr; }
   .game-promo-benefits { grid-template-columns: 1fr; }
-  .game-promo-title { font-size: 0.95rem; }
+  .game-promo-title { font-size: 0.9rem; }
   .aroma-grid { grid-template-columns: 1fr 1fr; }
   .client-profile { flex-wrap: wrap; }
   .client-avatar-frame { width: 100px; height: 100px; }

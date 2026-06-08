@@ -352,7 +352,7 @@ const SECTION_INTROS = {
 };
 
 /* ===== Ссылка для связи с Натальей (MAX) ===== */
-const NATALYA_CONTACT_URL = 'https://max.ru/u/f9LHodD0cOIP8EjW1gjuxBQgv0vvt2CzVvd_ooi2yX3tz1G5w2XwEpXjZkk';
+const NATALYA_CONTACT_URL = 'https://max.ru/u/f9LHodD0cOIGYo3gLQjiuZN4K6jviUocF6RpjxXXG5ZmBzCkKs_UmX4AzXI';
 
 const icons = {
   menu: {
@@ -392,8 +392,10 @@ const icons = {
     fire: 'assets/icons/ui/fire.png',
     story: 'assets/icons/ui/story.png',
     gift: 'assets/icons/ui/gift.png',
+    bonus: 'assets/icons/ui/bonus.png',
     gem: 'assets/icons/ui/gem.png',
-    brand: 'assets/icons/ui/brand.png'
+    brand: 'assets/icons/ui/brand.png',
+    heart: 'assets/icons/ui/heart.png'
   }
 };
 
@@ -465,18 +467,32 @@ function getAromaImage(aroma) {
 
 function hideGamePromoBanner(persist = true) {
   state.promoBannerDismissed = true;
-  if (els.gamePromoBanner) els.gamePromoBanner.classList.add('hidden');
+  if (els.gameIntroPanel) els.gameIntroPanel.classList.add('hidden');
   if (persist) sessionStorage.setItem(PROMO_BANNER_KEY, '1');
 }
 
 function updateGamePromoBannerVisibility() {
-  if (!els.gamePromoBanner) return;
+  if (!els.gameIntroPanel) return;
   const onGameScreen = els.gameScreen && !els.gameScreen.classList.contains('hidden');
   const beforeFirstPick = state.currentIndex === 0 && !state.answered;
   const sessionDismissed = sessionStorage.getItem(PROMO_BANNER_KEY) === '1';
   const show = onGameScreen && state.dayStarted && beforeFirstPick &&
     !state.promoBannerDismissed && !sessionDismissed;
-  els.gamePromoBanner.classList.toggle('hidden', !show);
+  els.gameIntroPanel.classList.toggle('hidden', !show);
+}
+
+function openGamePersonalPickModal() {
+  openModal('Персональный подбор аромата', `
+    <p>Напишите, для чего нужен аромат: для себя, дома, машины или подарка. Наталья поможет подобрать свечу, диффузор, автопарфюм или распив парфюма.</p>
+    <a class="btn-telegram" href="${NATALYA_CONTACT_URL}" target="_blank" rel="noopener noreferrer">Написать в MAX</a>
+  `);
+}
+
+function openGameGiftModal() {
+  openModal('Подарок до 1000 ₽', `
+    <p>Можно подобрать мини-свечу, аромасаше, автопарфюм или небольшой ароматный набор. Напишите Наталье — она соберёт вариант под повод и бюджет.</p>
+    <a class="btn-telegram btn-telegram-inline" href="${NATALYA_CONTACT_URL}" target="_blank" rel="noopener noreferrer">Написать Наталье</a>
+  `);
 }
 
 function focusGamePlayArea() {
@@ -585,9 +601,13 @@ function cacheElements() {
   summaryScreen: document.getElementById('summaryScreen'),
   startDayBtn: document.getElementById('startDayBtn'),
   newDayBtn: document.getElementById('newDayBtn'),
+  gameIntroPanel: document.getElementById('gameIntroPanel'),
   gamePromoBanner: document.getElementById('gamePromoBanner'),
   gamePromoClose: document.getElementById('gamePromoClose'),
   gamePromoStartBtn: document.getElementById('gamePromoStartBtn'),
+  btnGameWriteNatalya: document.getElementById('btnGameWriteNatalya'),
+  btnGamePersonalPick: document.getElementById('btnGamePersonalPick'),
+  btnGameGift1000: document.getElementById('btnGameGift1000'),
   clientCard: document.getElementById('clientCard'),
   clientArrival: document.getElementById('clientArrival'),
   arrivalText: document.getElementById('arrivalText'),
@@ -2084,6 +2104,9 @@ function init() {
       focusGamePlayArea();
     });
   }
+  if (els.btnGamePersonalPick) els.btnGamePersonalPick.addEventListener('click', openGamePersonalPickModal);
+  if (els.btnGameGift1000) els.btnGameGift1000.addEventListener('click', openGameGiftModal);
+  bindMaxContactLink(els.btnGameWriteNatalya);
   if (els.newDayBtn) els.newDayBtn.addEventListener('click', startNewDay);
   if (els.nextClientBtn) els.nextClientBtn.addEventListener('click', nextClient);
   if (els.hintBtn) els.hintBtn.addEventListener('click', useHint);

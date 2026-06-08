@@ -1105,19 +1105,25 @@ body {
   text-align: center;
 }
 
-.game-contact-avatar {
-  width: 64px;
-  height: 64px;
+.game-contact-avatar.client-avatar-frame {
+  width: 52px;
+  height: 52px;
   padding: 3px;
-  margin-bottom: 2px;
+  margin: 0 auto 2px;
+  align-self: center;
+  box-shadow:
+    0 0 0 3px rgba(255, 252, 250, 0.85),
+    0 4px 14px rgba(112, 36, 49, 0.12),
+    0 0 12px rgba(232, 180, 176, 0.28);
 }
 
-.game-contact-avatar::after {
-  font-size: 0.5rem;
+.game-contact-avatar.client-avatar-frame::after {
+  font-size: 0.45rem;
   bottom: -1px;
 }
 
 .game-contact-avatar .client-avatar-img {
+  border-width: 2px;
   object-position: center 28%;
 }
 

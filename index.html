@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Коварство Ароматов: Лавка настроений</title>
   <link rel="stylesheet" href="style.css">
+  <script>
+    (function () {
+      var saved = localStorage.getItem('lavka_theme');
+      var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = saved || (dark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
 </head>
 <body>
   <div class="shop-bg" aria-hidden="true"></div>
@@ -48,6 +56,13 @@
           <span class="icon-frame"><img src="assets/icons/menu/collection.png" alt="Коллекции" class="menu-icon"><span class="icon-text-fallback hidden" aria-hidden="true">К</span></span><span class="nav-text">Коллекции</span>
         </a>
       </nav>
+
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Переключить тему оформления">
+        <span class="theme-toggle-track" aria-hidden="true">
+          <span class="theme-toggle-thumb"></span>
+        </span>
+        <span class="theme-toggle-text" id="themeToggleLabel">Тёмная тема</span>
+      </button>
 
       <div class="streak-card" id="streakCard">
         <div class="streak-flame" id="streakIcon"></div>

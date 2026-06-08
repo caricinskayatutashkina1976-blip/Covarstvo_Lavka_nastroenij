@@ -503,6 +503,38 @@ function focusGamePlayArea() {
 
 const SHARE_PROMO_TEXT = 'Промокод ЛАВКА — приятный комплимент к заказу от Коварство Ароматов.';
 const GAME_TITLE = 'Коварство Ароматов: Лавка настроений';
+const THEME_STORAGE_KEY = 'lavka_theme';
+
+function getCurrentTheme() {
+  return document.documentElement.getAttribute('data-theme') || 'light';
+}
+
+function applyTheme(theme) {
+  const next = theme === 'dark' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem(THEME_STORAGE_KEY, next);
+  updateThemeToggleUI(next);
+}
+
+function updateThemeToggleUI(theme) {
+  if (els.themeToggleLabel) {
+    els.themeToggleLabel.textContent = theme === 'dark' ? 'Светлая тема' : 'Тёмная тема';
+  }
+  if (els.themeToggle) {
+    els.themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему');
+  }
+}
+
+function initTheme() {
+  const saved = localStorage.getItem(THEME_STORAGE_KEY);
+  const preferred = window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const theme = saved || document.documentElement.getAttribute('data-theme') || preferred;
+  applyTheme(theme);
+}
+
+function toggleTheme() {
+  applyTheme(getCurrentTheme() === 'dark' ? 'light' : 'dark');
+}
 
 const LEGAL_DOCS = {
   privacy: {
@@ -755,7 +787,9 @@ function cacheElements() {
   shareResultText: document.getElementById('shareResultText'),
   btnCopyShareResult: document.getElementById('btnCopyShareResult'),
   btnCopyPromo: document.getElementById('btnCopyPromo'),
-  btnPlayAgain: document.getElementById('btnPlayAgain')
+  btnPlayAgain: document.getElementById('btnPlayAgain'),
+  themeToggle: document.getElementById('themeToggle'),
+  themeToggleLabel: document.getElementById('themeToggleLabel')
   });
 }
 
@@ -2170,6 +2204,9 @@ function init() {
   initialized = true;
 
   cacheElements();
+
+  initTheme();
+  if (els.themeToggle) els.themeToggle.addEventListener('click', toggleTheme);
 
   initMoodGradient();
   updateStats();

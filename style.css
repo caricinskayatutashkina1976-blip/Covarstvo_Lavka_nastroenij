@@ -52,11 +52,11 @@ body {
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(250, 243, 240, 0.55) 0%,
-    rgba(232, 180, 176, 0.35) 50%,
-    rgba(112, 36, 49, 0.25) 100%
+    rgba(255, 252, 250, 0.35) 0%,
+    rgba(250, 235, 228, 0.28) 45%,
+    rgba(232, 200, 185, 0.22) 100%
   );
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(1px);
   z-index: 1;
 }
 

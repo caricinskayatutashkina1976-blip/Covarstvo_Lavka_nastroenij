@@ -517,11 +517,14 @@ function applyTheme(theme) {
 }
 
 function updateThemeToggleUI(theme) {
-  if (els.themeToggleLabel) {
-    els.themeToggleLabel.textContent = theme === 'dark' ? 'Светлая тема' : 'Тёмная тема';
+  const isDark = theme === 'dark';
+  if (els.themeLight) {
+    els.themeLight.classList.toggle('active', !isDark);
+    els.themeLight.setAttribute('aria-pressed', String(!isDark));
   }
-  if (els.themeToggle) {
-    els.themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему');
+  if (els.themeDark) {
+    els.themeDark.classList.toggle('active', isDark);
+    els.themeDark.setAttribute('aria-pressed', String(isDark));
   }
 }
 
@@ -532,8 +535,13 @@ function initTheme() {
   applyTheme(theme);
 }
 
-function toggleTheme() {
-  applyTheme(getCurrentTheme() === 'dark' ? 'light' : 'dark');
+function bindThemeSwitch() {
+  if (els.themeLight) {
+    els.themeLight.addEventListener('click', () => applyTheme('light'));
+  }
+  if (els.themeDark) {
+    els.themeDark.addEventListener('click', () => applyTheme('dark'));
+  }
 }
 
 const LEGAL_DOCS = {
@@ -788,8 +796,9 @@ function cacheElements() {
   btnCopyShareResult: document.getElementById('btnCopyShareResult'),
   btnCopyPromo: document.getElementById('btnCopyPromo'),
   btnPlayAgain: document.getElementById('btnPlayAgain'),
-  themeToggle: document.getElementById('themeToggle'),
-  themeToggleLabel: document.getElementById('themeToggleLabel')
+  themeSwitch: document.getElementById('themeSwitch'),
+  themeLight: document.getElementById('themeLight'),
+  themeDark: document.getElementById('themeDark')
   });
 }
 
@@ -2206,7 +2215,7 @@ function init() {
   cacheElements();
 
   initTheme();
-  if (els.themeToggle) els.themeToggle.addEventListener('click', toggleTheme);
+  bindThemeSwitch();
 
   initMoodGradient();
   updateStats();

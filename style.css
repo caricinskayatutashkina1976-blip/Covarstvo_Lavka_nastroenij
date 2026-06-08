@@ -1400,6 +1400,20 @@ body {
 .coupon-text {
   font-size: 0.82rem;
   line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.coupon-text:last-of-type {
+  margin-bottom: 0;
+}
+
+.coupon-footnote {
+  font-size: 0.68rem;
+  line-height: 1.4;
+  opacity: 0.88;
+  font-style: italic;
+  margin-top: 8px;
+  margin-bottom: 0;
 }
 
 .coupon-code {

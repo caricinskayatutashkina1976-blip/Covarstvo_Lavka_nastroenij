@@ -708,7 +708,7 @@ function formatAromaTags(tags) {
 function buildAromaArtHtml(aroma) {
   const src = getAromaImage(aroma);
   return `
-    <img class="aroma-illustration" src="${src}" alt="${aroma.name}" loading="lazy">
+    <img class="aroma-illustration" src="${src}" alt="${aroma.name}" loading="eager" decoding="async">
     <span class="aroma-illustration-fallback hidden" aria-hidden="true">${iconInitial(aroma.name)}</span>
   `;
 }
@@ -718,13 +718,23 @@ function bindAromaIllustration(card, aroma) {
   const fallback = card.querySelector('.aroma-illustration-fallback');
   if (!img || !fallback) return;
 
+  const showImage = () => {
+    img.classList.remove('hidden');
+    fallback.classList.add('hidden');
+  };
+
   const showFallback = () => {
     img.classList.add('hidden');
     fallback.classList.remove('hidden');
   };
 
+  img.addEventListener('load', showImage);
   img.addEventListener('error', showFallback);
-  if (img.complete && img.naturalWidth === 0) showFallback();
+
+  if (img.complete) {
+    if (img.naturalWidth > 0) showImage();
+    else showFallback();
+  }
 }
 
 function getAromaTheme(tags) {

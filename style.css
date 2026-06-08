@@ -1611,9 +1611,15 @@ button.btn-telegram,
   filter: drop-shadow(0 4px 10px rgba(93, 46, 46, 0.1));
 }
 
+.aroma-illustration.hidden {
+  display: none !important;
+}
+
 .aroma-illustration-fallback {
   font-size: 2.8rem;
   line-height: 1;
+  font-weight: 700;
+  color: var(--burgundy);
 }
 
 .aroma-card-body {

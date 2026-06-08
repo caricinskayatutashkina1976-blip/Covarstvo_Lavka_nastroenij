@@ -28,7 +28,285 @@
 
 .hidden { display: none !important; }
 
-/* ===== Emoji icon badges ===== */
+/* ===== PNG UI icons ===== */
+.menu-icon,
+.stat-icon,
+.category-icon,
+.inventory-icon,
+.ui-icon {
+  display: block;
+  object-fit: contain;
+}
+
+.menu-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.stat-icon {
+  width: 38px;
+  height: 38px;
+}
+
+.category-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.inventory-icon {
+  width: 34px;
+  height: 34px;
+}
+
+.ui-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.ui-icon--inline {
+  display: inline-block;
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  margin: 0 2px;
+}
+
+.ui-icon.ui-icon--large,
+.result-type-icon .ui-icon {
+  width: 56px;
+  height: 56px;
+}
+
+.ui-icon.ui-icon--product,
+.result-product-icon .ui-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.favorite-aroma-image {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.icon-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: rgba(255, 248, 239, 0.85);
+  border: 1px solid rgba(201, 155, 106, 0.35);
+  box-shadow: 0 6px 14px rgba(107, 48, 53, 0.10);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.icon-frame--stat {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.icon-frame--inv {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.icon-frame--inv-add {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.icon-frame--panel {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: inline-flex;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.icon-frame--mood-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  margin-bottom: 2px;
+  background: rgba(255, 252, 250, 0.95);
+}
+
+.icon-frame--hint {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: inline-flex;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.icon-frame--brand {
+  width: 36px;
+  height: 36px;
+  margin: 0 auto 4px;
+  border-radius: 50%;
+}
+
+.icon-frame--coupon {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-right: 6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.icon-text-fallback {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  line-height: 1;
+}
+
+.nav-item .icon-frame {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+}
+
+.nav-item.active .icon-frame {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: none;
+}
+
+.coupon-badge {
+  display: inline-flex;
+  align-items: center;
+}
+
+.promo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.promo-badge .icon-frame {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+}
+
+.wreath-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+}
+
+.floating-heart {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  pointer-events: none;
+  animation: heartFloat 1.2s ease forwards;
+  opacity: 0;
+}
+
+.floating-heart--text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--burgundy);
+}
+
+.spark-img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.result-aroma-thumb {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.result-aroma-fallback,
+.favorite-aroma-fallback,
+.collection-aroma-fallback {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--burgundy);
+}
+
+.collection-aroma-thumb {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.collection-aroma {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.favorite-slot {
+  overflow: hidden;
+  position: relative;
+}
+
+.favorite-aroma-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-card-icon .icon-frame {
+  margin: 0 auto;
+  width: 52px;
+  height: 52px;
+}
+
+.inv-detail-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.inv-detail-card .icon-frame {
+  width: 44px;
+  height: 44px;
+}
+
+.favorite-detail-fallback {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--burgundy);
+}
+
+.quest-reward {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* ===== Legacy emoji icon badges (unused) ===== */
 .icon-badge {
   display: inline-flex;
   align-items: center;
@@ -213,7 +491,6 @@ body {
 }
 
 .brand-icon {
-  font-size: 1.4rem;
   margin-bottom: 4px;
 }
 
@@ -284,9 +561,23 @@ body {
 }
 
 .streak-flame {
-  font-size: 1.5rem;
   margin-bottom: 4px;
   animation: flamePulse 2s ease-in-out infinite;
+  display: flex;
+  justify-content: center;
+}
+
+.streak-flame .icon-frame {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.streak-flame .ui-icon {
+  width: 28px;
+  height: 28px;
 }
 
 @keyframes flamePulse {
@@ -595,9 +886,16 @@ body {
 }
 
 .result-type-icon {
-  font-size: 3rem;
   margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
   filter: drop-shadow(0 4px 8px rgba(112, 36, 49, 0.15));
+}
+
+.result-type-icon .icon-frame {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
 }
 
 .result-type-title {
@@ -662,8 +960,9 @@ body {
 }
 
 .result-product-icon {
-  font-size: 2rem;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .result-product-label {
@@ -1687,10 +1986,19 @@ button.btn-telegram,
   border: none;
   background: var(--burgundy);
   color: white;
-  font-size: 1.2rem;
   cursor: pointer;
   box-shadow: var(--shadow);
   transition: transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.inv-add .inventory-icon {
+  width: 22px;
+  height: 22px;
+  filter: brightness(0) invert(1);
 }
 
 .inv-add:hover { transform: scale(1.08); }
@@ -2090,7 +2398,7 @@ a.btn {
   border: 1px solid rgba(112, 36, 49, 0.08);
 }
 
-.inv-detail-icon { font-size: 1.6rem; display: block; margin-bottom: 4px; }
+.inv-detail-icon { display: block; margin-bottom: 4px; }
 .inv-detail-label { font-size: 0.72rem; color: var(--text-muted); }
 .inv-detail-value { font-size: 1.2rem; font-weight: 700; color: var(--burgundy); }
 

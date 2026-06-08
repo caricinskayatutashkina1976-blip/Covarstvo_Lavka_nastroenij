@@ -14,7 +14,12 @@
   <div class="app">
     <aside class="sidebar">
       <div class="brand">
-        <div class="brand-icon">🪷</div>
+        <div class="brand-icon">
+          <span class="icon-frame icon-frame--brand">
+            <img src="assets/icons/ui/brand.png" alt="Коварство Ароматов" class="ui-icon">
+            <span class="icon-text-fallback hidden" aria-hidden="true">К</span>
+          </span>
+        </div>
         <h1 class="brand-title">Коварство<br>Ароматов</h1>
         <p class="brand-subtitle">— Лавка настроений —</p>
       </div>
@@ -22,30 +27,30 @@
       <nav class="sidebar-nav" aria-label="Управление лавкой">
         <p class="sidebar-nav-label">Управление лавкой</p>
         <a href="#" class="nav-item active" data-nav="home" title="Обслуживание клиентов">
-          <span class="icon-badge nav-icon-badge">✨</span><span class="nav-text">Главная</span>
+          <span class="icon-frame"><img src="assets/icons/menu/home.png" alt="Главная" class="menu-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Г</span></span><span class="nav-text">Главная</span>
         </a>
         <a href="#" class="nav-item" data-nav="candles" title="Пополнение витрины свечами">
-          <span class="icon-badge nav-icon-badge">🕯️</span><span class="nav-text">Свечи</span>
+          <span class="icon-frame"><img src="assets/icons/menu/candle.png" alt="Свечи" class="menu-icon"><span class="icon-text-fallback hidden" aria-hidden="true">С</span></span><span class="nav-text">Свечи</span>
         </a>
         <a href="#" class="nav-item" data-nav="diffusers" title="Пополнение витрины диффузорами">
-          <span class="icon-badge nav-icon-badge">🌿</span><span class="nav-text">Диффузоры</span>
+          <span class="icon-frame"><img src="assets/icons/menu/diffuser.png" alt="Диффузоры" class="menu-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Д</span></span><span class="nav-text">Диффузоры</span>
         </a>
         <a href="#" class="nav-item" data-nav="auto" title="Пополнение витрины автопарфюмом">
-          <span class="icon-badge nav-icon-badge">🧴</span><span class="nav-text">Автопарфюм</span>
+          <span class="icon-frame"><img src="assets/icons/menu/car.png" alt="Автопарфюм" class="menu-icon"><span class="icon-text-fallback hidden" aria-hidden="true">А</span></span><span class="nav-text">Автопарфюм</span>
         </a>
         <a href="#" class="nav-item" data-nav="offers" title="Запуск акций для лавки">
-          <span class="icon-badge nav-icon-badge">🎁</span><span class="nav-text">Спецпредложения</span>
+          <span class="icon-frame"><img src="assets/icons/menu/gift.png" alt="Спецпредложения" class="menu-icon"><span class="icon-text-fallback hidden" aria-hidden="true">С</span></span><span class="nav-text">Спецпредложения</span>
         </a>
         <a href="#" class="nav-item" data-nav="inventory" title="Просмотр и покупка ресурсов">
-          <span class="icon-badge nav-icon-badge">📦</span><span class="nav-text">Инвентарь</span>
+          <span class="icon-frame"><img src="assets/icons/menu/inventory.png" alt="Инвентарь" class="menu-icon"><span class="icon-text-fallback hidden" aria-hidden="true">И</span></span><span class="nav-text">Инвентарь</span>
         </a>
         <a href="#" class="nav-item" data-nav="collections" title="Сбор ароматических коллекций">
-          <span class="icon-badge nav-icon-badge">📖</span><span class="nav-text">Коллекции</span>
+          <span class="icon-frame"><img src="assets/icons/menu/collection.png" alt="Коллекции" class="menu-icon"><span class="icon-text-fallback hidden" aria-hidden="true">К</span></span><span class="nav-text">Коллекции</span>
         </a>
       </nav>
 
       <div class="streak-card" id="streakCard">
-        <div class="streak-flame" id="streakIcon">🔥</div>
+        <div class="streak-flame" id="streakIcon"></div>
         <h3>Серия удачных подборов</h3>
         <p class="streak-main"><span id="streakCount">0</span> дня подряд</p>
         <p class="streak-sub"><span id="pickStreakCount">0</span> подряд сегодня</p>
@@ -57,21 +62,21 @@
       <header class="top-bar">
         <div class="stats-row">
           <div class="stat-card">
-            <div class="icon-badge stat-icon-badge">🧴</div>
+            <span class="icon-frame icon-frame--stat"><img src="assets/icons/stats/sales.png" alt="Продажи" class="stat-icon"><span class="icon-text-fallback hidden" aria-hidden="true">П</span></span>
             <div class="stat-info">
               <span class="stat-label">Продажи</span>
               <span class="stat-value" id="salesCount">0</span>
             </div>
           </div>
           <div class="stat-card">
-            <div class="icon-badge stat-icon-badge">💗</div>
+            <span class="icon-frame icon-frame--stat"><img src="assets/icons/stats/happy.png" alt="Довольные" class="stat-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Д</span></span>
             <div class="stat-info">
               <span class="stat-label">Довольные</span>
               <span class="stat-value" id="happyCount">0</span>
             </div>
           </div>
           <div class="stat-card stat-card-mood">
-            <div class="icon-badge stat-icon-badge">😊</div>
+            <span class="icon-frame icon-frame--stat"><img src="assets/icons/stats/mood.png" alt="Настроение лавки" class="stat-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Н</span></span>
             <div class="stat-info">
               <span class="stat-label">Настроение лавки</span>
               <div class="mood-bar-wrap">
@@ -84,7 +89,7 @@
 
         <div class="top-bar-right">
           <div class="hearts-widget stat-card-hearts" id="heartsCard">
-            <div class="icon-badge hearts-icon-badge">💗</div>
+            <span class="icon-frame icon-frame--stat"><img src="assets/icons/stats/hearts.png" alt="Бонусные сердца" class="stat-icon"><span class="icon-text-fallback hidden" aria-hidden="true">С</span></span>
             <div class="hearts-widget-info">
               <span class="hearts-widget-value" id="heartsCount">0</span>
               <span class="hearts-widget-label">Бонусные<br>сердца</span>
@@ -118,10 +123,10 @@
               <div class="client-card-border" aria-hidden="true"></div>
               <div class="client-card-inner">
                 <div class="category-tabs" aria-hidden="true">
-                  <span class="category-tab active"><span class="icon-badge category-icon-badge">🕯️</span></span>
-                  <span class="category-tab"><span class="icon-badge category-icon-badge">🌿</span></span>
-                  <span class="category-tab"><span class="icon-badge category-icon-badge">🧴</span></span>
-                  <span class="category-tab"><span class="icon-badge category-icon-badge">🌸</span></span>
+                  <span class="category-tab active"><span class="icon-frame"><img src="assets/icons/categories/candle.png" alt="Свечи" class="category-icon"><span class="icon-text-fallback hidden" aria-hidden="true">С</span></span></span>
+                  <span class="category-tab"><span class="icon-frame"><img src="assets/icons/categories/diffuser.png" alt="Диффузоры" class="category-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Д</span></span></span>
+                  <span class="category-tab"><span class="icon-frame"><img src="assets/icons/categories/perfume.png" alt="Автопарфюм" class="category-icon"><span class="icon-text-fallback hidden" aria-hidden="true">А</span></span></span>
+                  <span class="category-tab"><span class="icon-frame"><img src="assets/icons/categories/flower.png" alt="Цветы" class="category-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Ц</span></span></span>
                 </div>
 
                 <div class="client-profile">
@@ -136,7 +141,7 @@
                     </div>
                     <blockquote class="client-request" id="clientRequest">«Завтра важная презентация...»</blockquote>
                   </div>
-                  <button class="btn btn-hint" id="hintBtn"><span class="icon-badge hint-icon-badge">💡</span> Подсказка</button>
+                  <button class="btn btn-hint" id="hintBtn"><span class="icon-frame icon-frame--hint"><img src="assets/icons/ui/hint.png" alt="Подсказка" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">П</span></span> Подсказка</button>
                 </div>
 
                 <div class="hint-box hidden" id="hintBox"></div>
@@ -165,7 +170,7 @@
 
               <div class="result-header">✦ Ваш ароматный результат ✦</div>
 
-              <div class="result-type-icon" id="resultIcon">🕯️</div>
+              <div class="result-type-icon" id="resultIcon"></div>
               <h2 class="result-type-title" id="resultType">Эстет уюта</h2>
               <p class="result-type-desc" id="resultDesc"></p>
 
@@ -175,7 +180,7 @@
               </div>
 
               <div class="result-product-card" id="resultProductCard">
-                <span class="result-product-icon" id="resultProductIcon">🕯️</span>
+                <span class="result-product-icon" id="resultProductIcon"></span>
                 <div class="result-product-info">
                   <span class="result-product-label">Рекомендуем</span>
                   <p class="result-product-text" id="resultProductText"></p>
@@ -183,7 +188,7 @@
               </div>
 
               <div class="result-promo-coupon">
-                <span class="coupon-badge">🎁 Ваш бонус</span>
+                <span class="coupon-badge"><span class="icon-frame icon-frame--coupon"><img src="assets/icons/ui/gift.png" alt="Бонус" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Б</span></span> Ваш бонус</span>
                 <p class="coupon-text">Назовите кодовое слово <strong class="coupon-code">ЛАВКА</strong> и получите приятный комплимент к заказу.</p>
               </div>
 
@@ -233,7 +238,7 @@
                 </form>
 
                 <div class="lead-message-block hidden" id="leadMessageBlock">
-                  <h4 class="lead-message-title">✉️ Готовое сообщение для Натальи</h4>
+                  <h4 class="lead-message-title">Готовое сообщение для Натальи</h4>
                   <div class="lead-message-text" id="leadMessageText"></div>
                   <div class="lead-message-actions">
                     <button class="btn btn-secondary btn-cta" type="button" id="btnCopyMessage">Скопировать сообщение</button>
@@ -271,7 +276,7 @@
                   <h2 class="section-panel-title" id="sectionTitle">Раздел</h2>
                   <p class="section-intro" id="sectionIntro"></p>
                 </div>
-                <span class="promo-badge hidden" id="promoBadge">🎁 Акция активна</span>
+                <span class="promo-badge hidden" id="promoBadge"></span>
               </div>
               <div class="section-content" id="sectionContent"></div>
               <button class="btn btn-primary btn-back" id="backToShopBtn" type="button">К обслуживанию клиентов</button>
@@ -281,35 +286,35 @@
 
         <aside class="right-panel">
           <div class="panel-card panel-card-quest" id="questCard">
-            <h3><span class="icon-badge panel-icon-badge">📋</span> Ежедневное задание</h3>
+            <h3><span class="icon-frame icon-frame--panel"><img src="assets/icons/ui/task.png" alt="Задание" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">З</span></span> Ежедневное задание</h3>
             <p class="quest-text" id="questText">Подберите 3 аромата с настроением «Энергия»</p>
             <div class="quest-progress-bar"><div class="quest-progress-fill" id="questBarFill"></div></div>
             <div class="quest-progress"><span id="questProgress">0 / 3</span></div>
-            <p class="quest-reward">Награда: 💎 <span id="questReward">5</span> + 💖 <span id="questHeartReward">2</span></p>
-            <p class="quest-complete hidden" id="questComplete">✨ Задание выполнено!</p>
+            <p class="quest-reward">Награда: <img src="assets/icons/ui/gem.png" alt="Алмазы" class="ui-icon ui-icon--inline"><span id="questReward">5</span> + <img src="assets/icons/stats/hearts.png" alt="Сердца" class="ui-icon ui-icon--inline"><span id="questHeartReward">2</span></p>
+            <p class="quest-complete hidden" id="questComplete">Задание выполнено!</p>
             <span class="panel-card-badge hidden" id="questBadge">Ежедневное</span>
           </div>
 
           <div class="panel-card mood-circle-card">
-            <h3><span class="icon-badge panel-icon-badge">😊</span> Настроение лавки</h3>
+            <h3><span class="icon-frame icon-frame--panel"><img src="assets/icons/ui/mood.png" alt="Настроение" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Н</span></span> Настроение лавки</h3>
             <div class="mood-circle">
               <svg viewBox="0 0 100 100">
                 <circle class="mood-circle-bg" cx="50" cy="50" r="42"/>
                 <circle class="mood-circle-fill" id="moodCircleFill" cx="50" cy="50" r="42"/>
               </svg>
               <div class="mood-circle-center">
-                <span class="icon-badge mood-circle-badge">😊</span>
+                <span class="icon-frame icon-frame--mood-circle"><img src="assets/icons/ui/mood.png" alt="Настроение" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Н</span></span>
                 <span class="mood-circle-text" id="moodCircleText">50%</span>
               </div>
             </div>
           </div>
 
           <div class="panel-card panel-card-reputation" id="reputationCard">
-            <h3><span class="icon-badge panel-icon-badge">🏆</span> Репутация</h3>
+            <h3><span class="icon-frame icon-frame--panel"><img src="assets/icons/ui/trophy.png" alt="Репутация" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Р</span></span> Репутация</h3>
             <div class="reputation-wreath">
-              <span class="wreath-deco">🌿</span>
+              <span class="wreath-deco"><img src="assets/icons/categories/flower.png" alt="" class="wreath-icon"></span>
               <span class="wreath-level" id="reputationTier">1</span>
-              <span class="wreath-deco">🌿</span>
+              <span class="wreath-deco"><img src="assets/icons/categories/flower.png" alt="" class="wreath-icon"></span>
             </div>
             <p class="reputation-title" id="reputationTitle">Начинающий аромаэксперт</p>
             <span class="reputation-stars hidden" id="reputationStars">★☆☆☆</span>
@@ -318,7 +323,7 @@
           </div>
 
           <div class="panel-card tip-card">
-            <h3><span class="icon-badge panel-icon-badge">💡</span> Подсказка дня</h3>
+            <h3><span class="icon-frame icon-frame--panel"><img src="assets/icons/ui/hint.png" alt="Подсказка" class="ui-icon"><span class="icon-text-fallback hidden" aria-hidden="true">П</span></span> Подсказка дня</h3>
             <p class="tip-text" id="dailyTip">Слушайте настроение клиента — оно подскажет аромат.</p>
           </div>
         </aside>
@@ -330,18 +335,20 @@
           <p class="bottom-hint">Нажмите на иконку — посмотреть, что есть в наличии</p>
           <div class="inventory-items">
             <button class="inv-item inv-item-click" type="button" data-inv="candles" id="invCandlesBtn" title="Свечи в наличии">
-              <span class="icon-badge inv-icon-badge">🕯️</span><span class="inv-item-label">Свечи</span><span class="inv-item-qty" id="invCandlesQty">7</span>
+              <span class="icon-frame icon-frame--inv"><img src="assets/icons/inventory/candle.png" alt="Свечи" class="inventory-icon"><span class="icon-text-fallback hidden" aria-hidden="true">С</span></span><span class="inv-item-label">Свечи</span><span class="inv-item-qty" id="invCandlesQty">7</span>
             </button>
             <button class="inv-item inv-item-click" type="button" data-inv="diffusers" id="invDiffusersBtn" title="Диффузоры в наличии">
-              <span class="icon-badge inv-icon-badge">🌿</span><span class="inv-item-label">Диффузоры</span><span class="inv-item-qty" id="invDiffusersQty">5</span>
+              <span class="icon-frame icon-frame--inv"><img src="assets/icons/inventory/diffuser.png" alt="Диффузоры" class="inventory-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Д</span></span><span class="inv-item-label">Диффузоры</span><span class="inv-item-qty" id="invDiffusersQty">5</span>
             </button>
             <button class="inv-item inv-item-click" type="button" data-inv="bottles" id="invBottlesBtn" title="Флаконы в наличии">
-              <span class="icon-badge inv-icon-badge">🧴</span><span class="inv-item-label">Флаконы</span><span class="inv-item-qty" id="invBottlesQty">4</span>
+              <span class="icon-frame icon-frame--inv"><img src="assets/icons/inventory/bottle.png" alt="Флаконы" class="inventory-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Ф</span></span><span class="inv-item-label">Флаконы</span><span class="inv-item-qty" id="invBottlesQty">4</span>
             </button>
             <button class="inv-item inv-item-click" type="button" data-inv="decor" id="invDecorBtn" title="Декор лавки">
-              <span class="icon-badge inv-icon-badge">🌸</span><span class="inv-item-label">Декор</span><span class="inv-item-qty" id="invDecorQty">6</span>
+              <span class="icon-frame icon-frame--inv"><img src="assets/icons/inventory/flower.png" alt="Декор" class="inventory-icon"><span class="icon-text-fallback hidden" aria-hidden="true">Д</span></span><span class="inv-item-label">Декор</span><span class="inv-item-qty" id="invDecorQty">6</span>
             </button>
-            <button class="inv-add" type="button" id="invAddBtn" title="Открыть мини-магазин">+</button>
+            <button class="inv-add" type="button" id="invAddBtn" title="Открыть мини-магазин">
+              <span class="icon-frame icon-frame--inv-add"><img src="assets/icons/inventory/plus.png" alt="Добавить" class="inventory-icon"><span class="icon-text-fallback hidden" aria-hidden="true">+</span></span>
+            </button>
           </div>
         </div>
 

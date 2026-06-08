@@ -377,6 +377,97 @@ const SECTION_INTROS = {
 /* ===== Ссылка для связи с Натальей (MAX) ===== */
 const NATALYA_CONTACT_URL = 'https://max.ru/u/f9LHodD0cOIP8EjW1gjuxBQgv0vvt2CzVvd_ooi2yX3tz1G5w2XwEpXjZkk';
 
+const icons = {
+  menu: {
+    home: 'assets/icons/menu/home.png',
+    candles: 'assets/icons/menu/candle.png',
+    diffusers: 'assets/icons/menu/diffuser.png',
+    carPerfume: 'assets/icons/menu/car.png',
+    offers: 'assets/icons/menu/gift.png',
+    inventory: 'assets/icons/menu/inventory.png',
+    collections: 'assets/icons/menu/collection.png'
+  },
+  stats: {
+    sales: 'assets/icons/stats/sales.png',
+    happy: 'assets/icons/stats/happy.png',
+    mood: 'assets/icons/stats/mood.png',
+    hearts: 'assets/icons/stats/hearts.png'
+  },
+  categories: {
+    candle: 'assets/icons/categories/candle.png',
+    diffuser: 'assets/icons/categories/diffuser.png',
+    perfume: 'assets/icons/categories/perfume.png',
+    flower: 'assets/icons/categories/flower.png'
+  },
+  inventory: {
+    candle: 'assets/icons/inventory/candle.png',
+    diffuser: 'assets/icons/inventory/diffuser.png',
+    bottle: 'assets/icons/inventory/bottle.png',
+    flower: 'assets/icons/inventory/flower.png',
+    plus: 'assets/icons/inventory/plus.png'
+  },
+  ui: {
+    task: 'assets/icons/ui/task.png',
+    hint: 'assets/icons/ui/hint.png',
+    trophy: 'assets/icons/ui/trophy.png',
+    mood: 'assets/icons/ui/mood.png',
+    star: 'assets/icons/ui/star.png',
+    fire: 'assets/icons/ui/fire.png',
+    story: 'assets/icons/ui/story.png',
+    gift: 'assets/icons/ui/gift.png',
+    gem: 'assets/icons/ui/gem.png',
+    brand: 'assets/icons/ui/brand.png'
+  }
+};
+
+const AROMA_TYPE_IMAGES = {
+  cozy: { image: icons.categories.candle, product: icons.categories.candle },
+  energy: { image: icons.categories.perfume, product: icons.menu.carPerfume },
+  feminine: { image: icons.ui.star, product: icons.ui.star },
+  calm: { image: icons.categories.diffuser, product: icons.categories.diffuser },
+  festive: { image: icons.ui.gift, product: icons.ui.gift }
+};
+
+function iconInitial(text) {
+  const t = String(text || '').trim();
+  return t ? t.charAt(0).toUpperCase() : '?';
+}
+
+function iconImg(src, alt, className, fallbackText) {
+  const fb = fallbackText || iconInitial(alt);
+  return `
+    <span class="icon-frame">
+      <img src="${src}" alt="${alt}" class="${className}">
+      <span class="icon-text-fallback hidden" aria-hidden="true">${fb}</span>
+    </span>
+  `;
+}
+
+function bindIconFallbacks(root = document) {
+  root.querySelectorAll('.icon-frame img').forEach(img => {
+    if (img.dataset.fallbackBound) return;
+    img.dataset.fallbackBound = '1';
+    const frame = img.closest('.icon-frame');
+    const fallback = frame?.querySelector('.icon-text-fallback');
+    const showFallback = () => {
+      img.classList.add('hidden');
+      if (fallback) fallback.classList.remove('hidden');
+    };
+    img.addEventListener('error', showFallback);
+    if (img.complete && img.naturalWidth === 0) showFallback();
+  });
+}
+
+function setIconContainer(el, src, alt, className, fallbackText) {
+  if (!el) return;
+  el.innerHTML = iconImg(src, alt, className, fallbackText);
+  bindIconFallbacks(el);
+}
+
+function getAromaImage(aroma) {
+  return aroma.image || `assets/aromas/${aroma.id}.png`;
+}
+
 const SHARE_PROMO_TEXT = 'Промокод ЛАВКА — приятный комплимент к заказу от Коварство Ароматов.';
 const GAME_TITLE = 'Коварство Ароматов: Лавка настроений';
 
@@ -615,10 +706,10 @@ function formatAromaTags(tags) {
 }
 
 function buildAromaArtHtml(aroma) {
-  const src = aroma.image || `assets/aromas/${aroma.id}.png`;
+  const src = getAromaImage(aroma);
   return `
     <img class="aroma-illustration" src="${src}" alt="${aroma.name}" loading="lazy">
-    <span class="aroma-illustration-fallback hidden" aria-hidden="true">${aroma.icon}</span>
+    <span class="aroma-illustration-fallback hidden" aria-hidden="true">${iconInitial(aroma.name)}</span>
   `;
 }
 
@@ -749,7 +840,7 @@ function completeQuest() {
   if (els.questCard) els.questCard.classList.add('quest-done');
   if (els.questBadge) els.questBadge.textContent = 'Готово ✓';
 
-  showToast(`Ежедневное задание выполнено! +${state.questGemReward} 💎 +${state.questHeartReward} 💖`, 'quest');
+  showToast(`Ежедневное задание выполнено! +${state.questGemReward} алмазов +${state.questHeartReward} сердец`, 'quest');
 }
 
 function addHearts(amount, reason) {
@@ -760,18 +851,25 @@ function addHearts(amount, reason) {
     els.heartsCard.classList.add('hearts-pop');
   }
   spawnFloatingHearts(amount);
-  if (reason) showToast(`+${amount} 💖 ${reason}`, 'heart');
+  if (reason) showToast(`+${amount} сердец: ${reason}`, 'heart');
 }
 
 function spawnFloatingHearts(count) {
   if (!els.heartsFloat) return;
   const n = Math.min(count, 5);
   for (let i = 0; i < n; i++) {
-    const h = document.createElement('span');
+    const h = document.createElement('img');
     h.className = 'floating-heart';
-    h.textContent = '💖';
+    h.src = icons.stats.hearts;
+    h.alt = 'Сердце';
     h.style.left = 20 + Math.random() * 60 + '%';
     h.style.animationDelay = i * 0.12 + 's';
+    h.addEventListener('error', () => {
+      h.replaceWith(Object.assign(document.createElement('span'), {
+        className: 'floating-heart floating-heart--text',
+        textContent: 'С'
+      }));
+    });
     els.heartsFloat.appendChild(h);
     setTimeout(() => h.remove(), 1200);
   }
@@ -806,8 +904,9 @@ function updateInventoryUI() {
 function updatePromoBadge() {
   if (!els.promoBadge) return;
   if (state.activePromo) {
-    els.promoBadge.textContent = `🎁 ${state.activePromo.name}`;
+    els.promoBadge.innerHTML = `${iconImg(icons.ui.gift, 'Акция', 'ui-icon', 'А')} <span class="promo-badge-text">${state.activePromo.name}</span>`;
     els.promoBadge.classList.remove('hidden');
+    bindIconFallbacks(els.promoBadge);
   } else {
     els.promoBadge.classList.add('hidden');
   }
@@ -886,16 +985,16 @@ function navigateToSection(navId) {
   renderSection(navId);
 }
 
-function renderShopCard(item, btnLabel, btnAction) {
+function renderShopCard(item, btnLabel, btnAction, iconSrc) {
   return `
     <article class="shop-card">
-      <div class="shop-card-icon">${item.icon}</div>
+      <div class="shop-card-icon">${iconImg(iconSrc, item.name, 'inventory-icon', iconInitial(item.name))}</div>
       <h4 class="shop-card-name">${item.name}</h4>
       <p class="shop-card-desc">${item.description}</p>
       ${item.mood ? `<span class="shop-card-mood">${item.mood}</span>` : ''}
       ${item.room ? `<p class="shop-card-meta">Комната: ${item.room}</p>` : ''}
       ${item.audience ? `<p class="shop-card-meta">Кому: ${item.audience}</p>` : ''}
-      ${item.price ? `<p class="shop-card-price">💎 ${item.price} монет</p>` : ''}
+      ${item.price ? `<p class="shop-card-price">${iconImg(icons.ui.gem, 'Монеты', 'ui-icon ui-icon--inline', 'М')} ${item.price} монет</p>` : ''}
       ${item.contents ? `<p class="shop-card-meta">Состав: ${item.contents}</p>` : ''}
       ${item.bonus ? `<p class="offer-bonus">Бонус: ${item.bonus}</p>` : ''}
       <button class="btn-shop" type="button" data-action="${btnAction}" data-id="${item.id}">${btnLabel}</button>
@@ -910,19 +1009,19 @@ function renderSection(navId) {
   switch (navId) {
     case 'candles':
       html = `<div class="shop-grid">${SHOP_CANDLES.map(c =>
-        renderShopCard(c, 'Добавить в витрину', 'add-candle')
+        renderShopCard(c, 'Добавить в витрину', 'add-candle', icons.inventory.candle)
       ).join('')}</div>`;
       break;
 
     case 'diffusers':
       html = `<div class="shop-grid">${SHOP_DIFFUSERS.map(d =>
-        renderShopCard(d, 'Добавить в витрину', 'add-diffuser')
+        renderShopCard(d, 'Добавить в витрину', 'add-diffuser', icons.inventory.diffuser)
       ).join('')}</div>`;
       break;
 
     case 'auto':
       html = `<div class="shop-grid">${SHOP_AUTO.map(a =>
-        renderShopCard(a, 'Добавить в витрину', 'add-auto')
+        renderShopCard(a, 'Добавить в витрину', 'add-auto', icons.inventory.bottle)
       ).join('')}</div>`;
       break;
 
@@ -931,7 +1030,8 @@ function renderSection(navId) {
         renderShopCard(
           o,
           state.promoUsedToday ? 'Акция уже запущена' : 'Запустить акцию',
-          'launch-offer'
+          'launch-offer',
+          icons.ui.gift
         )
       ).join('')}</div>`;
       if (state.promoUsedToday && state.activePromo) {
@@ -943,12 +1043,12 @@ function renderSection(navId) {
       html = `
         <p class="section-lead">Все ресурсы лавки в одном месте. Покупайте за продажи — это ваши игровые монеты.</p>
         <div class="inventory-detail-grid">
-          <div class="inv-detail-card"><span class="inv-detail-icon">🕯️</span><span class="inv-detail-label">Свечи</span><span class="inv-detail-value">${state.inventory.candles}</span></div>
-          <div class="inv-detail-card"><span class="inv-detail-icon">🌿</span><span class="inv-detail-label">Диффузоры</span><span class="inv-detail-value">${state.inventory.diffusers}</span></div>
-          <div class="inv-detail-card"><span class="inv-detail-icon">🧴</span><span class="inv-detail-label">Флаконы</span><span class="inv-detail-value">${state.inventory.bottles}</span></div>
-          <div class="inv-detail-card"><span class="inv-detail-icon">🌸</span><span class="inv-detail-label">Декор</span><span class="inv-detail-value">${state.inventory.decor}</span></div>
-          <div class="inv-detail-card"><span class="inv-detail-icon">💖</span><span class="inv-detail-label">Сердца</span><span class="inv-detail-value">${state.hearts}</span></div>
-          <div class="inv-detail-card"><span class="inv-detail-icon">💎</span><span class="inv-detail-label">Алмазы</span><span class="inv-detail-value">${state.gems}</span></div>
+          <div class="inv-detail-card">${iconImg(icons.inventory.candle, 'Свечи', 'inventory-icon', 'С')}<span class="inv-detail-label">Свечи</span><span class="inv-detail-value">${state.inventory.candles}</span></div>
+          <div class="inv-detail-card">${iconImg(icons.inventory.diffuser, 'Диффузоры', 'inventory-icon', 'Д')}<span class="inv-detail-label">Диффузоры</span><span class="inv-detail-value">${state.inventory.diffusers}</span></div>
+          <div class="inv-detail-card">${iconImg(icons.inventory.bottle, 'Флаконы', 'inventory-icon', 'Ф')}<span class="inv-detail-label">Флаконы</span><span class="inv-detail-value">${state.inventory.bottles}</span></div>
+          <div class="inv-detail-card">${iconImg(icons.inventory.flower, 'Декор', 'inventory-icon', 'Д')}<span class="inv-detail-label">Декор</span><span class="inv-detail-value">${state.inventory.decor}</span></div>
+          <div class="inv-detail-card">${iconImg(icons.stats.hearts, 'Сердца', 'inventory-icon', 'С')}<span class="inv-detail-label">Сердца</span><span class="inv-detail-value">${state.hearts}</span></div>
+          <div class="inv-detail-card">${iconImg(icons.ui.gem, 'Алмазы', 'inventory-icon', 'А')}<span class="inv-detail-label">Алмазы</span><span class="inv-detail-value">${state.gems}</span></div>
         </div>
         <p class="shop-card-meta">Избранных ароматов: <strong>${state.favorites.length}</strong></p>
         <p class="shop-card-meta">Продаж (монеты): <strong>${state.sales}</strong></p>
@@ -969,16 +1069,21 @@ function renderSection(navId) {
         const done = state.completedCollections.includes(col.id);
         return `
           <div class="collection-card${done ? ' done' : ''}">
-            <h4 class="collection-name">${done ? '✨ ' : ''}${col.name}</h4>
+            <h4 class="collection-name">${done ? iconImg(icons.ui.star, 'Готово', 'ui-icon ui-icon--inline', 'Г') + ' ' : ''}${col.name}</h4>
             <div class="collection-aromas">
               ${col.aromas.map(id => {
                 const a = getAromaById(id);
                 const has = state.collectedAromas[id];
-                return `<span class="collection-aroma${has ? ' collected' : ''}">${a ? a.icon + ' ' + a.name : id}</span>`;
+                if (!a) return `<span class="collection-aroma">${id}</span>`;
+                return `<span class="collection-aroma${has ? ' collected' : ''}">
+                  <img src="${getAromaImage(a)}" alt="${a.name}" class="collection-aroma-thumb">
+                  <span class="collection-aroma-fallback hidden" aria-hidden="true">${iconInitial(a.name)}</span>
+                  ${a.name}
+                </span>`;
               }).join('')}
             </div>
             <div class="collection-progress-bar"><div class="collection-progress-fill" style="width:${pct}%"></div></div>
-            <p class="collection-reward">Прогресс: ${collected.length}/${col.aromas.length} · Награда: ${col.reward.hearts} 💖, +${col.reward.mood} настроения</p>
+            <p class="collection-reward">Прогресс: ${collected.length}/${col.aromas.length} · Награда: ${col.reward.hearts} сердец, +${col.reward.mood} настроения</p>
           </div>
         `;
       }).join('');
@@ -989,6 +1094,13 @@ function renderSection(navId) {
   }
 
   els.sectionContent.innerHTML = html;
+  bindIconFallbacks(els.sectionContent);
+  els.sectionContent.querySelectorAll('.collection-aroma-thumb').forEach(img => {
+    img.addEventListener('error', () => {
+      img.classList.add('hidden');
+      img.parentElement?.querySelector('.collection-aroma-fallback')?.classList.remove('hidden');
+    });
+  });
 
   if (navId === 'offers' && state.promoUsedToday) {
     els.sectionContent.querySelectorAll('[data-action="launch-offer"]').forEach(btn => {
@@ -1077,7 +1189,7 @@ function trackCollection(aromaId) {
       state.completedCollections.push(col.id);
       addHearts(col.reward.hearts, '');
       addMood(col.reward.mood, true);
-      showToast(`Коллекция «${col.name}» собрана! +${col.reward.hearts} 💖`, 'success');
+      showToast(`Коллекция «${col.name}» собрана! +${col.reward.hearts} сердец`, 'success');
       showToast('Настроение лавки выросло', 'mood');
     }
   });
@@ -1107,9 +1219,9 @@ function openQuickInventory(type) {
       <p>Украшения, сухоцветы и вазы создают уют в лавке.</p>
       <p class="shop-card-meta">В наличии: <strong>${qty}</strong> единиц декора</p>
       <ul class="modal-list">
-        <li>🌸 Сухие розы в вазах</li>
-        <li>🕯️ Подсвечники из латуни</li>
-        <li>🪷 Ароматические букеты</li>
+        <li>Сухие розы в вазах</li>
+        <li>Подсвечники из латуни</li>
+        <li>Ароматические букеты</li>
       </ul>
     `;
   } else {
@@ -1164,15 +1276,24 @@ function openHostessTip() {
 }
 
 function openFavoriteDetail(aroma) {
+  const src = getAromaImage(aroma);
   openModal('Избранный аромат', `
     <div class="favorite-detail-card">
-      <span class="favorite-detail-icon">${aroma.icon}</span>
+      <img src="${src}" alt="${aroma.name}" class="favorite-aroma-image favorite-detail-image">
+      <span class="favorite-detail-fallback hidden" aria-hidden="true">${iconInitial(aroma.name)}</span>
       <h4 class="favorite-detail-name">${aroma.name}</h4>
       <span class="favorite-detail-mood">${aroma.mood}</span>
       <p>${aroma.description}</p>
       <p class="shop-card-meta">${aroma.tags}</p>
     </div>
   `);
+  const img = els.modalBody.querySelector('.favorite-detail-image');
+  if (img) {
+    img.addEventListener('error', () => {
+      img.classList.add('hidden');
+      els.modalBody.querySelector('.favorite-detail-fallback')?.classList.remove('hidden');
+    });
+  }
 }
 
 function bindSectionContentEvents() {
@@ -1195,9 +1316,13 @@ function updateStreakUI() {
     els.streakCard.classList.toggle('streak-fire', state.streak >= 1);
   }
   if (els.streakIcon) {
-    if (state.currentStreak >= 5) els.streakIcon.textContent = '🔥';
-    else if (state.currentStreak >= 3) els.streakIcon.textContent = '✨';
-    else els.streakIcon.textContent = '🕯️';
+    if (state.currentStreak >= 5) {
+      setIconContainer(els.streakIcon, icons.ui.fire, 'Серия', 'ui-icon', 'Ж');
+    } else if (state.currentStreak >= 3) {
+      setIconContainer(els.streakIcon, icons.ui.star, 'Серия', 'ui-icon', 'С');
+    } else {
+      setIconContainer(els.streakIcon, icons.menu.candles, 'Серия', 'ui-icon', 'С');
+    }
   }
 }
 
@@ -1440,10 +1565,10 @@ function handleAromaChoice(chosenId, cardEl) {
 
     if (state.currentStreak === 3) {
       addHearts(1, 'Серия из 3 подборов!');
-      showToast('🔥 Серия из 3 удачных подборов!', 'streak');
+      showToast('Серия из 3 удачных подборов!', 'streak');
     } else if (state.currentStreak === 5) {
       addHearts(2, 'Идеальная серия!');
-      showToast('🔥 Потрясающая серия — 5 подряд!', 'streak');
+      showToast('Потрясающая серия — 5 подряд!', 'streak');
     }
 
     const moodBoost = Math.random() > 0.5 ? 15 : 10;
@@ -1457,7 +1582,7 @@ function handleAromaChoice(chosenId, cardEl) {
 
     const favAdded = addFavorite(correctAroma);
     showResult(true, client, correctAroma);
-    spawnSparks(true);
+    spawnSparks();
 
     if (els.reputationCard) {
       els.reputationCard.classList.remove('rep-levelup');
@@ -1495,14 +1620,15 @@ function showResult(isCorrect, client, correctAroma) {
   els.nextClientBtn.textContent = isLast ? 'Завершить день' : 'Следующий клиент';
 }
 
-function spawnSparks(isHearts) {
-  const symbols = isHearts ? ['💖', '✨', '💫', '🌸', '⭐'] : [];
+function spawnSparks() {
+  const sparkIcons = [icons.stats.hearts, icons.ui.star, icons.ui.fire];
   const container = els.resultSparks;
 
   for (let i = 0; i < 12; i++) {
-    const spark = document.createElement('span');
-    spark.className = 'spark';
-    spark.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    const spark = document.createElement('img');
+    spark.className = 'spark spark-img';
+    spark.src = sparkIcons[Math.floor(Math.random() * sparkIcons.length)];
+    spark.alt = '';
     spark.style.left = 30 + Math.random() * 40 + '%';
     spark.style.top = 30 + Math.random() * 40 + '%';
     const angle = Math.random() * Math.PI * 2;
@@ -1519,7 +1645,7 @@ function addFavorite(aroma) {
   if (state.favorites.some(f => f.id === aroma.id)) return false;
   state.favorites.push(aroma);
   renderFavorites(true);
-  showToast(`${aroma.icon} «${aroma.name}» добавлен в избранное!`, 'favorite');
+  showToast(`«${aroma.name}» добавлен в избранное!`, 'favorite');
   return true;
 }
 
@@ -1531,12 +1657,21 @@ function renderFavorites(highlightNew) {
 
   els.favoritesList.innerHTML = state.favorites.map((a, i) => {
     const isNew = highlightNew && i === state.favorites.length - 1;
+    const src = getAromaImage(a);
     return `
       <button type="button" class="favorite-slot${isNew ? ' favorite-new' : ''}" data-fav-id="${a.id}" title="${a.name}">
-        <span class="icon-badge fav-icon-badge">${a.icon}</span>
+        <img src="${src}" alt="${a.name}" class="favorite-aroma-image">
+        <span class="favorite-aroma-fallback hidden" aria-hidden="true">${iconInitial(a.name)}</span>
       </button>
     `;
   }).join('');
+
+  els.favoritesList.querySelectorAll('.favorite-aroma-image').forEach(img => {
+    img.addEventListener('error', () => {
+      img.classList.add('hidden');
+      img.parentElement?.querySelector('.favorite-aroma-fallback')?.classList.remove('hidden');
+    });
+  });
 
   els.favoritesList.querySelectorAll('[data-fav-id]').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1552,7 +1687,7 @@ function useHint() {
   if (!state.freeHintsToday && state.hintUsed) return;
 
   const client = state.dayClients[state.currentIndex];
-  els.hintBox.textContent = '💡 ' + client.hint;
+  els.hintBox.textContent = client.hint;
   els.hintBox.classList.remove('hidden');
 
   if (!state.freeHintsToday) {
@@ -1602,18 +1737,29 @@ function renderAromaResult() {
   const type = calculateAromaType(state.dayCorrectAromas);
   state.currentAromaType = type;
 
-  if (els.resultIcon) els.resultIcon.textContent = type.icon;
+  const typeImages = AROMA_TYPE_IMAGES[type.id] || AROMA_TYPE_IMAGES.cozy;
+  setIconContainer(els.resultIcon, typeImages.image, type.title, 'ui-icon ui-icon--large', iconInitial(type.title));
   if (els.resultType) els.resultType.textContent = type.title;
   if (els.resultDesc) els.resultDesc.textContent = type.description;
-  if (els.resultProductIcon) els.resultProductIcon.textContent = type.productIcon;
+  setIconContainer(els.resultProductIcon, typeImages.product, 'Рекомендация', 'ui-icon ui-icon--product', 'Р');
   if (els.resultProductText) els.resultProductText.textContent = type.product;
 
   if (els.resultAromas) {
     els.resultAromas.innerHTML = type.aromaIds.map(id => {
       const a = getAromaById(id);
       if (!a) return '';
-      return `<span class="result-aroma-pill">${a.icon} ${a.name}</span>`;
+      return `<span class="result-aroma-pill">
+        <img src="${getAromaImage(a)}" alt="${a.name}" class="result-aroma-thumb">
+        <span class="result-aroma-fallback hidden" aria-hidden="true">${iconInitial(a.name)}</span>
+        ${a.name}
+      </span>`;
     }).join('');
+    els.resultAromas.querySelectorAll('.result-aroma-thumb').forEach(img => {
+      img.addEventListener('error', () => {
+        img.classList.add('hidden');
+        img.parentElement?.querySelector('.result-aroma-fallback')?.classList.remove('hidden');
+      });
+    });
   }
 
   resetLeadForm();
@@ -1824,7 +1970,7 @@ function endDay() {
   if (els.summaryQuestReward) {
     if (state.questCompleted) {
       els.summaryQuestReward.textContent =
-        `✨ Задание дня выполнено! Получено: ${state.questGemReward} 💎 и ${state.questHeartReward} 💖`;
+        `Задание дня выполнено! Получено: ${state.questGemReward} алмазов и ${state.questHeartReward} сердец`;
       els.summaryQuestReward.classList.remove('hidden');
     } else {
       els.summaryQuestReward.classList.add('hidden');
@@ -1837,7 +1983,7 @@ function endDay() {
 
   const newTier = getReputationTier(state.totalHappy);
   if (newTier.stars > prevTier.stars) {
-    showToast(`⭐ Новый уровень репутации: ${newTier.title}!`, 'quest');
+    showToast(`Новый уровень репутации: ${newTier.title}!`, 'quest');
   }
 
   state.maxPickStreak = 0;
@@ -1943,6 +2089,7 @@ function init() {
   }
 
   bindSectionContentEvents();
+  bindIconFallbacks(document);
 }
 
 function bootGame() {

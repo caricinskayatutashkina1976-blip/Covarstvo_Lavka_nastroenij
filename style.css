@@ -1244,15 +1244,15 @@ button.btn-telegram,
   position: relative;
   display: flex;
   flex-direction: column;
-  background: var(--white);
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(112, 36, 49, 0.1);
-  box-shadow: var(--shadow);
+  background: #FFF9F2;
+  border-radius: 14px;
+  border: 1px solid rgba(201, 155, 106, 0.28);
+  box-shadow: 0 4px 16px rgba(93, 46, 46, 0.08);
   cursor: pointer;
   overflow: hidden;
   transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
   font-family: var(--font-sans);
-  text-align: left;
+  text-align: center;
   padding: 0;
 }
 
@@ -1294,27 +1294,45 @@ button.btn-telegram,
 }
 
 .aroma-card-art {
-  height: 100px;
+  height: 128px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg, rgba(232,180,176,0.2) 0%, rgba(250,243,240,0.5) 100%);
+  padding: 10px 12px 6px;
+  background: linear-gradient(180deg, rgba(255, 252, 250, 0.35) 0%, rgba(255, 249, 242, 0.95) 100%);
+}
+
+.aroma-illustration {
+  display: block;
+  max-width: 92%;
+  max-height: 112px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(93, 46, 46, 0.1));
+}
+
+.aroma-illustration-fallback {
+  font-size: 2.8rem;
+  line-height: 1;
 }
 
 .aroma-card-body {
-  padding: 10px 12px 14px;
+  padding: 8px 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 6px;
   flex: 1;
 }
 
 .aroma-card-body h4,
 .aroma-name {
   font-family: var(--font-serif);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 700;
-  color: var(--burgundy);
+  color: #5D2E2E;
+  line-height: 1.25;
 }
 
 .aroma-card-body p,
@@ -1330,14 +1348,16 @@ button.btn-telegram,
   flex-wrap: wrap;
   gap: 4px;
   margin-top: auto;
+  justify-content: center;
 }
 
 .aroma-tag-pill {
   font-size: 0.58rem;
-  color: var(--burgundy);
+  color: #5D2E2E;
   font-weight: 600;
-  background: rgba(232, 180, 176, 0.35);
-  padding: 2px 7px;
+  background: rgba(255, 249, 242, 0.95);
+  border: 1px solid rgba(201, 155, 106, 0.35);
+  padding: 3px 8px;
   border-radius: 99px;
 }
 

@@ -5,6 +5,7 @@ const AROMAS = [
     name: 'Лаванда',
     description: 'Спокойствие, сон, расслабление',
     tags: 'Травяной • Спокойный',
+    image: 'assets/aromas/lavender.png',
     icon: '🪻',
     mood: 'Спокойствие'
   },
@@ -13,6 +14,7 @@ const AROMAS = [
     name: 'Ваниль',
     description: 'Тепло, уют, нежность',
     tags: 'Сладкий • Уютный',
+    image: 'assets/aromas/vanilla.png',
     icon: '🍦',
     mood: 'Уют'
   },
@@ -21,6 +23,7 @@ const AROMAS = [
     name: 'Хвоя и мандарин',
     description: 'Праздник, свежесть, Новый год',
     tags: 'Хвойный • Праздничный',
+    image: 'assets/aromas/pine_mandarin.png',
     icon: '🍊',
     mood: 'Праздник'
   },
@@ -29,6 +32,7 @@ const AROMAS = [
     name: 'Грейпфрут и ветивер',
     description: 'Энергия, собранность, уверенность',
     tags: 'Свежий • Деловой',
+    image: 'assets/aromas/grapefruit_vetiver.png',
     icon: '🌿',
     mood: 'Энергия'
   },
@@ -37,6 +41,7 @@ const AROMAS = [
     name: 'Печёная айва с пряностями',
     description: 'Осень, дом, чай, тепло',
     tags: 'Тёплый • Пряный',
+    image: 'assets/aromas/quince_spice.png',
     icon: '🍯',
     mood: 'Уют'
   },
@@ -45,6 +50,7 @@ const AROMAS = [
     name: 'Белый кедр и роза',
     description: 'Элегантность, женственность, мягкость',
     tags: 'Цветочный • Благородный',
+    image: 'assets/aromas/cedar_rose.png',
     icon: '🌹',
     mood: 'Романтика'
   },
@@ -53,6 +59,7 @@ const AROMAS = [
     name: 'Манго',
     description: 'Яркость, лето, радость',
     tags: 'Фруктовый • Солнечный',
+    image: 'assets/aromas/mango.png',
     icon: '🥭',
     mood: 'Радость'
   },
@@ -61,6 +68,7 @@ const AROMAS = [
     name: 'Утренняя роса',
     description: 'Чистота, свежесть, лёгкость',
     tags: 'Свежий • Лёгкий',
+    image: 'assets/aromas/morning_dew.png',
     icon: '💧',
     mood: 'Свежесть'
   },
@@ -69,6 +77,7 @@ const AROMAS = [
     name: 'Лаванда и шалфей',
     description: 'Спокойствие, фокус, ясность',
     tags: 'Травяной • Спокойный',
+    image: 'assets/aromas/lavender_sage.png',
     icon: '🪻',
     mood: 'Фокус'
   },
@@ -77,6 +86,7 @@ const AROMAS = [
     name: 'Цитрусовый заряд',
     description: 'Энергия, бодрость, позитив',
     tags: 'Цитрусовый • Энергичный',
+    image: 'assets/aromas/citrus_charge.png',
     icon: '🍋',
     mood: 'Энергия'
   }
@@ -606,6 +616,28 @@ function pickAromaOptions(correctId) {
 function formatAromaTags(tags) {
   return tags.split('•').map(t => t.trim()).filter(Boolean)
     .map(t => `<span class="aroma-tag-pill">${t}</span>`).join('');
+}
+
+function buildAromaArtHtml(aroma) {
+  const src = aroma.image || `assets/aromas/${aroma.id}.png`;
+  return `
+    <img class="aroma-illustration" src="${src}" alt="${aroma.name}" loading="lazy">
+    <span class="aroma-illustration-fallback hidden" aria-hidden="true">${aroma.icon}</span>
+  `;
+}
+
+function bindAromaIllustration(card, aroma) {
+  const img = card.querySelector('.aroma-illustration');
+  const fallback = card.querySelector('.aroma-illustration-fallback');
+  if (!img || !fallback) return;
+
+  const showFallback = () => {
+    img.classList.add('hidden');
+    fallback.classList.remove('hidden');
+  };
+
+  img.addEventListener('error', showFallback);
+  if (img.complete && img.naturalWidth === 0) showFallback();
 }
 
 function getAromaTheme(tags) {
@@ -1350,7 +1382,7 @@ function playClientEntrance(client) {
       card.innerHTML = `
         <div class="aroma-card-shine"></div>
         <div class="aroma-card-art">
-          <span class="icon-badge aroma-icon-badge">${aroma.icon}</span>
+          ${buildAromaArtHtml(aroma)}
         </div>
         <div class="aroma-card-body">
           <div class="aroma-name">${aroma.name}</div>
@@ -1358,6 +1390,7 @@ function playClientEntrance(client) {
           <div class="aroma-tags">${formatAromaTags(aroma.tags)}</div>
         </div>
       `;
+      bindAromaIllustration(card, aroma);
       card.addEventListener('click', () => handleAromaChoice(aroma.id, card));
       els.aromaGrid.appendChild(card);
     });

@@ -1773,7 +1773,14 @@ button.btn-telegram,
 }
 
 /* ===== Buttons ===== */
-.btn {
+.btn,
+a.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
   font-family: var(--font-sans);
   border: none;
   cursor: pointer;

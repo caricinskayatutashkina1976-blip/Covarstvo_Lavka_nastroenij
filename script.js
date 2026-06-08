@@ -377,10 +377,6 @@ const SECTION_INTROS = {
 /* ===== Ссылка для связи с Натальей (MAX) ===== */
 const NATALYA_CONTACT_URL = 'https://max.ru/u/f9LHodD0cOIP8EjW1gjuxBQgv0vvt2CzVvd_ooi2yX3tz1G5w2XwEpXjZkk';
 
-/* ===== Telegram для формы заявки — заменить USERNAME на настоящий ник ===== */
-const TELEGRAM_USERNAME = 'USERNAME';
-const TELEGRAM_URL = `https://t.me/${TELEGRAM_USERNAME}`;
-
 const SHARE_PROMO_TEXT = 'Промокод ЛАВКА — приятный комплимент к заказу от Коварство Ароматов.';
 const GAME_TITLE = 'Коварство Ароматов: Лавка настроений';
 
@@ -1758,17 +1754,27 @@ async function copyLeadMessage() {
   }
 }
 
-function openTelegramWithMessage() {
+function openMaxWithMessage(e) {
   if (!state.leadMessage) {
+    e?.preventDefault();
     showToast('Сначала сформируйте сообщение', 'warning');
     return;
   }
-  const url = `${TELEGRAM_URL}?text=${encodeURIComponent(state.leadMessage)}`;
-  window.open(url, '_blank', 'noopener,noreferrer');
+  copyTextToClipboard(state.leadMessage);
 }
 
 function openContact() {
   window.open(NATALYA_CONTACT_URL, '_blank', 'noopener,noreferrer');
+}
+
+function bindMaxContactLink(el, options = {}) {
+  if (!el) return;
+  el.href = NATALYA_CONTACT_URL;
+  el.target = '_blank';
+  el.rel = 'noopener noreferrer';
+  if (options.requireMessage) {
+    el.addEventListener('click', openMaxWithMessage);
+  }
 }
 
 function openPersonalPickModal() {
@@ -1897,11 +1903,11 @@ function init() {
   if (els.btnPersonalPick) els.btnPersonalPick.addEventListener('click', openPersonalPickModal);
   if (els.btnViewCandles) els.btnViewCandles.addEventListener('click', openCandlesFromResult);
   if (els.btnGift1000) els.btnGift1000.addEventListener('click', openGift1000Modal);
-  if (els.btnWriteNatalya) els.btnWriteNatalya.addEventListener('click', openContact);
+  bindMaxContactLink(els.btnWriteNatalya);
+  bindMaxContactLink(els.btnWriteTelegram, { requireMessage: true });
 
   if (els.leadForm) els.leadForm.addEventListener('submit', handleLeadFormSubmit);
   if (els.btnCopyMessage) els.btnCopyMessage.addEventListener('click', copyLeadMessage);
-  if (els.btnWriteTelegram) els.btnWriteTelegram.addEventListener('click', openTelegramWithMessage);
   if (els.btnCopyShareResult) els.btnCopyShareResult.addEventListener('click', copyShareResult);
   if (els.btnCopyPromo) els.btnCopyPromo.addEventListener('click', copySharePromo);
   if (els.btnPlayAgain) els.btnPlayAgain.addEventListener('click', startNewDay);

@@ -1104,6 +1104,22 @@ body {
   text-align: center;
 }
 
+.game-contact-visual {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(201, 155, 106, 0.28);
+  box-shadow: 0 3px 10px rgba(112, 36, 49, 0.08);
+}
+
+.game-contact-photo {
+  display: block;
+  width: 100%;
+  height: 74px;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
 .game-contact-title {
   font-family: var(--font-serif);
   font-size: 0.78rem;

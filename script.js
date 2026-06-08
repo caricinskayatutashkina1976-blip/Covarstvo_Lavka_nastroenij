@@ -86,6 +86,7 @@ const AROMAS = [
 const CLIENTS = [
   {
     name: 'Софья',
+    image: 'assets/clients/sofia.png',
     avatar: '👩‍💼',
     moodTag: 'Деловая',
     request: '«Завтра важная презентация. Нужен аромат, который даст энергию и поможет собраться.»',
@@ -97,6 +98,7 @@ const CLIENTS = [
   },
   {
     name: 'Марина',
+    image: 'assets/clients/marina.png',
     avatar: '😴',
     moodTag: 'Уставшая',
     request: '«Хочу вечером выключить голову, зажечь свечу и просто отдохнуть.»',
@@ -108,6 +110,7 @@ const CLIENTS = [
   },
   {
     name: 'Анна',
+    image: 'assets/clients/anna.png',
     avatar: '💃',
     moodTag: 'Романтичная',
     request: '«Мне нужен аромат для красивого вечера, чтобы было женственно и нежно.»',
@@ -119,6 +122,7 @@ const CLIENTS = [
   },
   {
     name: 'Ирина',
+    image: 'assets/clients/irina.png',
     avatar: '🎄',
     moodTag: 'Праздничная',
     request: '«Хочу аромат, чтобы дома сразу стало ощущение праздника.»',
@@ -130,6 +134,7 @@ const CLIENTS = [
   },
   {
     name: 'Ольга',
+    image: 'assets/clients/olga.png',
     avatar: '🏡',
     moodTag: 'Домашняя',
     request: '«Хочу аромат для кухни-гостиной: чай, плед, уют и спокойный вечер.»',
@@ -141,6 +146,7 @@ const CLIENTS = [
   },
   {
     name: 'Кристина',
+    image: 'assets/clients/kristina.png',
     avatar: '☀️',
     moodTag: 'Яркая',
     request: '«Мне хочется чего-то летнего, сочного и радостного.»',
@@ -152,6 +158,7 @@ const CLIENTS = [
   },
   {
     name: 'Елена',
+    image: 'assets/clients/elena.png',
     avatar: '🤍',
     moodTag: 'Минималистка',
     request: '«Мне нужен чистый лёгкий аромат, чтобы не был тяжёлым.»',
@@ -163,6 +170,7 @@ const CLIENTS = [
   },
   {
     name: 'Виктория',
+    image: 'assets/clients/viktoria.png',
     avatar: '📚',
     moodTag: 'Сосредоточенная',
     request: '«Хочу аромат для рабочего стола, чтобы не отвлекал, а помогал думать.»',
@@ -174,6 +182,7 @@ const CLIENTS = [
   },
   {
     name: 'Дарья',
+    image: 'assets/clients/darya.png',
     avatar: '⚡',
     moodTag: 'Энергичная',
     request: '«Нужен аромат на утро, чтобы проснуться и зарядиться настроением.»',
@@ -185,6 +194,7 @@ const CLIENTS = [
   },
   {
     name: 'Наталья',
+    image: 'assets/clients/natalya.png',
     avatar: '🎁',
     moodTag: 'Заботливая',
     request: '«Ищу подарок для подруги. Хочется, чтобы было тепло, нежно и не слишком ярко.»',
@@ -471,7 +481,9 @@ function cacheElements() {
   clientCard: document.getElementById('clientCard'),
   clientArrival: document.getElementById('clientArrival'),
   arrivalText: document.getElementById('arrivalText'),
-  clientAvatar: document.getElementById('clientAvatar'),
+  clientAvatarFrame: document.getElementById('clientAvatarFrame'),
+  clientAvatarImg: document.getElementById('clientAvatarImg'),
+  clientAvatarFallback: document.getElementById('clientAvatarFallback'),
   clientName: document.getElementById('clientName'),
   clientMood: document.getElementById('clientMood'),
   clientRequest: document.getElementById('clientRequest'),
@@ -1257,6 +1269,57 @@ function renderClient() {
   playClientEntrance(client);
 }
 
+function getClientInitial(name) {
+  return (name || '?').trim().charAt(0).toUpperCase();
+}
+
+function showClientAvatarFallback(client, useEmoji) {
+  const fallback = els.clientAvatarFallback;
+  const img = els.clientAvatarImg;
+  if (!fallback) return;
+
+  if (img) {
+    img.classList.add('hidden');
+    img.removeAttribute('src');
+  }
+
+  fallback.textContent = useEmoji ? (client.avatar || '👩') : getClientInitial(client.name);
+  fallback.classList.toggle('client-avatar-fallback--emoji', !!useEmoji);
+  fallback.classList.remove('hidden');
+}
+
+function renderClientPortrait(client) {
+  const img = els.clientAvatarImg;
+  const fallback = els.clientAvatarFallback;
+
+  if (!img || !fallback) return;
+
+  img.classList.add('hidden');
+  fallback.classList.add('hidden');
+
+  if (!client.image) {
+    showClientAvatarFallback(client, false);
+    return;
+  }
+
+  img.alt = client.name;
+  img.onload = () => {
+    img.classList.remove('hidden');
+    fallback.classList.add('hidden');
+  };
+  img.onerror = () => showClientAvatarFallback(client, true);
+  img.src = client.image;
+
+  if (img.complete) {
+    if (img.naturalWidth > 0) {
+      img.classList.remove('hidden');
+      fallback.classList.add('hidden');
+    } else {
+      showClientAvatarFallback(client, true);
+    }
+  }
+}
+
 function playClientEntrance(client) {
   if (els.clientArrival) {
     els.clientArrival.classList.remove('hidden');
@@ -1269,7 +1332,7 @@ function playClientEntrance(client) {
   setTimeout(() => {
     hideClientArrival();
 
-    els.clientAvatar.textContent = client.avatar;
+    renderClientPortrait(client);
     els.clientName.textContent = client.name;
     els.clientMood.textContent = client.moodTag;
     els.clientRequest.textContent = client.request;
@@ -1287,7 +1350,7 @@ function playClientEntrance(client) {
       card.innerHTML = `
         <div class="aroma-card-shine"></div>
         <div class="aroma-card-art">
-          <span class="aroma-icon">${aroma.icon}</span>
+          <span class="icon-badge aroma-icon-badge">${aroma.icon}</span>
         </div>
         <div class="aroma-card-body">
           <div class="aroma-name">${aroma.name}</div>
@@ -1441,7 +1504,7 @@ function renderFavorites(highlightNew) {
     const isNew = highlightNew && i === state.favorites.length - 1;
     return `
       <button type="button" class="favorite-slot${isNew ? ' favorite-new' : ''}" data-fav-id="${a.id}" title="${a.name}">
-        <span class="fav-icon">${a.icon}</span>
+        <span class="icon-badge fav-icon-badge">${a.icon}</span>
       </button>
     `;
   }).join('');

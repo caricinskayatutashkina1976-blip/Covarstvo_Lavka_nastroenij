@@ -22,25 +22,25 @@
       <nav class="sidebar-nav" aria-label="Управление лавкой">
         <p class="sidebar-nav-label">Управление лавкой</p>
         <a href="#" class="nav-item active" data-nav="home" title="Обслуживание клиентов">
-          <span class="nav-icon">✨</span><span class="nav-text">Главная</span>
+          <span class="icon-badge nav-icon-badge">✨</span><span class="nav-text">Главная</span>
         </a>
         <a href="#" class="nav-item" data-nav="candles" title="Пополнение витрины свечами">
-          <span class="nav-icon">🕯️</span><span class="nav-text">Свечи</span>
+          <span class="icon-badge nav-icon-badge">🕯️</span><span class="nav-text">Свечи</span>
         </a>
         <a href="#" class="nav-item" data-nav="diffusers" title="Пополнение витрины диффузорами">
-          <span class="nav-icon">🌿</span><span class="nav-text">Диффузоры</span>
+          <span class="icon-badge nav-icon-badge">🌿</span><span class="nav-text">Диффузоры</span>
         </a>
         <a href="#" class="nav-item" data-nav="auto" title="Пополнение витрины автопарфюмом">
-          <span class="nav-icon">🧴</span><span class="nav-text">Автопарфюм</span>
+          <span class="icon-badge nav-icon-badge">🧴</span><span class="nav-text">Автопарфюм</span>
         </a>
         <a href="#" class="nav-item" data-nav="offers" title="Запуск акций для лавки">
-          <span class="nav-icon">🎁</span><span class="nav-text">Спецпредложения</span>
+          <span class="icon-badge nav-icon-badge">🎁</span><span class="nav-text">Спецпредложения</span>
         </a>
         <a href="#" class="nav-item" data-nav="inventory" title="Просмотр и покупка ресурсов">
-          <span class="nav-icon">📦</span><span class="nav-text">Инвентарь</span>
+          <span class="icon-badge nav-icon-badge">📦</span><span class="nav-text">Инвентарь</span>
         </a>
         <a href="#" class="nav-item" data-nav="collections" title="Сбор ароматических коллекций">
-          <span class="nav-icon">📖</span><span class="nav-text">Коллекции</span>
+          <span class="icon-badge nav-icon-badge">📖</span><span class="nav-text">Коллекции</span>
         </a>
       </nav>
 
@@ -57,21 +57,21 @@
       <header class="top-bar">
         <div class="stats-row">
           <div class="stat-card">
-            <div class="stat-icon-wrap">🧴</div>
+            <div class="icon-badge stat-icon-badge">🧴</div>
             <div class="stat-info">
               <span class="stat-label">Продажи</span>
               <span class="stat-value" id="salesCount">0</span>
             </div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon-wrap">💗</div>
+            <div class="icon-badge stat-icon-badge">💗</div>
             <div class="stat-info">
               <span class="stat-label">Довольные</span>
               <span class="stat-value" id="happyCount">0</span>
             </div>
           </div>
           <div class="stat-card stat-card-mood">
-            <div class="stat-icon-wrap">😊</div>
+            <div class="icon-badge stat-icon-badge">😊</div>
             <div class="stat-info">
               <span class="stat-label">Настроение лавки</span>
               <div class="mood-bar-wrap">
@@ -84,7 +84,7 @@
 
         <div class="top-bar-right">
           <div class="hearts-widget stat-card-hearts" id="heartsCard">
-            <div class="hearts-widget-icon">💗</div>
+            <div class="icon-badge hearts-icon-badge">💗</div>
             <div class="hearts-widget-info">
               <span class="hearts-widget-value" id="heartsCount">0</span>
               <span class="hearts-widget-label">Бонусные<br>сердца</span>
@@ -118,25 +118,25 @@
               <div class="client-card-border" aria-hidden="true"></div>
               <div class="client-card-inner">
                 <div class="category-tabs" aria-hidden="true">
-                  <span class="category-tab active">🕯️</span>
-                  <span class="category-tab">🌿</span>
-                  <span class="category-tab">🧴</span>
-                  <span class="category-tab">🌸</span>
+                  <span class="category-tab active"><span class="icon-badge category-icon-badge">🕯️</span></span>
+                  <span class="category-tab"><span class="icon-badge category-icon-badge">🌿</span></span>
+                  <span class="category-tab"><span class="icon-badge category-icon-badge">🧴</span></span>
+                  <span class="category-tab"><span class="icon-badge category-icon-badge">🌸</span></span>
                 </div>
 
-                <div class="client-row">
-                  <div class="client-avatar-wrap">
-                    <div class="client-avatar" id="clientAvatar">👩</div>
+                <div class="client-profile">
+                  <div class="client-avatar-frame" id="clientAvatarFrame">
+                    <img class="client-avatar-img hidden" id="clientAvatarImg" src="" alt="Клиент">
+                    <div class="client-avatar-fallback hidden" id="clientAvatarFallback">С</div>
                   </div>
-                  <div class="client-meta">
-                    <h2 class="client-name" id="clientName">Софья</h2>
-                    <span class="mood-tag" id="clientMood">Деловая</span>
+                  <div class="client-info">
+                    <div class="client-info-head">
+                      <h2 class="client-name" id="clientName">Софья</h2>
+                      <span class="client-mood-tag" id="clientMood">Деловая</span>
+                    </div>
+                    <blockquote class="client-request" id="clientRequest">«Завтра важная презентация...»</blockquote>
                   </div>
-                  <button class="btn btn-hint" id="hintBtn">💡 Подсказка</button>
-                </div>
-
-                <div class="client-speech">
-                  <blockquote class="client-request" id="clientRequest">«Завтра важная презентация...»</blockquote>
+                  <button class="btn btn-hint" id="hintBtn"><span class="icon-badge hint-icon-badge">💡</span> Подсказка</button>
                 </div>
 
                 <div class="hint-box hidden" id="hintBox"></div>
@@ -281,7 +281,7 @@
 
         <aside class="right-panel">
           <div class="panel-card panel-card-quest" id="questCard">
-            <h3>Ежедневное задание</h3>
+            <h3><span class="icon-badge panel-icon-badge">📋</span> Ежедневное задание</h3>
             <p class="quest-text" id="questText">Подберите 3 аромата с настроением «Энергия»</p>
             <div class="quest-progress-bar"><div class="quest-progress-fill" id="questBarFill"></div></div>
             <div class="quest-progress"><span id="questProgress">0 / 3</span></div>
@@ -291,21 +291,21 @@
           </div>
 
           <div class="panel-card mood-circle-card">
-            <h3>Настроение лавки</h3>
+            <h3><span class="icon-badge panel-icon-badge">😊</span> Настроение лавки</h3>
             <div class="mood-circle">
               <svg viewBox="0 0 100 100">
                 <circle class="mood-circle-bg" cx="50" cy="50" r="42"/>
                 <circle class="mood-circle-fill" id="moodCircleFill" cx="50" cy="50" r="42"/>
               </svg>
               <div class="mood-circle-center">
-                <span class="mood-emoji">😊</span>
+                <span class="icon-badge mood-circle-badge">😊</span>
                 <span class="mood-circle-text" id="moodCircleText">50%</span>
               </div>
             </div>
           </div>
 
           <div class="panel-card panel-card-reputation" id="reputationCard">
-            <h3>Репутация</h3>
+            <h3><span class="icon-badge panel-icon-badge">🏆</span> Репутация</h3>
             <div class="reputation-wreath">
               <span class="wreath-deco">🌿</span>
               <span class="wreath-level" id="reputationTier">1</span>
@@ -318,7 +318,7 @@
           </div>
 
           <div class="panel-card tip-card">
-            <h3>Подсказка дня</h3>
+            <h3><span class="icon-badge panel-icon-badge">💡</span> Подсказка дня</h3>
             <p class="tip-text" id="dailyTip">Слушайте настроение клиента — оно подскажет аромат.</p>
           </div>
         </aside>
@@ -330,16 +330,16 @@
           <p class="bottom-hint">Нажмите на иконку — посмотреть, что есть в наличии</p>
           <div class="inventory-items">
             <button class="inv-item inv-item-click" type="button" data-inv="candles" id="invCandlesBtn" title="Свечи в наличии">
-              <span class="inv-item-icon">🕯️</span><span class="inv-item-label">Свечи</span><span class="inv-item-qty" id="invCandlesQty">7</span>
+              <span class="icon-badge inv-icon-badge">🕯️</span><span class="inv-item-label">Свечи</span><span class="inv-item-qty" id="invCandlesQty">7</span>
             </button>
             <button class="inv-item inv-item-click" type="button" data-inv="diffusers" id="invDiffusersBtn" title="Диффузоры в наличии">
-              <span class="inv-item-icon">🌿</span><span class="inv-item-label">Диффузоры</span><span class="inv-item-qty" id="invDiffusersQty">5</span>
+              <span class="icon-badge inv-icon-badge">🌿</span><span class="inv-item-label">Диффузоры</span><span class="inv-item-qty" id="invDiffusersQty">5</span>
             </button>
             <button class="inv-item inv-item-click" type="button" data-inv="bottles" id="invBottlesBtn" title="Флаконы в наличии">
-              <span class="inv-item-icon">🧴</span><span class="inv-item-label">Флаконы</span><span class="inv-item-qty" id="invBottlesQty">4</span>
+              <span class="icon-badge inv-icon-badge">🧴</span><span class="inv-item-label">Флаконы</span><span class="inv-item-qty" id="invBottlesQty">4</span>
             </button>
             <button class="inv-item inv-item-click" type="button" data-inv="decor" id="invDecorBtn" title="Декор лавки">
-              <span class="inv-item-icon">🌸</span><span class="inv-item-label">Декор</span><span class="inv-item-qty" id="invDecorQty">6</span>
+              <span class="icon-badge inv-icon-badge">🌸</span><span class="inv-item-label">Декор</span><span class="inv-item-qty" id="invDecorQty">6</span>
             </button>
             <button class="inv-add" type="button" id="invAddBtn" title="Открыть мини-магазин">+</button>
           </div>

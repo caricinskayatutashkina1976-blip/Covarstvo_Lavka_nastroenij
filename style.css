@@ -176,6 +176,26 @@
   line-height: 1;
 }
 
+.icon-text-fallback:not(.hidden) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+.icon-frame--hint .icon-text-fallback:not(.hidden) {
+  font-size: 0.65rem;
+}
+
+.icon-frame--inv-add .icon-text-fallback:not(.hidden) {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
 .nav-item .icon-frame {
   width: 34px;
   height: 34px;

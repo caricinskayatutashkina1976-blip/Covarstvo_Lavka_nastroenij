@@ -420,6 +420,16 @@ function iconImg(src, alt, className, fallbackText) {
   `;
 }
 
+function bindImageErrorLogging(root = document) {
+  root.querySelectorAll('img').forEach(img => {
+    if (img.dataset.errorLogBound) return;
+    img.dataset.errorLogBound = '1';
+    img.addEventListener('error', () => {
+      console.warn('Не загрузилась картинка:', img.src);
+    });
+  });
+}
+
 function bindIconFallbacks(root = document) {
   root.querySelectorAll('.icon-frame img').forEach(img => {
     if (img.dataset.fallbackBound) return;
@@ -2082,6 +2092,7 @@ function init() {
   }
 
   bindSectionContentEvents();
+  bindImageErrorLogging(document);
   bindIconFallbacks(document);
 }
 

@@ -804,6 +804,145 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  gap: 10px;
+}
+
+/* ===== Game promo banner ===== */
+.game-promo-banner {
+  position: relative;
+  flex-shrink: 0;
+  background: linear-gradient(145deg, #FFF9F2 0%, #FAF3F0 100%);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(201, 155, 106, 0.38);
+  overflow: hidden;
+}
+
+.game-promo-banner.hidden {
+  display: none !important;
+}
+
+.game-promo-border {
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(201, 155, 106, 0.28);
+  border-radius: calc(var(--radius) - 4px);
+  pointer-events: none;
+}
+
+.game-promo-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 2;
+  border: none;
+  background: rgba(255, 252, 250, 0.9);
+  color: var(--text-muted);
+  font-size: 0.62rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 99px;
+  cursor: pointer;
+  border: 1px solid rgba(201, 155, 106, 0.25);
+  transition: color 0.2s, background 0.2s;
+}
+
+.game-promo-close:hover {
+  color: var(--burgundy);
+  background: var(--white);
+}
+
+.game-promo-inner {
+  position: relative;
+  z-index: 1;
+  padding: 14px 18px 12px;
+  text-align: center;
+}
+
+.game-promo-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.game-promo-title {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+.game-promo-lead {
+  font-size: 0.72rem;
+  color: var(--text);
+  line-height: 1.45;
+  max-width: 640px;
+  margin: 0 auto 10px;
+}
+
+.game-promo-benefits {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.game-promo-benefit {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(201, 155, 106, 0.22);
+  border-radius: var(--radius-sm);
+  padding: 8px 8px 10px;
+  box-shadow: 0 2px 8px rgba(112, 36, 49, 0.05);
+}
+
+.icon-frame--promo {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  margin: 0 auto 6px;
+}
+
+.icon-frame--promo .ui-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.game-promo-benefit-title {
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--burgundy);
+  margin-bottom: 3px;
+}
+
+.game-promo-benefit-text {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.game-promo-cta {
+  padding: 8px 22px;
+  font-size: 0.78rem;
+  margin-bottom: 6px;
+}
+
+.game-promo-footnote {
+  font-size: 0.68rem;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.game-promo-time {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  font-style: italic;
 }
 
 /* ===== Welcome / Summary / Result ===== */
@@ -2244,6 +2383,8 @@ a.btn {
 @media (max-width: 600px) {
   .stats-row { flex-wrap: wrap; }
   .stat-card { min-width: calc(50% - 5px); flex: 1; }
+  .game-promo-benefits { grid-template-columns: 1fr; }
+  .game-promo-title { font-size: 0.95rem; }
   .aroma-grid { grid-template-columns: 1fr 1fr; }
   .client-profile { flex-wrap: wrap; }
   .client-avatar-frame { width: 100px; height: 100px; }

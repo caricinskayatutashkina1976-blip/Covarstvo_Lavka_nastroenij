@@ -463,6 +463,28 @@ function getAromaImage(aroma) {
   return aroma.image || `assets/aromas/${aroma.id}.png`;
 }
 
+function hideGamePromoBanner(persist = true) {
+  state.promoBannerDismissed = true;
+  if (els.gamePromoBanner) els.gamePromoBanner.classList.add('hidden');
+  if (persist) sessionStorage.setItem(PROMO_BANNER_KEY, '1');
+}
+
+function updateGamePromoBannerVisibility() {
+  if (!els.gamePromoBanner) return;
+  const onGameScreen = els.gameScreen && !els.gameScreen.classList.contains('hidden');
+  const beforeFirstPick = state.currentIndex === 0 && !state.answered;
+  const sessionDismissed = sessionStorage.getItem(PROMO_BANNER_KEY) === '1';
+  const show = onGameScreen && state.dayStarted && beforeFirstPick &&
+    !state.promoBannerDismissed && !sessionDismissed;
+  els.gamePromoBanner.classList.toggle('hidden', !show);
+}
+
+function focusGamePlayArea() {
+  if (els.clientCard) {
+    els.clientCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
 const SHARE_PROMO_TEXT = 'Промокод ЛАВКА — приятный комплимент к заказу от Коварство Ароматов.';
 const GAME_TITLE = 'Коварство Ароматов: Лавка настроений';
 
@@ -547,8 +569,11 @@ const state = {
   showcaseItems: { candles: [], diffusers: [], bottles: [] },
   dayCorrectAromas: [],
   currentAromaType: null,
-  leadMessage: ''
+  leadMessage: '',
+  promoBannerDismissed: false
 };
+
+const PROMO_BANNER_KEY = 'lavka_promo_banner_dismissed';
 
 /* ===== DOM-элементы ===== */
 const els = {};
@@ -560,6 +585,9 @@ function cacheElements() {
   summaryScreen: document.getElementById('summaryScreen'),
   startDayBtn: document.getElementById('startDayBtn'),
   newDayBtn: document.getElementById('newDayBtn'),
+  gamePromoBanner: document.getElementById('gamePromoBanner'),
+  gamePromoClose: document.getElementById('gamePromoClose'),
+  gamePromoStartBtn: document.getElementById('gamePromoStartBtn'),
   clientCard: document.getElementById('clientCard'),
   clientArrival: document.getElementById('clientArrival'),
   arrivalText: document.getElementById('arrivalText'),
@@ -1534,6 +1562,7 @@ function hideClientArrival() {
 function handleAromaChoice(chosenId, cardEl) {
   if (state.answered) return;
   state.answered = true;
+  hideGamePromoBanner();
 
   const client = state.dayClients[state.currentIndex];
   const isCorrect = chosenId === client.correctAroma;
@@ -2012,12 +2041,15 @@ function startDay() {
   state.dayCorrectAromas = [];
   state.currentAromaType = null;
   state.leadMessage = '';
+  state.promoBannerDismissed = false;
+  sessionStorage.removeItem(PROMO_BANNER_KEY);
 
   applyDailyQuest(pickDailyQuest());
   els.dailyTip.textContent = DAILY_TIPS[Math.floor(Math.random() * DAILY_TIPS.length)];
 
   updateStats();
   showScreen(els.gameScreen);
+  updateGamePromoBannerVisibility();
   renderClient();
 }
 
@@ -2045,6 +2077,13 @@ function init() {
   }
 
   els.startDayBtn.addEventListener('click', startDay);
+  if (els.gamePromoClose) els.gamePromoClose.addEventListener('click', () => hideGamePromoBanner());
+  if (els.gamePromoStartBtn) {
+    els.gamePromoStartBtn.addEventListener('click', () => {
+      hideGamePromoBanner();
+      focusGamePlayArea();
+    });
+  }
   if (els.newDayBtn) els.newDayBtn.addEventListener('click', startNewDay);
   if (els.nextClientBtn) els.nextClientBtn.addEventListener('click', nextClient);
   if (els.hintBtn) els.hintBtn.addEventListener('click', useHint);

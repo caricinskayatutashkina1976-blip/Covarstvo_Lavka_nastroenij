@@ -426,12 +426,20 @@ function bindIconFallbacks(root = document) {
     img.dataset.fallbackBound = '1';
     const frame = img.closest('.icon-frame');
     const fallback = frame?.querySelector('.icon-text-fallback');
+    const showImage = () => {
+      img.classList.remove('hidden');
+      if (fallback) fallback.classList.add('hidden');
+    };
     const showFallback = () => {
       img.classList.add('hidden');
       if (fallback) fallback.classList.remove('hidden');
     };
+    img.addEventListener('load', showImage);
     img.addEventListener('error', showFallback);
-    if (img.complete && img.naturalWidth === 0) showFallback();
+    if (img.complete) {
+      if (img.naturalWidth > 0) showImage();
+      else showFallback();
+    }
   });
 }
 

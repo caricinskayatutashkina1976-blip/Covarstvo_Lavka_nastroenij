@@ -1099,23 +1099,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   gap: 5px;
   padding: 8px 10px;
   text-align: center;
-}
-
-.game-contact-face {
-  flex-shrink: 0;
-}
-
-.game-contact-photo {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(201, 155, 106, 0.45);
-  box-shadow: 0 4px 12px rgba(112, 36, 49, 0.12);
 }
 
 .game-contact-title {

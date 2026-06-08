@@ -174,7 +174,7 @@ const CLIENTS = [
   },
   {
     name: 'Дарья',
-    image: 'assets/clients/darya.png',
+    image: 'assets/clients/darya.jpg',
     moodTag: 'Энергичная',
     request: '«Нужен аромат на утро, чтобы проснуться и зарядиться настроением.»',
     correctAroma: 'citrus_charge',
@@ -185,7 +185,7 @@ const CLIENTS = [
   },
   {
     name: 'Наталья',
-    image: 'assets/clients/natalya.png',
+    image: 'assets/clients/natalya.jpg',
     moodTag: 'Заботливая',
     request: '«Ищу подарок для подруги. Хочется, чтобы было тепло, нежно и не слишком ярко.»',
     correctAroma: 'vanilla',

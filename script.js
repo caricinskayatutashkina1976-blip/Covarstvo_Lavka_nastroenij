@@ -6,7 +6,6 @@ const AROMAS = [
     description: 'Спокойствие, сон, расслабление',
     tags: 'Травяной • Спокойный',
     image: 'assets/aromas/lavender.png',
-    icon: '🪻',
     mood: 'Спокойствие'
   },
   {
@@ -15,7 +14,6 @@ const AROMAS = [
     description: 'Тепло, уют, нежность',
     tags: 'Сладкий • Уютный',
     image: 'assets/aromas/vanilla.png',
-    icon: '🍦',
     mood: 'Уют'
   },
   {
@@ -24,7 +22,6 @@ const AROMAS = [
     description: 'Праздник, свежесть, Новый год',
     tags: 'Хвойный • Праздничный',
     image: 'assets/aromas/pine_mandarin.png',
-    icon: '🍊',
     mood: 'Праздник'
   },
   {
@@ -33,7 +30,6 @@ const AROMAS = [
     description: 'Энергия, собранность, уверенность',
     tags: 'Свежий • Деловой',
     image: 'assets/aromas/grapefruit_vetiver.png',
-    icon: '🌿',
     mood: 'Энергия'
   },
   {
@@ -42,7 +38,6 @@ const AROMAS = [
     description: 'Осень, дом, чай, тепло',
     tags: 'Тёплый • Пряный',
     image: 'assets/aromas/quince_spice.png',
-    icon: '🍯',
     mood: 'Уют'
   },
   {
@@ -51,7 +46,6 @@ const AROMAS = [
     description: 'Элегантность, женственность, мягкость',
     tags: 'Цветочный • Благородный',
     image: 'assets/aromas/cedar_rose.png',
-    icon: '🌹',
     mood: 'Романтика'
   },
   {
@@ -60,7 +54,6 @@ const AROMAS = [
     description: 'Яркость, лето, радость',
     tags: 'Фруктовый • Солнечный',
     image: 'assets/aromas/mango.png',
-    icon: '🥭',
     mood: 'Радость'
   },
   {
@@ -69,7 +62,6 @@ const AROMAS = [
     description: 'Чистота, свежесть, лёгкость',
     tags: 'Свежий • Лёгкий',
     image: 'assets/aromas/morning_dew.png',
-    icon: '💧',
     mood: 'Свежесть'
   },
   {
@@ -78,7 +70,6 @@ const AROMAS = [
     description: 'Спокойствие, фокус, ясность',
     tags: 'Травяной • Спокойный',
     image: 'assets/aromas/lavender_sage.png',
-    icon: '🪻',
     mood: 'Фокус'
   },
   {
@@ -87,7 +78,6 @@ const AROMAS = [
     description: 'Энергия, бодрость, позитив',
     tags: 'Цитрусовый • Энергичный',
     image: 'assets/aromas/citrus_charge.png',
-    icon: '🍋',
     mood: 'Энергия'
   }
 ];
@@ -97,7 +87,6 @@ const CLIENTS = [
   {
     name: 'Софья',
     image: 'assets/clients/sofia.png',
-    avatar: '👩‍💼',
     moodTag: 'Деловая',
     request: '«Завтра важная презентация. Нужен аромат, который даст энергию и поможет собраться.»',
     correctAroma: 'grapefruit_vetiver',
@@ -109,7 +98,6 @@ const CLIENTS = [
   {
     name: 'Марина',
     image: 'assets/clients/marina.png',
-    avatar: '😴',
     moodTag: 'Уставшая',
     request: '«Хочу вечером выключить голову, зажечь свечу и просто отдохнуть.»',
     correctAroma: 'lavender',
@@ -121,7 +109,6 @@ const CLIENTS = [
   {
     name: 'Анна',
     image: 'assets/clients/anna.png',
-    avatar: '💃',
     moodTag: 'Романтичная',
     request: '«Мне нужен аромат для красивого вечера, чтобы было женственно и нежно.»',
     correctAroma: 'cedar_rose',
@@ -133,7 +120,6 @@ const CLIENTS = [
   {
     name: 'Ирина',
     image: 'assets/clients/irina.png',
-    avatar: '🎄',
     moodTag: 'Праздничная',
     request: '«Хочу аромат, чтобы дома сразу стало ощущение праздника.»',
     correctAroma: 'pine_mandarin',
@@ -145,7 +131,6 @@ const CLIENTS = [
   {
     name: 'Ольга',
     image: 'assets/clients/olga.png',
-    avatar: '🏡',
     moodTag: 'Домашняя',
     request: '«Хочу аромат для кухни-гостиной: чай, плед, уют и спокойный вечер.»',
     correctAroma: 'quince_spice',
@@ -157,7 +142,6 @@ const CLIENTS = [
   {
     name: 'Кристина',
     image: 'assets/clients/kristina.png',
-    avatar: '☀️',
     moodTag: 'Яркая',
     request: '«Мне хочется чего-то летнего, сочного и радостного.»',
     correctAroma: 'mango',
@@ -169,7 +153,6 @@ const CLIENTS = [
   {
     name: 'Елена',
     image: 'assets/clients/elena.png',
-    avatar: '🤍',
     moodTag: 'Минималистка',
     request: '«Мне нужен чистый лёгкий аромат, чтобы не был тяжёлым.»',
     correctAroma: 'morning_dew',
@@ -181,7 +164,6 @@ const CLIENTS = [
   {
     name: 'Виктория',
     image: 'assets/clients/viktoria.png',
-    avatar: '📚',
     moodTag: 'Сосредоточенная',
     request: '«Хочу аромат для рабочего стола, чтобы не отвлекал, а помогал думать.»',
     correctAroma: 'lavender_sage',
@@ -193,7 +175,6 @@ const CLIENTS = [
   {
     name: 'Дарья',
     image: 'assets/clients/darya.png',
-    avatar: '⚡',
     moodTag: 'Энергичная',
     request: '«Нужен аромат на утро, чтобы проснуться и зарядиться настроением.»',
     correctAroma: 'citrus_charge',
@@ -205,7 +186,6 @@ const CLIENTS = [
   {
     name: 'Наталья',
     image: 'assets/clients/natalya.png',
-    avatar: '🎁',
     moodTag: 'Заботливая',
     request: '«Ищу подарок для подруги. Хочется, чтобы было тепло, нежно и не слишком ярко.»',
     correctAroma: 'vanilla',
@@ -276,33 +256,32 @@ const CLIENTS_PER_DAY = 5;
 
 /* ===== Каталоги магазина ===== */
 const SHOP_CANDLES = [
-  { id: 'memory', name: 'Воспоминание', icon: '🕯️', description: 'Мягкий янтарный свет и ноты ванили с кедром.', mood: 'Ностальгия', price: 120 },
-  { id: 'botanical', name: 'Ожидание встречи', icon: '🌿', description: 'Ботаническая свеча с лавандой и зелёными нотами.', mood: 'Романтика', price: 140 },
-  { id: 'pine_candle', name: 'Хвоя и мандарин', icon: '🍊', description: 'Праздничный аромат новогодней ёлки и цитруса.', mood: 'Праздник', price: 130 },
-  { id: 'quince_candle', name: 'Печёная айва', icon: '🍯', description: 'Тёплые пряности и сладкая запечённая айва.', mood: 'Уют', price: 125 },
-  { id: 'lavender_candle', name: 'Лаванда', icon: '🪻', description: 'Классическая лаванда для спокойного вечера.', mood: 'Спокойствие', price: 110 }
+  { id: 'memory', name: 'Воспоминание', description: 'Мягкий янтарный свет и ноты ванили с кедром.', mood: 'Ностальгия', price: 120 },
+  { id: 'botanical', name: 'Ожидание встречи', description: 'Ботаническая свеча с лавандой и зелёными нотами.', mood: 'Романтика', price: 140 },
+  { id: 'pine_candle', name: 'Хвоя и мандарин', description: 'Праздничный аромат новогодней ёлки и цитруса.', mood: 'Праздник', price: 130 },
+  { id: 'quince_candle', name: 'Печёная айва', description: 'Тёплые пряности и сладкая запечённая айва.', mood: 'Уют', price: 125 },
+  { id: 'lavender_candle', name: 'Лаванда', description: 'Классическая лаванда для спокойного вечера.', mood: 'Спокойствие', price: 110 }
 ];
 
 const SHOP_DIFFUSERS = [
-  { id: 'lavender_field', name: 'Лавандовое поле', icon: '🪻', description: 'Мягкий травяной букет для спальни и гостиной.', room: 'Спальня, гостиная' },
-  { id: 'grapefruit_diff', name: 'Грейпфрут и ветивер', icon: '🌿', description: 'Свежий деловой аромат для кабинета.', room: 'Кабинет, прихожая' },
-  { id: 'dew_diff', name: 'Утренняя роса', icon: '💧', description: 'Лёгкая свежесть для минималистичного интерьера.', room: 'Спальня, ванная' },
-  { id: 'cedar_diff', name: 'Белый кедр и роза', icon: '🌹', description: 'Элегантный цветочно-древесный диффузор.', room: 'Гостиная, спальня' }
+  { id: 'lavender_field', name: 'Лавандовое поле', description: 'Мягкий травяной букет для спальни и гостиной.', room: 'Спальня, гостиная' },
+  { id: 'grapefruit_diff', name: 'Грейпфрут и ветивер', description: 'Свежий деловой аромат для кабинета.', room: 'Кабинет, прихожая' },
+  { id: 'dew_diff', name: 'Утренняя роса', description: 'Лёгкая свежесть для минималистичного интерьера.', room: 'Спальня, ванная' },
+  { id: 'cedar_diff', name: 'Белый кедр и роза', description: 'Элегантный цветочно-древесный диффузор.', room: 'Гостиная, спальня' }
 ];
 
 const SHOP_AUTO = [
-  { id: 'creed', name: 'Creed Aventus', icon: '🚗', description: 'Благородный древесно-фруктовый характер.', audience: 'Уверенным водителям' },
-  { id: 'citrus_auto', name: 'Цитрусовый заряд', icon: '🍋', description: 'Бодрящий цитрус для утренних поездок.', audience: 'Энергичным людям' },
-  { id: 'mango_auto', name: 'Манго', icon: '🥭', description: 'Солнечный фруктовый аромат для лета.', audience: 'Любителям яркости' },
-  { id: 'grapefruit_auto', name: 'Грейпфрут и ветивер', icon: '🧴', description: 'Собранный свежий аромат для авто.', audience: 'Деловым клиентам' },
-  { id: 'cedar_auto', name: 'Белый кедр', icon: '🌲', description: 'Чистый древесный аромат для салона.', audience: 'Ценителям элегантности' }
+  { id: 'creed', name: 'Creed Aventus', description: 'Благородный древесно-фруктовый характер.', audience: 'Уверенным водителям' },
+  { id: 'citrus_auto', name: 'Цитрусовый заряд', description: 'Бодрящий цитрус для утренних поездок.', audience: 'Энергичным людям' },
+  { id: 'mango_auto', name: 'Манго', description: 'Солнечный фруктовый аромат для лета.', audience: 'Любителям яркости' },
+  { id: 'grapefruit_auto', name: 'Грейпфрут и ветивер', description: 'Собранный свежий аромат для авто.', audience: 'Деловым клиентам' },
+  { id: 'cedar_auto', name: 'Белый кедр', description: 'Чистый древесный аромат для салона.', audience: 'Ценителям элегантности' }
 ];
 
 const SHOP_OFFERS = [
   {
     id: 'cozy_set',
     name: 'Набор для уютного вечера',
-    icon: '🕯️',
     contents: 'Свеча «Лаванда», диффузор «Лавандовое поле», мини-ваниль',
     bonus: '+1 продажа при следующем правильном подборе',
     bonusType: 'extraSale'
@@ -310,7 +289,6 @@ const SHOP_OFFERS = [
   {
     id: 'gift_set',
     name: 'Подарок до 1000 рублей',
-    icon: '🎁',
     contents: 'Мини-свеча, саше, открытка с пожеланием',
     bonus: 'Бесплатная подсказка для всех клиентов сегодня',
     bonusType: 'freeHints'
@@ -318,7 +296,6 @@ const SHOP_OFFERS = [
   {
     id: 'car_set',
     name: 'Аромат в машину',
-    icon: '🚗',
     contents: 'Автопарфюм «Цитрусовый заряд» + освежитель',
     bonus: '+1 продажа и +5 настроения при следующем правильном подборе',
     bonusType: 'carBonus'
@@ -476,47 +453,37 @@ const AROMA_TYPES = [
   {
     id: 'cozy',
     title: 'Эстет уюта',
-    icon: '🕯️',
     aromaIds: ['vanilla', 'quince_spice', 'lavender'],
     description: 'Вы выбираете тёплые, мягкие и обволакивающие ароматы. Для вас аромат — это не просто запах, а ощущение дома, заботы и красивого вечера.',
-    product: 'Ароматическая свеча или уютный подарочный набор',
-    productIcon: '🕯️'
+    product: 'Ароматическая свеча или уютный подарочный набор'
   },
   {
     id: 'energy',
     title: 'Энергия и уверенность',
-    icon: '⚡',
     aromaIds: ['grapefruit_vetiver', 'citrus_charge', 'morning_dew'],
     description: 'Вам подходят свежие, бодрые и собранные ароматы. Они помогают включиться в день, почувствовать уверенность и ясность.',
-    product: 'Автопарфюм или диффузор для рабочего пространства',
-    productIcon: '🚗'
+    product: 'Автопарфюм или диффузор для рабочего пространства'
   },
   {
     id: 'feminine',
     title: 'Женственная история',
-    icon: '🌹',
     aromaIds: ['cedar_rose', 'vanilla', 'mango'],
     description: 'Ваш ароматный стиль — мягкий, красивый и запоминающийся. Вам близки женственные, эстетичные и немного романтичные композиции.',
-    product: 'Свеча, диффузор или распив парфюма для красивого образа',
-    productIcon: '✨'
+    product: 'Свеча, диффузор или распив парфюма для красивого образа'
   },
   {
     id: 'calm',
     title: 'Спокойствие и восстановление',
-    icon: '🪻',
     aromaIds: ['lavender', 'lavender_sage', 'morning_dew'],
     description: 'Вы выбираете ароматы, которые помогают замедлиться, восстановиться и создать вокруг себя спокойное пространство.',
-    product: 'Свеча для вечернего ритуала или диффузор для спальни',
-    productIcon: '🌿'
+    product: 'Свеча для вечернего ритуала или диффузор для спальни'
   },
   {
     id: 'festive',
     title: 'Праздничное настроение',
-    icon: '🎄',
     aromaIds: ['pine_mandarin', 'quince_spice', 'mango'],
     description: 'Вам нравятся ароматы, которые создают настроение, украшают момент и делают обычный день особенным.',
-    product: 'Подарочный набор, праздничная свеча или аромат для дома',
-    productIcon: '🎁'
+    product: 'Подарочный набор, праздничная свеча или аромат для дома'
   }
 ];
 
@@ -779,7 +746,12 @@ function getReputationProgress(totalHappy) {
 }
 
 function renderStars(count) {
-  return '★'.repeat(count) + '☆'.repeat(4 - count);
+  let html = '';
+  for (let i = 0; i < 4; i++) {
+    const filled = i < count;
+    html += `<img src="${icons.ui.star}" alt="" class="reputation-star${filled ? '' : ' reputation-star--empty'}" aria-hidden="true">`;
+  }
+  return html;
 }
 
 function pickDailyQuest() {
@@ -1388,7 +1360,10 @@ function updateStats() {
   const repProgress = getReputationProgress(state.totalHappy);
 
   if (els.reputationTitle) els.reputationTitle.textContent = tier.title;
-  if (els.reputationStars) els.reputationStars.textContent = renderStars(tier.stars);
+  if (els.reputationStars) {
+    els.reputationStars.innerHTML = renderStars(tier.stars);
+    bindIconFallbacks(els.reputationStars);
+  }
   if (els.reputationTier) els.reputationTier.textContent = tier.stars;
   if (els.reputationBarFill) els.reputationBarFill.style.width = repProgress.pct + '%';
   if (els.reputationProgressLabel) els.reputationProgressLabel.textContent = repProgress.label;
@@ -1436,7 +1411,7 @@ function getClientInitial(name) {
   return (name || '?').trim().charAt(0).toUpperCase();
 }
 
-function showClientAvatarFallback(client, useEmoji) {
+function showClientAvatarFallback(client) {
   const fallback = els.clientAvatarFallback;
   const img = els.clientAvatarImg;
   if (!fallback) return;
@@ -1446,8 +1421,8 @@ function showClientAvatarFallback(client, useEmoji) {
     img.removeAttribute('src');
   }
 
-  fallback.textContent = useEmoji ? (client.avatar || '👩') : getClientInitial(client.name);
-  fallback.classList.toggle('client-avatar-fallback--emoji', !!useEmoji);
+  fallback.textContent = getClientInitial(client.name);
+  fallback.classList.remove('client-avatar-fallback--emoji');
   fallback.classList.remove('hidden');
 }
 
@@ -1461,7 +1436,7 @@ function renderClientPortrait(client) {
   fallback.classList.add('hidden');
 
   if (!client.image) {
-    showClientAvatarFallback(client, false);
+    showClientAvatarFallback(client);
     return;
   }
 
@@ -1470,7 +1445,7 @@ function renderClientPortrait(client) {
     img.classList.remove('hidden');
     fallback.classList.add('hidden');
   };
-  img.onerror = () => showClientAvatarFallback(client, true);
+  img.onerror = () => showClientAvatarFallback(client);
   img.src = client.image;
 
   if (img.complete) {
@@ -1478,7 +1453,7 @@ function renderClientPortrait(client) {
       img.classList.remove('hidden');
       fallback.classList.add('hidden');
     } else {
-      showClientAvatarFallback(client, true);
+      showClientAvatarFallback(client);
     }
   }
 }
@@ -1847,18 +1822,18 @@ function buildLeadMessage() {
     '',
     'Хочу персональный подбор ароматов из игры «Коварство Ароматов: Лавка настроений».',
     '',
-    `🎯 Для чего: ${purpose}`,
-    `💰 Бюджет: ${budget}`,
-    `💬 Комментарий: ${comment}`,
+    `Для чего: ${purpose}`,
+    `Бюджет: ${budget}`,
+    `Комментарий: ${comment}`,
     '',
-    '🌸 Мой ароматный результат:',
+    'Мой ароматный результат:',
     `Тип: ${type.title}`,
     type.description,
     '',
     `Подходящие ароматы: ${aromaNames}`,
     `Рекомендованный продукт: ${type.product}`,
     '',
-    '🎁 Кодовое слово: ЛАВКА',
+    'Кодовое слово: ЛАВКА',
     '',
     'Буду рада(а) вашей помощи с подбором!',
     name
@@ -1960,7 +1935,7 @@ function endDay() {
   if (state.dayHappy === CLIENTS_PER_DAY) {
     state.streak += 1;
     addHearts(3, 'Идеальный день в лавке!');
-    showToast('🌟 Идеальный день — все клиенты довольны!', 'streak');
+    showToast('Идеальный день — все клиенты довольны!', 'streak');
   } else {
     state.streak = 0;
   }

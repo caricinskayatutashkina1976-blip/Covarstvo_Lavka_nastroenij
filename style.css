@@ -212,6 +212,24 @@
   display: block;
 }
 
+.reputation-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.reputation-star {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  display: block;
+}
+
+.reputation-star--empty {
+  opacity: 0.28;
+  filter: grayscale(1);
+}
+
 .floating-heart {
   position: absolute;
   width: 22px;

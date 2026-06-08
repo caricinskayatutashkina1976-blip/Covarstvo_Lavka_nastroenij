@@ -1,0 +1,14 @@
+# Пример пользовательских правил
+# Соответствие: ст. 19 152-ФЗ — меры по обеспечению безопасности (настраиваемые правила)
+
+patterns:
+  CUSTOM_EMPLOYEE_ID:
+    - regex: 'EMP-\d{6}'
+      confidence: 0.99
+  CUSTOM_CLIENT_CODE:
+    - regex: 'CLT-[A-Z]{2}\d{4}'
+      confidence: 0.99
+
+entity_type_mapping:
+  CUSTOM_EMPLOYEE_ID: SESSION_TOKEN
+  CUSTOM_CLIENT_CODE: SESSION_TOKEN
